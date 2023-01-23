@@ -1,10 +1,36 @@
-<html>
+<html> 
 <head>
-<title>Leaflet and Javascript Example </title> </head>
+<!-- code for Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" 
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" 
+    crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" 
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" 
+    crossorigin=""></script>
+    
+<style type="text/css"> 
+#mapid { height: 180px; } 
+</style>
+</head>
+
 <body>
+<!-- basic information DIV -->
 <div>
 This is my first HTML Page
-My name is: XXXX
-My UCL username is: XXXX My GitHub username is: XXX </div>
+My name is: Yiqi
+My UCL username is: zcahuag 
+My GitHub username is: sophuang 
+</div>
+<!-- the mapid div will hold the map -->
+<div id="mapid" style="width: 600px; height: 400px;"></div>
+<!-- the following script will load the map and set the default view and zoom, as well as loading the basemap tiles -->
+<script> 
+"use strict";
+let mymap;
+mymap = L.map('mapid').setView([51.505, -0.09], 13); 
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(mymap);
+</script>
 </body>
 </html>
