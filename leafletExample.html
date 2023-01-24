@@ -15,6 +15,10 @@
         <!-- the following links incorporate the CSS required for custom icon creation --> <link rel="stylesheet" href="css/ionicons.min.css">
         <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
         <script src="js/leaflet.awesome-markers.js"></script>
+
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+
     </head>
 
     
@@ -117,7 +121,26 @@
         {color: 'orange', fillColor: '#f03', fillOpacity: 0.5}).addTo(mymap).bindPopup("I am a polygon in 2022.");
 
         console.log
-        window.onload = loadLeafletMap;
+        document.addEventListener('DOMContentLoaded', function() {
+            loadMap();}, false);
+        function loadMap() {
+            loadLeafletMap(); 
+            getEarthquakeData();
+        }
+
+        
+
+        let earthquakeLayer;
+        function getEarthquakeData() { 
+            let layerURL ="https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson";
+                $.ajax({url: layerURL, crossDomain: true,success: function(result){
+                    console.log(result); // check that the data is correct
+                    // add the JSON layer onto the map - it will appear using the default icons earthquakelayer = L.geoJson(result).addTo(mymap);
+                    // change the map zoom so that all the data is shown mymap.fitBounds(earthquakelayer.getBounds());
+                } // end of the inner function
+            }); // end of the ajax request
+        } // end of the getEarthquakeData function
+
 
         </script>
     </body>
