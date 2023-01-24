@@ -29,13 +29,26 @@ My GitHub username is: sophuang
 let mymap; // global variable to store the map
 
 function loadLeafletMap() {
-
+console.log
 // now call the code to add the markers 
 addBasicMarkers();
 } //end code to add the leaflet map
 
 function addBasicMarkers() {
-
+console.log
+// create a geoJSON feature - 
+let geojsonFeature = {
+    "type": "Feature", 
+    "properties": {
+        "name": "London",
+        "popupContent": "This is where UCL is based. We have on campus and off campus activity." 
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [-0.118092, 51.509865]
+    } };
+// and add it to the map
+L.geoJSON(geojsonFeature).addTo(mymap).bindPopup("<b>"+geojsonFeature.properties.name+" "+geojsonFeature.properties.popupContent+"<b>");
 } // end code to add the basic markers
 
 mymap = L.map('mapid').setView([51.505, -0.09], 13); 
@@ -55,6 +68,9 @@ let myPolygon = L.polygon([
 ],
 {color: 'orange', fillColor: '#f03', fillOpacity: 0.5
 }).addTo(mymap).bindPopup("I am a polygon in 2022.");
+console.log
+window.onload = loadLeafletMap;
+
 </script>
 </body>
 </html>
