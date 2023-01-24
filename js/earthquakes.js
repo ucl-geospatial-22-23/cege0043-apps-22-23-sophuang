@@ -1,6 +1,8 @@
 "use strict";
-
+let mymap; // global variable to store the map
 let earthquakelayer;
+
+
 function getEarthquakeData() { 
     let layerURL ="https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson";
         $.ajax({url: layerURL, crossDomain: true,success: function(result){
