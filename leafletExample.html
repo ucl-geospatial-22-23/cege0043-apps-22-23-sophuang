@@ -28,8 +28,26 @@ My GitHub username is: sophuang
 "use strict";
 let mymap; // global variable to store the map
 
+
+// create a custom popup as a global variable 
+let popup = L.popup();
+// create an event detector to wait for the user's click event and then use the popup to show them where they clicked
+// note that you don't need to do any complicated maths to convert screen coordinates to real world coordiantes - the Leaflet API does this for you
+
+function onMapClick(e) { 
+    popup
+            .setLatLng(e.latlng)
+            .setContent("You clicked the map at " + e.latlng.toString())
+            .openOn(mymap);
+}
+
+
+
+
 function loadLeafletMap() {
 console.log
+// now add the click event detector to the map 
+mymap.on('click', onMapClick);
 // now call the code to add the markers 
 addBasicMarkers();
 } //end code to add the leaflet map
@@ -45,7 +63,7 @@ let geojsonFeature = {
     },
     "geometry": {
         "type": "Point",
-        "coordinates": [-0.118092, 51.509865]
+        "coordinates": [39.804771, -75.933487]
     } };
 // and add it to the map
 L.geoJSON(geojsonFeature).addTo(mymap).bindPopup("<b>"+geojsonFeature.properties.name+" "+geojsonFeature.properties.popupContent+"<b>");
