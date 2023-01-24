@@ -1,104 +1,124 @@
 <html> 
-<head>
-<!-- code for Leaflet -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" 
-    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" 
-    crossorigin=""/>
-<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" 
-    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" 
-    crossorigin=""></script>
+    <head>
+        <!-- code for Leaflet -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" 
+        integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" 
+        crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" 
+        integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" 
+        crossorigin=""></script>
 
- <!-- the following links incorporate the CSS required for custom icon creation --> <link rel="stylesheet" href="css/ionicons.min.css">
-<link rel="stylesheet" href="css/leaflet.awesome-markers.css">
-<script src="js/leaflet.awesome-markers.js"></script>
+        <style type="text/css"> 
+            #mapid { height: 180px; } 
+        </style>
+        
+        <!-- the following links incorporate the CSS required for custom icon creation --> <link rel="stylesheet" href="css/ionicons.min.css">
+        <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
+        <script src="js/leaflet.awesome-markers.js"></script>
+    </head>
 
-<style type="text/css"> 
-#mapid { height: 180px; } 
-</style>
-</head>
-
-<body>
-<!-- basic information DIV -->
-<div>
-This is my first HTML Page
-My name is: Yiqi
-My UCL username is: zcahuag 
-My GitHub username is: sophuang 
-</div>
-<!-- the mapid div will hold the map -->
-<div id="mapid" style="width: 600px; height: 400px;"></div>
-<!-- the following script will load the map and set the default view and zoom, as well as loading the basemap tiles -->
-<script> 
-"use strict";
-let mymap; // global variable to store the map
+    
+    <body>
+    <!-- basic information DIV -->
+    <div>
+    This is my first HTML Page
+    My name is: Yiqi
+    My UCL username is: zcahuag     
+    My GitHub username is: sophuang 
+    </div>
+    <!-- the mapid div will hold the map -->
+    <div id="mapid" style="width: 600px; height: 400px;"></div>
+    <!-- the following script will load the map and set the default view and zoom, as well as loading the basemap tiles -->
+        <script> 
+        "use strict";
+        
+        let mymap; // global variable to store the map
 
 
-// create a custom popup as a global variable 
-let popup = L.popup();
+        
+        let popup = L.popup(); // create a custom popup as a global variable 
+
 // create an event detector to wait for the user's click event and then use the popup to show them where they clicked
 // note that you don't need to do any complicated maths to convert screen coordinates to real world coordiantes - the Leaflet API does this for you
 
-function onMapClick(e) { 
-    popup
-            .setLatLng(e.latlng)
-            .setContent("You clicked the map at " + e.latlng.toString())
-            .openOn(mymap);
-}
+        function onMapClick(e) { 
+                            popup
+                                .setLatLng(e.latlng)
+                                .setContent("You clicked the map at " + e.latlng.toString())
+                                .openOn(mymap);
+                                }
 
 
 
 
-function loadLeafletMap() {
-console.log
-// now add the click event detector to the map 
-mymap.on('click', onMapClick);
-// now call the code to add the markers 
-addBasicMarkers();
-} //end code to add the leaflet map
+        function loadLeafletMap() {
+                            console.log
 
-function addBasicMarkers() {
-console.log
+                            // now add the click event detector to the map 
+                            mymap.on('click', onMapClick);
 
-let testMarkerPink = L.AwesomeMarkers.icon({ icon: 'play',
-markerColor: 'pink'});
+                            // now call the code to add the markers 
+                            addBasicMarkers();
+        } //end code to add the leaflet map
 
-// create a geoJSON feature - 
-let geojsonFeature = {
-    "type": "Feature", 
-    "properties": {
-        "name": "London",
-        "popupContent": "This is where UCL is based. We have on campus and off campus activity." 
-    },
-    "geometry": {
-        "type": "Point",
-        "coordinates": [39.804771, -75.933487]
-    } };
-// and add it to the map
-L.geoJSON(geojsonFeature, { pointToLayer: function (feature, latlng) {
-return L.marker(latlng, {icon:testMarkerPink}); }
-}).addTo(mymap).bindPopup("<b>"+geojsonFeature.properties.name+" "+geojsonFeature.properties.popupContent+"<b>");
-} // end code to add the basic markers
 
-mymap = L.map('mapid').setView([51.505, -0.09], 13); 
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(mymap);
 
-// add a circle
-L.circle([51.508, -0.11], 5000, {
-color: 'green',
-fillColor: '#f03',
-fillOpacity: 0.8 }).addTo(mymap).bindPopup("I am a circle.");
-console.log("added a circle");
-// add a polygon
-let myPolygon = L.polygon([
-[51.709, -0.10], [51.703, 0.07], [51.22, 0.07], [51.22, -0.057]
-],
-{color: 'orange', fillColor: '#f03', fillOpacity: 0.5
-}).addTo(mymap).bindPopup("I am a polygon in 2022.");
-console.log
-window.onload = loadLeafletMap;
 
-</script>
-</body>
+            
+
+        function addBasicMarkers() {
+                            console.log
+
+                            let testMarkerPink = L.AwesomeMarkers.icon({
+                                            icon:'play',
+                                            markerColor:'pink'});
+
+                            // create a geoJSON feature - 
+                            let geojsonFeature = {
+                                "type": "Feature", 
+                                "properties": {
+                                    "name": "London",
+                                    "popupContent": "This is where UCL is based. We have on campus and off campus activity." 
+                                },
+                                "geometry": {
+                                    "type": "Point",
+                                    "coordinates": [39.804771, -75.933487]
+                                } };
+
+                            // and add it to the map
+                            L.geoJSON(geojsonFeature, {
+                pointToLayer:function(feature, latlng){
+                    return L.marker(latlng, {icon:testMarkerPink});
+                }
+            }).addTo(mymap).bindPopup("<b>"+geojsonFeature.properties.name+""+geojsonFeature.properties.popupContent+"<b>");
+        } // end code to add the basic markers
+
+
+
+        mymap = L.map('mapid').setView([39.804771, -75.933487], 13); 
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(mymap);
+
+        // add a circle
+        L.circle([39.804771, -75.933487], 5000, {
+        color: 'green',
+        fillColor: '#f03',
+        fillOpacity: 0.8 }).addTo(mymap).bindPopup("I am a circle.");
+        console.log("added a circle");
+
+
+        // add a polygon
+        let myPolygon = L.polygon([
+        [51.709, -0.10], 
+        [51.703, 0.07], 
+        [51.22, 0.07], 
+        [51.22, -0.057] ],
+        {color: 'orange', fillColor: '#f03', fillOpacity: 0.5}).addTo(mymap).bindPopup("I am a polygon in 2022.");
+
+        console.log
+        window.onload = loadLeafletMap;
+
+        </script>
+    </body>
 </html>
