@@ -12,7 +12,8 @@
             #mapid { height: 180px; } 
         </style>
         
-        <!-- the following links incorporate the CSS required for custom icon creation --> <link rel="stylesheet" href="css/ionicons.min.css">
+        <!-- the following links incorporate the CSS required for custom icon creation -->
+         <link rel="stylesheet" href="css/ionicons.min.css">
         <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
         <script src="js/leaflet.awesome-markers.js"></script>
 
@@ -20,7 +21,7 @@
 
 
         <script src="js/basicMap.js"></script> 
-        <script src="js/earthquakes.js"></script>
+        <script src="js/earthquakes.js"></script> 
     </head>
 
     
@@ -42,98 +43,8 @@
     <button id="removeEarthquakeData" name="removeEarthquakeData" onclick="removeEarthquakeData()">Click here to remove the Earthquake data </button>
     
     <!-- the following script will load the map and set the default view and zoom, as well as loading the basemap tiles -->
-        <script> 
-        "use strict";
+        <script>
         
-        let mymap; // global variable to store the map
-
-
-                
-        let popup = L.popup(); // create a custom popup as a global variable 
-
-        // create an event detector to wait for the user's click event and then use the popup to show them where they clicked
-        // note that you don't need to do any complicated maths to convert screen coordinates to real world coordiantes - the Leaflet API does this for you
-
-        function onMapClick(e) { 
-                            popup
-                                .setLatLng(e.latlng)
-                                .setContent("You clicked the map at " + e.latlng.toString())
-                                .openOn(mymap);
-                                }
-
-
-
-
-        function loadLeafletMap() {
-                            console.log
-
-                            // now add the click event detector to the map 
-                            mymap.on('click', onMapClick);
-
-                            // now call the code to add the markers 
-                            addBasicMarkers();
-        } //end code to add the leaflet map
-
-
-
-
-            
-
-        function addBasicMarkers() {
-                            console.log
-
-                            let testMarkerPink = L.AwesomeMarkers.icon({
-                                            icon:'play',
-                                            markerColor:'pink'});
-
-                            
-
-                            // create a geoJSON feature - 
-                            let geojsonFeature = {
-                                "type": "Feature", 
-                                "properties": {
-                                    "name": "London",
-                                    "popupContent": "This is where UCL is based. We have on campus and off campus activity." 
-                                },
-                                "geometry": {
-                                    "type": "Point",
-                                    "coordinates": [-0.126240,51.500149]
-                                } };
-
-                            // and add it to the map
-                            L.geoJSON(geojsonFeature, {
-                pointToLayer:function(feature, latlng){
-                    return L.marker(latlng, {icon:testMarkerPink});
-                }
-            }).addTo(mymap).bindPopup("<b>"+geojsonFeature.properties.name+""+geojsonFeature.properties.popupContent+"<b>");
-        } // end code to add the basic markers
-
-
-
-        mymap = L.map('mapid').setView([51.500149, -0.126240], 13); 
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(mymap);
-
-        // add a circle
-        L.circle([51.500149, -0.126240], 5000, {
-        color: 'green',
-        fillColor: '#f03',
-        fillOpacity: 0.8 }).addTo(mymap).bindPopup("I am a circle.");
-        console.log("added a circle");
-
-
-        // add a polygon
-        let myPolygon = L.polygon([
-        [51.709, -0.10], 
-        [51.703, 0.07], 
-        [51.22, 0.07], 
-        [51.22, -0.057] ],
-        {color: 'orange', fillColor: '#f03', fillOpacity: 0.5}).addTo(mymap).bindPopup("I am a polygon in 2022.");
-
-
-
-
 
         //code to load the map when the page is loaded 
         document.addEventListener('DOMContentLoaded', function() {
@@ -141,7 +52,7 @@
 
         function loadMap() {
             loadLeafletMap(); 
-            getEarthquakeData();
+            //getEarthquakeData();
         }
         
         </script>
