@@ -19,6 +19,8 @@
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
 
+        <script src="js/basicMap.js"></script> 
+        <script src="js/earthquakes.js"></script>
     </head>
 
     
@@ -43,148 +45,21 @@
         <script> 
         "use strict";
         
-        let mymap; // global variable to store the map
-
-
-        
-        let popup = L.popup(); // create a custom popup as a global variable 
-
-// create an event detector to wait for the user's click event and then use the popup to show them where they clicked
-// note that you don't need to do any complicated maths to convert screen coordinates to real world coordiantes - the Leaflet API does this for you
-
-        function onMapClick(e) { 
-                            popup
-                                .setLatLng(e.latlng)
-                                .setContent("You clicked the map at " + e.latlng.toString())
-                                .openOn(mymap);
-                                }
-
-
-
-
-        function loadLeafletMap() {
-                            console.log
-
-                            // now add the click event detector to the map 
-                            mymap.on('click', onMapClick);
-
-                            // now call the code to add the markers 
-                            addBasicMarkers();
-        } //end code to add the leaflet map
-
-
-
-
-            
-
-        function addBasicMarkers() {
-                            console.log
-
-                            let testMarkerPink = L.AwesomeMarkers.icon({
-                                            icon:'play',
-                                            markerColor:'pink'});
-
-                            
-
-                            // create a geoJSON feature - 
-                            let geojsonFeature = {
-                                "type": "Feature", 
-                                "properties": {
-                                    "name": "London",
-                                    "popupContent": "This is where UCL is based. We have on campus and off campus activity." 
-                                },
-                                "geometry": {
-                                    "type": "Point",
-                                    "coordinates": [-0.126240,51.500149]
-                                } };
-
-                            // and add it to the map
-                            L.geoJSON(geojsonFeature, {
-                pointToLayer:function(feature, latlng){
-                    return L.marker(latlng, {icon:testMarkerPink});
-                }
-            }).addTo(mymap).bindPopup("<b>"+geojsonFeature.properties.name+""+geojsonFeature.properties.popupContent+"<b>");
-        } // end code to add the basic markers
-
-
-
-        mymap = L.map('mapid').setView([51.500149, -0.126240], 13); 
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(mymap);
-
-        // add a circle
-        L.circle([51.500149, -0.126240], 5000, {
-        color: 'green',
-        fillColor: '#f03',
-        fillOpacity: 0.8 }).addTo(mymap).bindPopup("I am a circle.");
-        console.log("added a circle");
-
-
-        // add a polygon
-        let myPolygon = L.polygon([
-        [51.709, -0.10], 
-        [51.703, 0.07], 
-        [51.22, 0.07], 
-        [51.22, -0.057] ],
-        {color: 'orange', fillColor: '#f03', fillOpacity: 0.5}).addTo(mymap).bindPopup("I am a polygon in 2022.");
 
         console.log
+        //code to load the map when the page is loaded 
         document.addEventListener('DOMContentLoaded', function() {
             loadMap();}, false);
 
         function loadMap() {
             loadLeafletMap(); 
-            getEarthquakeData();
+            //getEarthquakeData();
         }
+
+
+
 
         
-
-        let earthquakelayer;
-        function getEarthquakeData() { 
-            let layerURL ="https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson";
-                $.ajax({url: layerURL, crossDomain: true,success: function(result){
-                    console.log(result); // check that the data is correct
-                    // add the JSON layer onto the map - it will appear using the default icons 
-                    
-                    let testMarkerGreen = L.AwesomeMarkers.icon({ icon: 'play',markerColor: 'green' });
-                    let testMarkerPink = L.AwesomeMarkers.icon({ icon: 'play', markerColor: 'pink' });
-
-                    // load the geoJSON layer 
-                    earthquakelayer = L.geoJson(result, {
-                    // use point to layer to create the points 
-                    pointToLayer: function (feature, latlng){
-                        // look at the GeoJSON file - specifically at the properties - to see the earthquake magnitude and use a different marker depending on this value
-                        // also include a pop-up that shows the place value of the earthquakes 
-                        if (feature.properties.mag > 1.75) {
-                        return L.marker(latlng, {icon:testMarkerGreen}).bindPopup("<b>"+feature.properties.place +"</b>");
-                        }
-                        else {
-                        // magnitude is 1.75 or less
-                        return L.marker(latlng, {icon:testMarkerPink}).bindPopup("<b>"+feature.properties.place +"</b>");;
-                        }
-                        }, // end of point to layer
-                        }).addTo(mymap);
-
-                    // change the map zoom so that all the data is shown 
-                    mymap.fitBounds(earthquakelayer.getBounds());
-                } // end of the inner function
-
-                
-                
-
-            }); // end of the ajax request
-        } // end of the getEarthquakeData function
-
-        function removeEarthquakeData() { 
-            try {
-                alert("Earthquake data will be removed");
-                mymap.removeLayer( earthquakelayer );
-            } 
-            catch (err) {
-                alert("Layer doesn't exist :" + err);
-            }
-        }
         </script>
     </body>
 </html>
