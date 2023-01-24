@@ -32,6 +32,11 @@
     </div>
     <!-- the mapid div will hold the map -->
     <div id="mapid" style="width: 600px; height: 400px;"></div>
+    
+    <!-- Loading the Earthquake Data on Demand -->
+    <button id="loadEarthquakeData" name="loadEarthquakeData" onclick="getEarthquakeData ()">Click here to load the Earthquake data </button>
+    
+    
     <!-- the following script will load the map and set the default view and zoom, as well as loading the basemap tiles -->
         <script> 
         "use strict";
@@ -125,9 +130,10 @@
         console.log
         document.addEventListener('DOMContentLoaded', function() {
             loadMap();}, false);
+
         function loadMap() {
             loadLeafletMap(); 
-            getEarthquakeData();
+            //getEarthquakeData();
         }
 
         
