@@ -82,7 +82,7 @@
                                 },
                                 "geometry": {
                                     "type": "Point",
-                                    "coordinates": [39.804771, -75.933487]
+                                    "coordinates": [-0.126240,51.500149]
                                 } };
 
                             // and add it to the map
@@ -95,13 +95,13 @@
 
 
 
-        mymap = L.map('mapid').setView([39.804771, -75.933487], 13); 
+        mymap = L.map('mapid').setView([51.500149, -0.126240], 13); 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(mymap);
 
         // add a circle
-        L.circle([39.804771, -75.933487], 5000, {
+        L.circle([51.500149, -0.126240], 5000, {
         color: 'green',
         fillColor: '#f03',
         fillOpacity: 0.8 }).addTo(mymap).bindPopup("I am a circle.");
