@@ -176,7 +176,15 @@
             }); // end of the ajax request
         } // end of the getEarthquakeData function
 
-
+        function removeEarthquakeData() { 
+            try {
+                alert("Earthquake data will be removed");
+                mymap.removeLayer( earthquakelayer );
+            } 
+            catch (err) {
+                alert("Layer doesn't exist :" + err);
+            }
+        }
         </script>
     </body>
 </html>
