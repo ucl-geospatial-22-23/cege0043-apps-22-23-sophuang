@@ -1,0 +1,75 @@
+<html> 
+    <head>
+        <!-- code for Leaflet -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" 
+        integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" 
+        crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" 
+        integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" 
+        crossorigin=""></script>
+
+        <style type="text/css"> 
+            #mapid { height: 180px; } 
+        </style>
+        
+        <!-- the following links incorporate the CSS required for custom icon creation -->
+         <link rel="stylesheet" href="css/ionicons.min.css">
+        <link rel="stylesheet" href="css/leaflet.awesome-markers.css">
+        <script src="js/leaflet.awesome-markers.js"></script>
+
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+
+        <script src="js/basicMap.js"></script> 
+        <script src="js/earthquakes.js"></script> 
+        <script src="js/busstops.js"></script> 
+        <script src="js/ethernetcables.js"></script> 
+    </head>
+
+    
+    <body>
+    <!-- basic information DIV -->
+    <div>
+    This is my first HTML Page
+    My name is: Yiqi
+    My UCL username is: zcahuag     
+    My GitHub username is: sophuang 
+    </div>
+    <!-- the mapid div will hold the map -->
+    <div id="mapid" style="width: 600px; height: 400px;"></div>
+    
+    <!-- Loading the Earthquake Data on Demand -->
+    <button id="loadEarthquakeData" name="loadEarthquakeData" onclick="getEarthquakeData ()">Click here to load the Earthquake data </button>
+    
+    <!-- Removing the Earthquake Data on Demand -->
+    <button id="removeEarthquakeData" name="removeEarthquakeData" onclick="removeEarthquakeData()">Click here to remove the Earthquake data </button>
+    
+    <!-- Loading the bus stop Data on Demand -->
+    <button id="loadBusstopData" name="loadBusstopData" onclick="getBusstopData()">Click here to load the Busstops data </button>
+    
+    <!-- Removing the bus stop Data on Demand -->
+    <button id="removeBusstopData" name="removeBusstopData" onclick="removeBusstopData()">Click here to remove the Busstops data </button>
+
+    <!-- Loading the cables Data on Demand -->
+    <button id="loadEthernetCablesData" name="loadEthernetCablesData" onclick="getEthernetCables()">Click here to load the EthernetCables data </button>
+    
+    <!-- Removing the cables Data on Demand -->
+    <button id="removeEthernetCablesData" name="removeEthernetCablesData" onclick="removeEthernetCables()">Click here to remove the EthernetCables data </button>
+    
+
+    <!-- the following script will load the map and set the default view and zoom, as well as loading the basemap tiles -->
+        <script>
+        
+
+        //code to load the map when the page is loaded 
+        document.addEventListener('DOMContentLoaded', function() {
+            loadMap();}, false);
+
+        function loadMap() {
+            loadLeafletMap(); 
+            //getEarthquakeData();
+        }
+        
+        </script>
+    </body>
+</html>
