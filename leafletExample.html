@@ -22,6 +22,8 @@
 
         <script src="js/basicMap.js"></script> 
         <script src="js/earthquakes.js"></script> 
+        <script src="js/busstops.js"></script> 
+        <script src="js/ethernetcables.js"></script> 
     </head>
 
     
@@ -42,6 +44,19 @@
     <!-- Removing the Earthquake Data on Demand -->
     <button id="removeEarthquakeData" name="removeEarthquakeData" onclick="removeEarthquakeData()">Click here to remove the Earthquake data </button>
     
+    <!-- Loading the bus stop Data on Demand -->
+    <button id="loadBusstopData" name="loadBusstopData" onclick="getBusstopData()">Click here to load the Busstops data </button>
+    
+    <!-- Removing the bus stop Data on Demand -->
+    <button id="removeBusstopData" name="removeBusstopData" onclick="removeBusstopData()">Click here to remove the Busstops data </button>
+
+    <!-- Loading the cables Data on Demand -->
+    <button id="loadEthernetCablesData" name="loadEthernetCablesData" onclick="getEthernetCables()">Click here to load the EthernetCables data </button>
+    
+    <!-- Removing the cables Data on Demand -->
+    <button id="removeEthernetCablesData" name="removeEthernetCablesData" onclick="removeEthernetCables()">Click here to remove the EthernetCables data </button>
+    
+
     <!-- the following script will load the map and set the default view and zoom, as well as loading the basemap tiles -->
         <script>
         
