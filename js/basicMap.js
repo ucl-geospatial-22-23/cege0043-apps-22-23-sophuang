@@ -34,20 +34,20 @@ function loadLeafletMap() {
                     addBasicMarkers();
 
                     // add a circle
-    L.circle([51.500149, -0.126240], 5000, {
-    color: 'green',
-    fillColor: '#f03',
-    fillOpacity: 0.8 }).addTo(mymap).bindPopup("I am a circle.");
-    console.log("added a circle");
+   // L.circle([51.500149, -0.126240], 5000, {
+    //color: 'green',
+    //fillColor: '#f03',
+    //fillOpacity: 0.8 }).addTo(mymap).bindPopup("I am a circle.");
+    //console.log("added a circle");
     
     
     // add a polygon
-    let myPolygon = L.polygon([
-    [51.709, -0.10], 
-    [51.703, 0.07], 
-    [51.22, 0.07], 
-    [51.22, -0.057] ],
-    {color: 'orange', fillColor: '#f03', fillOpacity: 0.5}).addTo(mymap).bindPopup("I am a polygon in 2022.");
+    ///let myPolygon = L.polygon([
+    //[51.709, -0.10], 
+    //[51.703, 0.07], 
+   // [51.22, 0.07], 
+   // [51.22, -0.057] ],
+    //{color: 'orange', fillColor: '#f03', fillOpacity: 0.5}).addTo(mymap).bindPopup("I am a polygon in 2022.");
     
 } //end code to add the leaflet map
 

@@ -21,7 +21,7 @@ function getBusStationData() {
                 // look at the GeoJSON file - specifically at the properties - to see the earthquake magnitude and use a different marker depending on this value
                 // also include a pop-up that shows the place value of the earthquakes 
                 
-                return L.polygon([latlng], {color: 'orange', fillColor: '#f03', fillOpacity: 0.5});
+                return L.polygon(latlng, {icon:testMarkerGreen});
                 
                 }, // end of point to layer
                 }).addTo(mymap).bindPopup("<b>"+"I am a Bus Station" +"</b>");
