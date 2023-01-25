@@ -54,6 +54,8 @@ function getBusstopData() {
         }
         }, // end of point to layer
         }).addTo(mymap);
+        // change the map zoom so that all the data is shown 
+        mymap.fitBounds(busstopsLayer.getBounds());
     } // end of the getbusstopseData function
 
     })
