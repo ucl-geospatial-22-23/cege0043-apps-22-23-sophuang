@@ -17,8 +17,12 @@ function onMapClick(e) {
 
 
 
-
 function loadLeafletMap() {
+    if(mymap) {
+        mymap.remove();
+    }
+    // Used the post in the link: https://stackoverflow.com/a/38939915, to solve the error 'of MapContainer Already exists'.
+
     mymap = L.map('mapid').setView([51.500149, -0.126240], 13); 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -31,13 +35,6 @@ function loadLeafletMap() {
                     console.log("check on map click");
     
 } //end code to add the leaflet map
-
-
-
-
-    
-
-
 
 
 
