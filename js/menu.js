@@ -1,31 +1,52 @@
 "use strict";
 
 function menu1() {
-    alert("menu1 clicked");
+    let re = /([^(]+)@|at ([^(]+) \(/g;
+    let aRegexResult = re.exec(new Error().stack);
+    let sCallerName = aRegexResult[1] || aRegexResult[2];
+    alert("menu number is 1 and menu is called by: "+ sCallerName);
 }
 
 function menu3() {
-    alert("menu3");
+    let re = /([^(]+)@|at ([^(]+) \(/g;
+    let aRegexResult = re.exec(new Error().stack);
+    let sCallerName = aRegexResult[1] || aRegexResult[2];
+    alert("menu number is 3 and menu is called by: "+ sCallerName);
 }
 
 function menu4() {
-    alert("menu4");
+    let re = /([^(]+)@|at ([^(]+) \(/g;
+    let aRegexResult = re.exec(new Error().stack);
+    let sCallerName = aRegexResult[1] || aRegexResult[2];
+    alert("menu number is 4 and menu is called by: "+ sCallerName);
 }
 
 function menu6() {
-    alert("menu6");
+    let re = /([^(]+)@|at ([^(]+) \(/g;
+    let aRegexResult = re.exec(new Error().stack);
+    let sCallerName = aRegexResult[1] || aRegexResult[2];
+    alert("menu number is 6 and menu is called by: "+ sCallerName);
 }
 
 function menu7() {
-    alert("menu7");
+    let re = /([^(]+)@|at ([^(]+) \(/g;
+    let aRegexResult = re.exec(new Error().stack);
+    let sCallerName = aRegexResult[1] || aRegexResult[2];
+    alert("menu number is 7 and menu is called by: "+ sCallerName);
 }
 
 function menu9() {
-    alert("menu9");
+    let re = /([^(]+)@|at ([^(]+) \(/g;
+    let aRegexResult = re.exec(new Error().stack);
+    let sCallerName = aRegexResult[1] || aRegexResult[2];
+    alert("menu number is 9 and menu is called by: "+ sCallerName);
 }
 
 function menu10() {
-    alert("menu10");
+    let re = /([^(]+)@|at ([^(]+) \(/g;
+    let aRegexResult = re.exec(new Error().stack);
+    let sCallerName = aRegexResult[1] || aRegexResult[2];
+    alert("menu number is 10 and menu is called by: "+ sCallerName);
 }
 
 function menu12() {
