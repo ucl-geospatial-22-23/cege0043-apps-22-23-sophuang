@@ -28,17 +28,29 @@ function menu10() {
     alert("menu10");
 }
 
-function menu11() {
-    alert("menu number is 11 and menu is called by: "+ arguments.callee.name);
-}
-
 function menu12() {
-    alert("menu number is 12 and menu is called by: "+ arguments.callee.name);
+    let re = /([^(]+)@|at ([^(]+) \(/g;
+    let aRegexResult = re.exec(new Error().stack);
+    let sCallerName = aRegexResult[1] || aRegexResult[2];
+    alert("menu number is 12 and menu is called by: "+ sCallerName);
 }
 
-function menu14() {
-    alert("menu number is 14 and menu is called by: "+ arguments.callee.name);
+function menu13() {
+    let re = /([^(]+)@|at ([^(]+) \(/g;
+    let aRegexResult = re.exec(new Error().stack);
+    let sCallerName = aRegexResult[1] || aRegexResult[2];
+    alert("menu number is 13 and menu is called by: "+ sCallerName);
 }
+
 function menu15() {
-    alert("menu number is 15 and menu is called by: "+ arguments.callee.name);
+    let re = /([^(]+)@|at ([^(]+) \(/g;
+    let aRegexResult = re.exec(new Error().stack);
+    let sCallerName = aRegexResult[1] || aRegexResult[2];
+    alert("menu number is 15 and menu is called by: "+ sCallerName);
+}
+function menu16() {
+    let re = /([^(]+)@|at ([^(]+) \(/g;
+    let aRegexResult = re.exec(new Error().stack);
+    let sCallerName = aRegexResult[1] || aRegexResult[2];
+    alert("menu number is 16 and menu is called by: "+ sCallerName);
 }
