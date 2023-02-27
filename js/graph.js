@@ -14,7 +14,7 @@ function closeAssetData(){
    }
    
    function loadGraph(){
-    //createGraph()
+    
     let mapCollapse = document.getElementById('mapWrapper');
     let bsMapCollapse = new bootstrap.Collapse(mapCollapse,{
      toggle:false, show:false
@@ -34,17 +34,30 @@ function closeAssetData(){
    
     // add the close button and SVG element for the graph
     document.getElementById("assetDataWrapper").innerHTML = 
-    `<button type="button" class="btn-close float-end" aria-label="Close" onclick="closeAssetData()"></button>
-
+    `<div class="h-100 w-100">
+    <button type="button" class="btn-close float-end" aria-label="Close" onclick="closeAssetData()"></button>
      <svg fill="blue" width="`+widtha+`" height="`+heighta+`" id="svg1"></svg>
+     </div>
     `
-   //<body onload = "`+createGraph()+`"</body>
+    createGraph();
    }
 
    "use strict";
    
    // create the graph
    function createGraph() {
+    // code to create the graph
+    let widtha = document.getElementById("assetDataWrapper").clientWidth;
+    let heighta = document.getElementById("assetDataWrapper").offsetHeight*3;
+    console.log(widtha+" "+heighta);
+   
+    // add the close button and SVG element for the graph
+    document.getElementById("assetDataWrapper").innerHTML = 
+    `<div class="mh-100 w-100">
+    <button type="button" class="btn-close float-end" aria-label="Close" onclick="closeAssetData()"></button>
+     <svg fill="blue" width="`+widtha+`" height="`+heighta+`" id="svg1"></svg>
+     </div>
+    `
         // create an SVG container for the graph
         // g is a grouping element
         let marginTop = 20;
