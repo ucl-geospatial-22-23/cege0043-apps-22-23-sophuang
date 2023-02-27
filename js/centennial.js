@@ -20,7 +20,7 @@ function loadBuildings(buildings){
     for (let i=0;i<listOfBuildings.length ;i++){
         if (listOfBuildings[i].buildings == buildings){
             console.log("equal");
-            alert("Thing already loaded");
+            alert("Building already loaded");
             return;
   }}
 
@@ -42,10 +42,10 @@ function loadBuildings(buildings){
         // look at the GeoJSON file - specifically at the properties - to see the earthquake magnitude and use a different marker depending on this value
         // also include a pop-up that shows the place value of the earthquakes 
 
-        return L.polygon(latlng).bindPopup("<b> "+feature.properties.building_id+"</b>");
+        return L.polygon(latlng);
 
         }, // end of point to layer
-    }).addTo(mymap);
+    }).addTo(mymap).bindPopup("<b>"+ "I am a building! "+ "</b>");
     Buildingslayer.setStyle(styleB);
     // change the map zoom so that all the data is shown 
     mymap.fitBounds(Buildingslayer.getBounds());
@@ -79,7 +79,7 @@ function removeBuildings(buildings){
         break;
   }}
   try {
-    alert("Sensor data will be removed");
+    alert("Building data will be removed");
     mymap.removeLayer( Buildingslayer );
 } 
 catch (err) {
@@ -99,7 +99,7 @@ function loadCables(ethernet_cables){
     for (let i=0;i<listOfCables.length ;i++){
         if (listOfCables[i].ethernet_cables == ethernet_cables){
             console.log("equal");
-            alert("Thing already loaded");
+            alert("Cables already loaded");
             return;
   }}
 
@@ -120,9 +120,9 @@ function loadCables(ethernet_cables){
         pointToLayer: function (feature, latlng){
         // look at the GeoJSON file - specifically at the properties - to see the earthquake magnitude and use a different marker depending on this value
         // also include a pop-up that shows the place value of the earthquakes 
-        return L.marker(latlng).bindPopup("<b> "+feature.properties.ethernet_id+"</b>");   
+        return L.marker(latlng);   
         }, // end of point to layer
-    }).addTo(mymap);
+    }).addTo(mymap).bindPopup("<b>" + " I am ethernet cable!"+" </b>");
     
     Cableslayer.setStyle(styleC);
 
@@ -157,7 +157,7 @@ function removeCables(ethernet_cables){
         break;
   }}
   try {
-    alert("Sensor data will be removed");
+    alert("Cable data will be removed");
     mymap.removeLayer( Cableslayer );
 } 
 catch (err) {
@@ -174,7 +174,7 @@ function loadRooms(rooms){
     for (let i=0;i<listOfRooms.length ;i++){
         if (listOfRooms[i].rooms == rooms){
             console.log("equal");
-            alert("Thing already loaded");
+            alert("Room already loaded");
             return;
   }}
 
@@ -194,9 +194,9 @@ function loadRooms(rooms){
             pointToLayer: function (feature, latlng){
             // look at the GeoJSON file - specifically at the properties - to see the earthquake magnitude and use a different marker depending on this value
             // also include a pop-up that shows the place value of the earthquakes 
-            return L.marker(latlng).bindPopup("<b> "+feature.properties.room_id+"</b>");   
+            return L.marker(latlng);   
             }, // end of point to layer
-        }).addTo(mymap);
+        }).addTo(mymap).bindPopup("<b>"+" I am a room! "+"</b>");
 
         Roomslayer.setStyle(styleR);
             
@@ -232,7 +232,7 @@ function removeRooms(Rooms){
   }}
 
   try {
-    alert("Sensor data will be removed");
+    alert("Room data will be removed");
     mymap.removeLayer( Roomslayer );
 } 
 catch (err) {
