@@ -32,16 +32,16 @@ function closeAssetData(){
   let heighta = document.getElementById("assetDataWrapper").offsetHeight;
   console.log(widtha+" "+heighta);
   
-  createGraph();
+  showGraph();
  }
 
  "use strict";
  
  // create the graph
- function createGraph() {
+ function showGraph() {
   // code to create the graph
-  let widtha = document.getElementById("assetDataWrapper").clientWidth;
-  let heighta = document.getElementById("assetDataWrapper").offsetHeight*3;
+  let widtha = document.getElementById("assetDataWrapperWrapper").clientWidth;
+  let heighta = document.getElementById("assetDataWrapperWrapper").offsetHeight;
   console.log(widtha+" "+heighta);
  
   // add the close button and SVG element for the graph
@@ -51,6 +51,7 @@ function closeAssetData(){
   <svg id="svg1" width="1000" height="500" style="z-index: 0"></svg>
    </div>
   `
+  //<svg fill="blue" width="`+widtha+`" height="`+heighta+`" id="svg1"></svg>
       // create an SVG container for the graph
       // g is a grouping element
       let marginTop = 20;
