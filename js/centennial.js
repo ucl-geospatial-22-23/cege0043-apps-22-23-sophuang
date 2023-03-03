@@ -8,10 +8,90 @@ let Buildingslayer;
 let Cableslayer;
 let Roomslayer;
 let Sensorslayer;
-let listOfBuildings = []
-let listOfCables = []
-let listOfRooms = []
-let listOfSensors = []
+let Universitylayer;
+let listOfUniversity = [];
+let listOfBuildings = [];
+let listOfCables = [];
+let listOfRooms = [];
+let listOfSensors = [];
+
+
+//Functions for Buildings start from here:
+function loadUniversity(university){
+  // first check if the thing is loaded already
+  for (let i=0;i<listOfUniversity.length ;i++){
+      if (listOfUniversity[i].university == university){
+          console.log("equal");
+          alert("University already loaded");
+          return;
+}}
+
+  let UniversityURL = document.location.origin + "/api/geojson/ucfscde/university/university_id/location";
+
+  $.ajax({url: UniversityURL, crossDomain: true,success: function(result){
+      console.log(result); // check that the data is correct
+      let newUniversity = result;
+      listOfUniversity.push(newUniversity);
+
+      let styleB = { 
+          "color": "#0C1F6E", "weight": 10, "opacity": 0.5
+       };
+
+  // load the geoJSON layer 
+  Universitylayer = L.geoJson(result, {
+      // use point to layer to create the points 
+      pointToLayer: function (feature, latlng){
+      // look at the GeoJSON file - specifically at the properties - to see the earthquake magnitude and use a different marker depending on this value
+      // also include a pop-up that shows the place value of the earthquakes 
+
+      return L.polygon(latlng);
+
+      }, // end of point to layer
+  }).addTo(mymap).bindPopup("<b>"+ "I am centennial university! "+ "</b>");
+  Universitylayer.setStyle(styleB);
+  // change the map zoom so that all the data is shown 
+  mymap.fitBounds(Universitylayer.getBounds());
+
+
+      
+
+
+  } // end of the inner function
+  }); // end of the ajax request
+}
+
+
+function listAllUniversity() {
+  console.log("*********************************");
+  console.log("********Current Things *********");
+  for (let i=0;i<listOfUniversity.length;i++){
+    console.log(listOfUniversity[i].university);
+  }
+  console.log("*********************************");
+}
+
+
+function removeUniversity(university){
+  for (let i=0;i<listOfUniversity.length ;i++){
+      if (listOfUniversity[i].university == university){
+          console.log("equal");
+          listOfUniversity.splice(i,1);
+      // don't continue the loop as we now have 1 less element in the array which means
+      // that when we try to get the last element it won't be there any more
+      break;
+}}
+try {
+  alert("University data will be removed");
+  mymap.removeLayer( Universitylayer );
+} 
+catch (err) {
+  alert("Layer doesn't exist :" + err);
+}
+}
+
+
+
+
 
 
 //Functions for Buildings start from here:
@@ -221,7 +301,7 @@ function listAllRooms() {
   }
 
 
-function removeRooms(Rooms){
+function removeRooms(rooms){
     for (let i=0;i<listOfRooms.length ;i++){
         if (listOfRooms[i].rooms == rooms){
             console.log("equal");
