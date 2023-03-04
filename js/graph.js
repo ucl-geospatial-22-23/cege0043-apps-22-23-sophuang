@@ -48,7 +48,7 @@ function closeAssetData(){
   document.getElementById("assetDataWrapper").innerHTML = 
   `<div class="mh-100 w-100">
   <button type="button" class="btn-close float-end" aria-label="Close" onclick="closeAssetData()"></button>
-  <svg id="svg1" width="1000" height="500" style="z-index: 0"></svg>
+  <svg fill="blue" width="`+widtha+`" height="`+heighta+`" id="svg1"></svg>
    </div>
   `
   //<svg fill="blue" width="`+widtha+`" height="`+heighta+`" id="svg1"></svg>

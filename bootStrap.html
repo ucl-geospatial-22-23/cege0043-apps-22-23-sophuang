@@ -322,15 +322,23 @@
             </nav><!-- Navbar End -->
            
 
-            <div id="mapWrapper" class="col vh-100 collapse show" aria-expanded="true">
-                <div id="mapid" class="vh-100 vw-100" style="z-index: 0;"  >
-                </div> <!-- map id -->
-            </div> <!-- map wrapper -->
+            <div class="container_fluid px-0">
+                <div class="row d-flex">
+                    <div class="col d-flex">
+                        <div id="mapWrapper" class="col vh-100 collapse show" aria-expanded="true" style="margin-top:65px;z-order:0">
+                            <div id="mapid" class="vh-100 vw-100" style="height:calc(100% - 65px);"  >
+                            </div> <!-- map id -->
+                        </div> <!-- map wrapper -->
+            
+                        <div id="assetDataWrapperWrapper" class="col vh-100 collapse hide" style="background-color:lightgray; margin-top:65px;z-order:0;" >
+                            <div  id="assetDataWrapper" style="height:calc(100% - 65px);">
+                            </div> <!-- asset data wrapper -->
+                        </div> <!-- asset data wrapper wrapper wrapper -->
 
-            <div id="assetDataWrapperWrapper" class="col vh-100 collapse hide" style="background-color:lightgray; margin-top:65px;z-order:0;" >
-                <div  id="assetDataWrapper" style="height:calc(100% - 65px);">
-                </div> <!-- asset data wrapper -->
-            </div> <!-- asset data wrapper wrapper wrapper -->
+                    </div>
+                </div>
+            </div>
+            
 
             
 
