@@ -276,7 +276,7 @@ function loadRooms(rooms){
             // also include a pop-up that shows the place value of the earthquakes 
             return L.marker(latlng);   
             }, // end of point to layer
-        }).addTo(mymap).bindPopup("<b>"+" I am a room! "+"</b>");
+        }).addTo(mymap).bindPopup("<b>"+" I am a room!"+"</b>");
 
         Roomslayer.setStyle(styleR);
             
@@ -391,44 +391,3 @@ function removeSensors(temperature_sensors){
   }
 
 
-/*
-function loadThing(thingname) {
-  // first check if the thing is loaded already
-  for (i=0;i<listOfThings.length ;i++){
-// SAMPLE CODE TO SHOW HOW ARRAYS WORK
-// NB – this code is not tested and is not meant to be executed
-// you need to adapt it to work with the layers
-if (listOfThings[i].thingName == thingname){
-      console.log("equal");
-      alert("Thing already loaded");
-      return;
-} }
-let thingURL = document.location.origin + "/api/thing/"+thingname;
-      $.ajax({url: thingURL, crossDomain: true,success: function(result){
-        console.log(result); // check that the data is correct
-let newThing = result;
-        // now add the thing into the array so that we can reference it later on
-        // push adds an item to the top of the array
-        listOfThings.push(newThing);
-    } // end of the inner function
-  }); // end of the ajax request
-}
-function listAllThings() {
-  console.log("*********************************");
-  console.log("********Current Things *********");
-  for (i=0;i<listOfThings.length;i++){
-    console.log(listOfThings[i].thingName);
-  }
-  console.log("*********************************");
-}
-function removeThing(thingname){
-  for (i=0;i<listOfThings.length ;i++){
-    if (listOfThings[i].thingname == thingname){
-      console.log("equal");
-      listOfThings.splice(i,1);
-// don't continue the loop as we now have 1 less element in the array which means
-// that when we try to get the last element it won't be there any more
-break;
-} }
-}
-*/
