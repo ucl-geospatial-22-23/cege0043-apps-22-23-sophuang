@@ -40,7 +40,7 @@ function closeAssetData(){
  // create the graph
  function showGraph() {
   // code to create the graph
-  let widtha = document.getElementById("assetDataWrapperWrapper").clientWidth;
+  let widtha = document.getElementById("assetDataWrapperWrapper").clientWidth*2;
   let heighta = document.getElementById("assetDataWrapperWrapper").offsetHeight;
   console.log(widtha+" "+heighta);
  
