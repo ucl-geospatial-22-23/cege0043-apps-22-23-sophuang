@@ -47,7 +47,7 @@ function loadUniversity(university){
       return L.polygon(latlng);
 
       }, // end of point to layer
-  }).addTo(mymap).bindPopup("<b>"+ "I am centennial university! "+ "</b>");
+  }).addTo(mymap).bindPopup("<b>"+ "I am Centennial University! "+ "</b>");
   Universitylayer.setStyle(styleB);
   // change the map zoom so that all the data is shown 
   mymap.fitBounds(Universitylayer.getBounds());
