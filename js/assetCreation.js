@@ -1,5 +1,7 @@
 "use strict";
-"use strict";
+////////////////////////////////////////////
+//function for assetForm
+////////////////////////////////////////////
 function saveNewAsset() {
 	alert ("start data upload");
 
@@ -46,6 +48,24 @@ function saveNewAsset() {
 
 
 
+function processData(postString) {
+	alert(postString);
+
+	let serviceUrl = document.location.origin + "/api/testCRUD";
+    $.ajax({
+    url: serviceUrl,
+    crossDomain: true,
+    type: "POST",
+    data: postString,
+    success: function(data){console.log(data); dataUploaded(data);}
+    }); 
+
+}
+// create the code to process the response from the data server
+function dataUploaded(data) {
+    // change the DIV to show the response
+    document.getElementById("responseDIV").innerHTML = JSON.stringify(data);
+}
 
 
 function deleteSingleAsset() {
@@ -69,22 +89,72 @@ function dataDeleted(data){
 
 
 
+////////////////////////////////////////////
+//function for conditionSurvey
+////////////////////////////////////////////
 
-function processData(postString) {
+function saveCondition() {
+    alert ("start condition saving");
+
+    // get ID of the asset
+    let assetID = document.getElementById("assetID").value;
+    let postString = "assetID="+assetID;
+    let Condition = "";
+
+    // now get the condition from radio button values
+	if (document.getElementById("1").checked) {
+        postString=postString+"&ConditionValue=1";
+        Condition="1";
+    }
+    if (document.getElementById("2").checked) {
+        postString=postString+"&ConditionValue=2";
+        Condition="2";
+    }
+    if (document.getElementById("3").checked) {
+        postString=postString+"&ConditionValue=3";
+        Condition="3";
+    }
+    if (document.getElementById("4").checked) {
+        postString=postString+"&ConditionValue=4";
+        Condition="4";
+    }
+    if (document.getElementById("5").checked) {
+        postString=postString+"&ConditionValue=5";
+        Condition="5";
+    }
+	
+    // get previous condition from hidden field
+    let pre_Condition = document.getElementById("previousConditionValue").value;
+    postString =postString+"&previousConditionValue="+pre_Condition;
+	
+    if (pre_Condition==Condition) {
+        alert("Previous condition is the same as your selected");
+    }
+    else{
+        alert("Previous condition is different from your selected");
+    }
+
+
+    processCondition(postString);
+
+}
+
+
+function processCondition(postString) {
 	alert(postString);
 
-	let serviceUrl=  document.location.origin + "/api/testCRUD";
-   $.ajax({
+	let serviceUrl = document.location.origin + "/api/testCRUD";
+    $.ajax({
     url: serviceUrl,
     crossDomain: true,
     type: "POST",
     data: postString,
-    success: function(data){console.log(data); dataUploaded(data);}
+    success: function(data){console.log(data); ConditionUploaded(data);}
+    }); 
 
-}); 
 }
 // create the code to process the response from the data server
-function dataUploaded(data) {
+function ConditionUploaded(data) {
     // change the DIV to show the response
-    document.getElementById("responseDIV").innerHTML = JSON.stringify(data);
+    document.getElementById("conditionResult").innerHTML = JSON.stringify(data);
 }
