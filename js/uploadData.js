@@ -82,5 +82,6 @@ function deleteRecord() {
 }
 function dataDeleted(data){
     document.getElementById("dataDeleteResult").innerHTML = JSON.stringify(data);
+	alert("Data has been deleted!")
 }
 
