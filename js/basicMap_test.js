@@ -105,7 +105,7 @@ function setUpPointClick() {
 function getPopupHTML(){
         // (in the final assignment, all the required values for the asset pop-up will be 
         //derived from feature.properties.xxx – see the Earthquakes code for how this is done)
-        var mylet = '<!DOCTYPE html>'+
+        var conditionSurvey = '<!DOCTYPE html>'+
         '<head>'+
         '<title>Condition Survey Form Creation</title>'+
         '</head>'+
@@ -163,14 +163,14 @@ function getPopupHTML(){
         '<script src="js/assetCreation.js"> </script>';
             
 
-    return mylet;
+    return conditionSurvey;
 
         
 }
         
 function basicFormHtml() {
 
-    var myvar = '<!DOCTYPE html>'+
+    var assetCreat = '<!DOCTYPE html>'+
             '<head>'+
             '<title>Asset Form Creation</title>'+
             '</head>'+
@@ -245,7 +245,7 @@ function basicFormHtml() {
             '<script src="js/assetCreation.js"> </script>';
 	
 
-    return myvar;
+    return assetCreat;
         
 
 }
