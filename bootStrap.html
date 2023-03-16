@@ -29,8 +29,6 @@
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
 
-    <!-- D3 library -->
-    <script src="https://d3js.org/d3.v5.min.js"></script>
 
     <!-- getLocation Javascript -->
     <script src="js/getLocation.js"></script>
@@ -41,14 +39,11 @@
     <!-- trackLocation Javascript -->
     <script src="js/trackLocation.js"></script>
 
-    <!-- centennial Javascript -->
-    <script src="js/centennial.js"></script>
+    <!-- uploadData Javascript -->
+    <script src="js/uploadData.js"></script>
 
-    <!-- graph Javascript -->
-    <script src="js/graph.js"></script>
-
-    <!-- utilities Javascript -->
-    <script src="js/utilities.js"></script>
+    <!-- uploadData Javascript -->
+    <script src="js/assetCreation.js"></script>
 
     <!-- code for Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" 
@@ -58,32 +53,9 @@
     integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" 
     crossorigin=""></script>
 
-    <!--<style type="text/css"> 
+    <style type="text/css"> 
         #mapid { height: 180px; } 
-    </style> -->
-    <style>
-        .bar {
-          fill: #71EEB8;
-        }
-        
-        .bar:hover {
-          fill: slateblue;
-        }
-        
-        .axis-x path {
-          display: none;
-        }
-        
-        .axis text {
-          font-weight: bold;
-        }
-        </style>
-
-    
-    </head>
-
-    
-    
+    </style>
     
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
@@ -95,16 +67,16 @@
             loadMap();}, false);
         
         function loadMap() {
+            
             loadLeafletMap(); 
+            window.addEventListener('resize', setMapClickEvent); 
+            setMapClickEvent();
             }   
     </script>
 
 </head>
 
-
-<body onresize="processWindowResize()">
-    
-
+<body onload="loadMap()" > 
     <div class="container-xxl position-relative bg-white p-0">
         <!-- Spinner Start -->
         <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -144,47 +116,30 @@
 
         <!-- Divider -->
         <hr class="sidebar-divider">
-        
 
-        <!-- Nav Item - Pages Collapse Menu -->
-        <div class="nav-item dropdown d-sm-none">
-            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Tracking</a>            
+        <!-- Nav Item - Asset Location -->
+        <div class="nav-item dropdown d-none d-md-block d-lg-block d-xl-block">
+            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Asset Location</a>            
         <div class="dropdown-menu bg-transparent border-0">
-        <a class="dropdown-item" class="dropdown-item" href="#" onclick="trackLocation()";>Switch tracking on</a>
-        <a class="dropdown-item" class="dropdown-item" href="#" 
-        onclick="removePositionPoints()";>Switch tracking off</a>
+        <a class="dropdown-item" class="dropdown-item" href="#" onclick="AssetBest()";>Asset in Best Condition</a>
+        <a class="dropdown-item" class="dropdown-item" href="#" onclick="RatesGraph()";>Daily Reporting Rates Graph</a>
         </div>
         </div>
 
 
 
-        <!-- Nav Item - University Menu -->
-        <div class="nav-item dropdown d-sm-none d-xl-block">
-            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Centennial</a>            
+        <!-- Nav Item - Condition Assessment -->
+        <div class="nav-item dropdown d-xs-block d-sm-block d-md-none">
+            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Condition Assessment</a>            
         <div class="dropdown-menu bg-transparent border-0">
-        <a class="dropdown-item" class="dropdown-item" href="#" onclick="loadUniversity()";>Load University</a>
-        <a class="dropdown-item" class="dropdown-item" href="#"  onclick="removeUniversity()";>Remove University</a>
-        <a class="dropdown-item" class="dropdown-item" href="#" onclick="loadBuildings()";>Load Buildings</a>
-        <a class="dropdown-item" class="dropdown-item" href="#" onclick="removeBuildings()";>Remove Buildings</a>
-        <a class="dropdown-item" class="dropdown-item" href="#" onclick="loadCables()";>Load Ethernet Cables</a>
-        <a class="dropdown-item" class="dropdown-item" href="#" onclick="removeCables()";>Remove Ethernet Cables</a>
-        <a class="dropdown-item" class="dropdown-item" href="#" onclick="loadRooms()";>Load Rooms</a>
-        <a class="dropdown-item" class="dropdown-item" href="#" onclick="removeRooms()";>Remove Rooms</a>
-        <a class="dropdown-item" class="dropdown-item" href="#" onclick="loadSensors()";>Load Temperature Sensors</a>
-        <a class="dropdown-item" class="dropdown-item" href="#" onclick="removeSensors()";>Remove Temperature Sensors</a>
-        </div>
-        </div>
-
-
-
-        
-        <!-- Nav Item - Graph Menu -->
-        <div class="nav-item dropdown d-none d-lg-block">
-            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Graph</a>            
-        <div class="dropdown-menu bg-transparent border-0">
-        <a class="dropdown-item" class="dropdown-item" href="#" onclick="loadGraph();";>Show Graph</a>
-        <a class="dropdown-item" class="dropdown-item" href="#" 
-        onclick="closeAssetData()";>Remove Graph</a>
+        <a class="dropdown-item" class="dropdown-item" href="#" onclick="help()";>Help</a>
+        <a class="dropdown-item" class="dropdown-item" href="#" onclick="UserRanking()";>User Ranking</a>
+        <a class="dropdown-item" class="dropdown-item" href="#" onclick="Add5assets()";>Add Layer – 5 closest assets</a>
+        <a class="dropdown-item" class="dropdown-item" href="#" onclick="Remove5assets()";>Remove Layer – 5 closest assets</a>
+        <a class="dropdown-item" class="dropdown-item" href="#" onclick="Add5reports()";>Add Layer – last 5 reports</a>
+        <a class="dropdown-item" class="dropdown-item" href="#" onclick="Remove5reports()";>Remove layer – last 5 reports</a>
+        <a class="dropdown-item" class="dropdown-item" href="#" onclick="Add3rated()";>Add Layer – not rated in the last 3 days</a>
+        <a class="dropdown-item" class="dropdown-item" href="#" onclick="Remove3rated()";>Remove Layer – not rated in the last 3 days</a>
         </div>
         </div>
 
@@ -240,35 +195,10 @@
 
                 </div>
             </nav><!-- Navbar End -->
-           
-
-            <div class="container_fluid px-0">
-                <div class="row d-flex">
-                    <div class="col d-flex">
-                        <div id="mapWrapper" class="col vh-100 collapse show" aria-expanded="true" style="margin-top:65px;z-order:0">
-                            <div id="mapid" class="vh-100 vw-100" style="height:calc(100% - 65px);"  >
-                            </div> <!-- map id -->
-                        </div> <!-- map wrapper -->
-            
-                        <div id="assetDataWrapperWrapper" class="col vh-100 collapse hide" style="background-color:lightgray; margin-top:65px;z-order:0;" >
-                            <div  id="assetDataWrapper" style="height:calc(100% - 65px);">
-                            </div> <!-- asset data wrapper -->
-                        </div> <!-- asset data wrapper wrapper wrapper -->
-
-                    </div>
-                </div>
-            </div>
-            
-
-            
-
-            <!-- 
-            <div id="svg1" class="col vh-100 collapse show" style="background-color: white; 
-            display: inline- block;position:absolute; 
-            top:-9999;left:15%;">
-            <svg id="svg1" width="1000" height="500"></svg>
-            <button type="button" class="close" aria-label="Close" onclick="closeGraph();">
-            </div>-->
+                <div id="mapid" class="vh-100 vw-100" style="z-index: 0;"  ></div>
+              <!-- z-index = 0 is required to ensure that the menu items from the template
+                appear on top of the map -->
+             <!-- <div class="col-md-6 col-sm-12 map-container rounded flex-fill" id="mapid"></div>  -->
 
 
 
@@ -293,7 +223,5 @@
     <!-- Menu Javascript -->
     <script src="js/menu.js"></script>
 </body>
-
-
 
 </html>
