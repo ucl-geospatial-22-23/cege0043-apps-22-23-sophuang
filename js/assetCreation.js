@@ -84,6 +84,7 @@ function deleteSingleAsset() {
 
 function dataDeleted1(data){
     document.getElementById("deleteAssetResponse").innerHTML = JSON.stringify(data);
+    alert("Condition has been deleted!")
 }
 
 
