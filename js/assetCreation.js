@@ -76,12 +76,13 @@ function deleteSingleAsset() {
 	    url: serviceUrl,
 	    crossDomain: true,
 	    type: "POST",
-	    success: function(data){console.log(data); dataDeleted(data);},
+	    success: function(data){console.log(data); 
+            dataDeleted1(data);},
 	    data: deleteString
 });	
 }
 
-function dataDeleted(data){
+function dataDeleted1(data){
     document.getElementById("deleteAssetResponse").innerHTML = JSON.stringify(data);
 }
 
