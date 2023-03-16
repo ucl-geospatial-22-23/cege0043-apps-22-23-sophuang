@@ -39,6 +39,12 @@
     <!-- trackLocation Javascript -->
     <script src="js/trackLocation.js"></script>
 
+    <!-- uploadData Javascript -->
+    <script src="js/uploadData.js"></script>
+
+    <!-- uploadData Javascript -->
+    <script src="js/assetCreation.js"></script>
+
     <!-- code for Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" 
     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" 
@@ -54,14 +60,17 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
     <!-- the following script will load the map and set the default view and zoom, as well as loading the basemap tiles -->
-    <script src="js/basicMap.js"></script> 
+    <script src="js/basicMap_test.js"></script> 
     <script>
         //code to load the map when the page is loaded 
         document.addEventListener('DOMContentLoaded', function() {
             loadMap();}, false);
         
         function loadMap() {
+            
             loadLeafletMap(); 
+            window.addEventListener('resize', setMapClickEvent); 
+            setMapClickEvent();
             }   
     </script>
 
@@ -120,7 +129,7 @@
 
 
         <!-- Nav Item - Condition Assessment -->
-        <div class="nav-item dropdown d-sm-block d-md-none">
+        <div class="nav-item dropdown d-xs-block d-sm-block d-md-none">
             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Condition Assessment</a>            
         <div class="dropdown-menu bg-transparent border-0">
         <a class="dropdown-item" class="dropdown-item" href="#" onclick="help()";>Help</a>
