@@ -5,16 +5,18 @@
 function saveNewAsset() {
 	alert ("start data upload");
 
-	let name = document.getElementById("name").value;
-	let surname = document.getElementById("surname").value;
-	let module = document.getElementById("module").value;
+	let asset_name = document.getElementById("Asset Name").value;
+	let date = document.getElementById("Installation Date").value;
+	let longtitude = document.getElementById("Longitude").value;
+    let lagtitude = document.getElementById("Latitude").value;
 
-	alert(name + " "+ surname + " "+module);
+	//alert(asset_name + " "+ date + " "+module);
 	
-	let postString = "name="+name +"&surname="+surname+"&module="+module;
+	let postString = "Asset Name="+asset_name +"&Installation Date="+date+"&Lagtitude="+lagtitude+"&Longtitude="+longtitude;
 	
 		// now get the checkbox values - separate them with a | so that they can be // split later on if necessary
-	let checkString = "";
+	/*
+    let checkString = "";
 	for (let i = 1;i< 5;i++){
 		if (document.getElementById("check"+i).checked === true) {
 			checkString = checkString + document.getElementById("check"+i).value + "||"
@@ -29,6 +31,7 @@ function saveNewAsset() {
 	let latitude = document.getElementById("latitude").value;
 	let longitude = document.getElementById("longitude").value;
 	postString = postString + "&latitude=" + latitude + "&longitude=" + longitude;
+    
 
 	postString = postString + "&modulelist="+checkString;
 
@@ -40,7 +43,7 @@ function saveNewAsset() {
 	if (document.getElementById("afternoon").checked) {
  		 postString=postString+"&lecturetime=afternoon";
 	}
-
+*/
 	
 	processData(postString);
 
@@ -65,6 +68,7 @@ function processData(postString) {
 function dataUploaded(data) {
     // change the DIV to show the response
     document.getElementById("responseDIV").innerHTML = JSON.stringify(data);
+    alert("Data has been uploaded:" + JSON.stringify(data));
 }
 
 
@@ -84,7 +88,8 @@ function deleteSingleAsset() {
 
 function dataDeleted1(data){
     document.getElementById("deleteAssetResponse").innerHTML = JSON.stringify(data);
-    alert("Condition has been deleted!")
+    alert("Condition has been deleted:"+ JSON.stringify(data));
+
 }
 
 
@@ -99,8 +104,10 @@ function saveCondition() {
     alert ("start condition saving");
 
     // get ID of the asset
-    let assetID = document.getElementById("assetID").value;
-    let postString = "assetID="+assetID;
+    let assetID = document.getElementById("assetID").innerHTML;
+    let assetName = document.getElementById("asset_name").value;
+    let date = document.getElementById("installation_date").value;
+    let postString = "AssetName=" + assetName + "Installation Date=" + date + "assetID=" + assetID;
     let Condition = "";
 
     // now get the condition from radio button values
@@ -126,7 +133,7 @@ function saveCondition() {
     }
 	
     // get previous condition from hidden field
-    let pre_Condition = document.getElementById("previousConditionValue").value;
+    let pre_Condition = document.getElementById("previousConditionValue").innerHTML;
     postString =postString+"&previousConditionValue="+pre_Condition;
 	
     if (pre_Condition==Condition) {
@@ -159,4 +166,6 @@ function processCondition(postString) {
 function ConditionUploaded(data) {
     // change the DIV to show the response
     document.getElementById("conditionResult").innerHTML = JSON.stringify(data);
+    alert("Condition has been deleted:"+ JSON.stringify(data));
+
 }
