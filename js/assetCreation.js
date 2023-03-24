@@ -104,8 +104,10 @@ function saveCondition() {
     alert ("start condition saving");
 
     // get ID of the asset
-    let assetID = document.getElementById("assetID").value;
-    let postString = "assetID="+assetID;
+    let assetID = document.getElementById("assetID").innerHTML;
+    let assetName = document.getElementById("asset_name").value;
+    let date = document.getElementById("installation_date").value;
+    let postString = "AssetName=" + assetName + "Installation Date=" + date + "assetID=" + assetID;
     let Condition = "";
 
     // now get the condition from radio button values
@@ -131,7 +133,7 @@ function saveCondition() {
     }
 	
     // get previous condition from hidden field
-    let pre_Condition = document.getElementById("previousConditionValue").value;
+    let pre_Condition = document.getElementById("previousConditionValue").innerHTML;
     postString =postString+"&previousConditionValue="+pre_Condition;
 	
     if (pre_Condition==Condition) {
