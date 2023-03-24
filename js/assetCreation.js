@@ -68,7 +68,7 @@ function processData(postString) {
 function dataUploaded(data) {
     // change the DIV to show the response
     document.getElementById("responseDIV").innerHTML = JSON.stringify(data);
-    alert(data);
+    alert("Data has been uploaded!");
 }
 
 
@@ -88,8 +88,7 @@ function deleteSingleAsset() {
 
 function dataDeleted1(data){
     document.getElementById("deleteAssetResponse").innerHTML = JSON.stringify(data);
-    alert("Condition has been deleted!")
-    alert(data);
+    alert("Condition has been deleted!");
 }
 
 
@@ -164,5 +163,5 @@ function processCondition(postString) {
 function ConditionUploaded(data) {
     // change the DIV to show the response
     document.getElementById("conditionResult").innerHTML = JSON.stringify(data);
-    alert(data);
+    alert("Condition has been deleted!");
 }
