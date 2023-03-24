@@ -70,6 +70,10 @@ function setMapClickEvent() {
         // the on click functionality of the MAP should pop up a blank asset creation form
         mymap.on('click', onMapClick); 
     }
+
+    else{
+        mymap.off('click',onMapClick)
+    }
 }
 
 
