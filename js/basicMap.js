@@ -117,7 +117,7 @@ function getPopupHTML(){
 ''+
 '<label for="asset_name">Asset name</label><input type="text" size="25" id="asset_name" value="University College London" readonly /><br />'+
 ''+
-'<label for="installation_date">Asset Installation Date</label><input type="text" size="25" id="installation_date" value="University College London" readonly/><br />'+
+'<label for="installation_date">Asset Installation Date</label><input type="text" size="25" id="installation_date" value="01/Sep/1826" readonly/><br />'+
 ''+
 ''+
 ''+
