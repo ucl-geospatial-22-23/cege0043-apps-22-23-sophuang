@@ -53,7 +53,7 @@ function saveNewAsset() {
 
 
 function processData(postString) {
-	alert(postString);
+	//alert(postString);
 
 	let serviceUrl = document.location.origin + "/api/testCRUD";
     $.ajax({
@@ -152,7 +152,7 @@ function saveCondition() {
 
 
 function processCondition(postString) {
-	alert(postString);
+	//alert(postString);
 
 	let serviceUrl = document.location.origin + "/api/testCRUD";
     $.ajax({
