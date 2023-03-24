@@ -9,10 +9,11 @@ function saveNewAsset() {
 	let date = document.getElementById("Installation Date").value;
 	let longtitude = document.getElementById("Longitude").value;
     let lagtitude = document.getElementById("Latitude").value;
+    let user = document.getElementById("user_id").innerHTML;
 
 	//alert(asset_name + " "+ date + " "+module);
 	
-	let postString = "Asset Name="+asset_name +"&Installation Date="+date+"&Lagtitude="+lagtitude+"&Longtitude="+longtitude;
+	let postString = "Asset Name="+asset_name +"&Installation Date="+date+"&Lagtitude="+lagtitude+"&Longtitude="+longtitude+ "userID=" + user;
 	
 		// now get the checkbox values - separate them with a | so that they can be // split later on if necessary
 	/*
@@ -52,7 +53,7 @@ function saveNewAsset() {
 
 
 function processData(postString) {
-	alert(postString);
+	//alert(postString);
 
 	let serviceUrl = document.location.origin + "/api/testCRUD";
     $.ajax({
@@ -106,8 +107,9 @@ function saveCondition() {
     // get ID of the asset
     let assetID = document.getElementById("assetID").innerHTML;
     let assetName = document.getElementById("asset_name").value;
+    let user = document.getElementById("user_id").innerHTML;
     let date = document.getElementById("installation_date").value;
-    let postString = "AssetName=" + assetName + "Installation Date=" + date + "assetID=" + assetID;
+    let postString = "assetID=" + assetID + "AssetName=" + assetName + "Installation Date=" + date + "userID=" + user;
     let Condition = "";
 
     // now get the condition from radio button values
@@ -150,7 +152,7 @@ function saveCondition() {
 
 
 function processCondition(postString) {
-	alert(postString);
+	//alert(postString);
 
 	let serviceUrl = document.location.origin + "/api/testCRUD";
     $.ajax({
