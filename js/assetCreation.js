@@ -5,46 +5,15 @@
 function saveNewAsset() {
 	alert ("start data upload");
 
-	let asset_name = document.getElementById("Asset Name").value;
-	let date = document.getElementById("Installation Date").value;
-	let longtitude = document.getElementById("Longitude").value;
-    let lagtitude = document.getElementById("Latitude").value;
+	let asset_name = document.getElementById("asset_name").value;
+	let date = document.getElementById("installation_date").value;
+	let longitude = document.getElementById("longitude").value;
+    let latitude = document.getElementById("latitude").value;
     let user = document.getElementById("user_id").innerHTML;
 
 	//alert(asset_name + " "+ date + " "+module);
 	
-	let postString = "Asset Name="+asset_name +"&Installation Date="+date+"&Lagtitude="+lagtitude+"&Longtitude="+longtitude+ "userID=" + user;
-	
-		// now get the checkbox values - separate them with a | so that they can be // split later on if necessary
-	/*
-    let checkString = "";
-	for (let i = 1;i< 5;i++){
-		if (document.getElementById("check"+i).checked === true) {
-			checkString = checkString + document.getElementById("check"+i).value + "||"
-		}
-
-	}
-		// now get the select box values
-	let language = document.getElementById("languageselectbox").value;
-	postString = postString + "&language="+language;
-
-	// now get the geometry values
-	let latitude = document.getElementById("latitude").value;
-	let longitude = document.getElementById("longitude").value;
-	postString = postString + "&latitude=" + latitude + "&longitude=" + longitude;
-    
-
-	postString = postString + "&modulelist="+checkString;
-
-
-// now get the radio button values
-	if (document.getElementById("morning").checked) {
- 		 postString=postString+"&lecturetime=morning";
-	}
-	if (document.getElementById("afternoon").checked) {
- 		 postString=postString+"&lecturetime=afternoon";
-	}
-*/
+	let postString = "asset_name="+asset_name +"&installation_date="+date+"&latitude="+latitude+"&longitude="+longitude+ "&user_id=" + user;
 	
 	processData(postString);
 
@@ -55,7 +24,7 @@ function saveNewAsset() {
 function processData(postString) {
 	//alert(postString);
 
-	let serviceUrl = document.location.origin + "/api/testCRUD";
+	let serviceUrl = document.location.origin + "/api/insertAssetPoint";
     $.ajax({
     url: serviceUrl,
     crossDomain: true,
@@ -76,7 +45,7 @@ function dataUploaded(data) {
 function deleteSingleAsset() {
 	let deleteID = document.getElementById("deleteID").value;
 	let deleteString = "id="+deleteID;
-	let serviceUrl= document.location.origin + "/api/testCRUD";
+	let serviceUrl= document.location.origin + "/api/insertAssetPoint";
 	$.ajax({
 	    url: serviceUrl,
 	    crossDomain: true,
@@ -154,7 +123,7 @@ function saveCondition() {
 function processCondition(postString) {
 	//alert(postString);
 
-	let serviceUrl = document.location.origin + "/api/testCRUD";
+	let serviceUrl = document.location.origin + "/api/insertAssetPoint";
     $.ajax({
     url: serviceUrl,
     crossDomain: true,
