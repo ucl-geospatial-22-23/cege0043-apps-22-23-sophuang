@@ -43,9 +43,9 @@ function dataUploaded(data) {
 
 
 function deleteSingleAsset() {
-	let deleteID = document.getElementById("deleteID").value;
+	let deleteID = document.getElementById("delete_id").value;
 	let deleteString = "id="+deleteID;
-	let serviceUrl= document.location.origin + "/api/insertAssetPoint";
+	let serviceUrl= document.location.origin + "/api/deleteAsset";
 	$.ajax({
 	    url: serviceUrl,
 	    crossDomain: true,
