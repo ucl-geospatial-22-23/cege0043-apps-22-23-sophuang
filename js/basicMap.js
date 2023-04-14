@@ -98,14 +98,44 @@ function setUpPointClick() {
     // and add it to the map and zoom to that location
     // use the mapPoint variable so that we can remove this point layer on 
     mapPoint= L.geoJSON(geojsonFeature).addTo(mymap).bindPopup(popUpHTML); 
-    mymap.setView([51.522449,-0.13263], 12)
+    //mymap.setView([51.522449,-0.13263], 12)
 
     console.log(popUpHTML);
     
     }
 
 
+function updateDescription(id) {
+        let description = '';
+        let descriptionDiv = document.getElementById('condition_description');
+      
+        switch (id) {
+          case '1':
+            description = 'Element is in very good condition';
+            break;
+          case '2':
+            description = 'Some aesthetic defects, needs minor repair';
+            break;
+          case '3':
+            description = 'Functional degradation of some parts, needs maintenance';
+            break;
+          case '4':
+            description = 'Not working and maintenance must be done as soon as reasonably possible';
+            break;
+          case '5':
+            description = 'Not working and needs immediate, urgent maintenance';
+            break;
+          case '6':
+            description = 'Unknown';
+            break;
+          default:
+            description = '';
+        }
+      
+        descriptionDiv.innerHTML = description;
+}
 
+      
 function getPopupHTML(){
         // (in the final assignment, all the required values for the asset pop-up will be 
         //derived from feature.properties.xxx – see the Earthquakes code for how this is done)
@@ -119,23 +149,25 @@ function getPopupHTML(){
 '<div>'+
 ''+
 ''+
-'<label for="asset_name">Asset name</label><input type="text" size="25" id="asset_name" value="University College London" readonly /><br />'+
+'<label for="asset_name">Asset name</label><input type="text" size="25" id="asset_name" value="UCL" readonly /><br />'+
 ''+
-'<label for="installation_date">Asset Installation Date</label><input type="text" size="25" id="installation_date" value="01/Sep/1826" readonly/><br />'+
+'<label for="installation_date">Asset Installation Date</label><input type="date" id="installation_date" value="1826-09-01" readonly/><br />'+
 ''+
 ''+
 ''+
 '<p>What is the condition value?</p>'+
-'	1: <input type="radio" name="amorpm" id="1" /><br />'+
-'	2: <input type="radio" name="amorpm" id ="2"/><br />'+
-'    3: <input type="radio" name="amorpm" id ="3"/><br />'+
-'    4: <input type="radio" name="amorpm" id ="4"/><br />'+
-'    5: <input type="radio" name="amorpm" id ="5"/><br />'+
+'	1: <input type="radio" name="amorpm" id="1" onclick="updateDescription(this.id)"/><br />'+
+'	2: <input type="radio" name="amorpm" id ="2" onclick="updateDescription(this.id)"/><br />'+
+'    3: <input type="radio" name="amorpm" id ="3" onclick="updateDescription(this.id)"/><br />'+
+'    4: <input type="radio" name="amorpm" id ="4" onclick="updateDescription(this.id)"/><br />'+
+'    5: <input type="radio" name="amorpm" id ="5" onclick="updateDescription(this.id)"/><br />'+
+'    6: <input type="radio" name="amorpm" id ="6" onclick="updateDescription(this.id)"/><br />'+
 ''+
 ''+
+'<div id="condition_description"></div>'+
 '<div id="user_id" style="display: none;"> 1272 </div>'+
 '<div id="previousConditionValue" style="display: none;">1</div> '+
-'<div id="assetID" style="display: none;">2</div>'+
+'<div id="asset_id" style="display: none;">2</div>'+
 ''+
 ''+
 '<p>Click here to save condition</p>'+
@@ -238,6 +270,5 @@ function basicFormHtml() {
         
 
 }
-
 
 

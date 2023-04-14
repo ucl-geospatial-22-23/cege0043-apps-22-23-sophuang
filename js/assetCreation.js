@@ -74,38 +74,42 @@ function saveCondition() {
     alert ("start condition saving");
 
     // get ID of the asset
-    let assetID = document.getElementById("assetID").innerHTML;
+    let assetID = document.getElementById("asset_id").innerHTML;
     let assetName = document.getElementById("asset_name").value;
     let user = document.getElementById("user_id").innerHTML;
     let date = document.getElementById("installation_date").value;
-    let postString = "assetID=" + assetID + "AssetName=" + assetName + "Installation Date=" + date + "userID=" + user;
+    let postString="asset_id=" + assetID;
     let Condition = "";
-
+    let condition_description = document.getElementById("condition_description").innerHTML;
+    
     // now get the condition from radio button values
+    
 	if (document.getElementById("1").checked) {
-        postString=postString+"&ConditionValue=1";
+        postString=postString+"&condition_id=1";
         Condition="1";
     }
     if (document.getElementById("2").checked) {
-        postString=postString+"&ConditionValue=2";
+        postString=postString+"&condition_id=2";
         Condition="2";
     }
     if (document.getElementById("3").checked) {
-        postString=postString+"&ConditionValue=3";
+        postString=postString+"&condition_id=3";
         Condition="3";
     }
     if (document.getElementById("4").checked) {
-        postString=postString+"&ConditionValue=4";
+        postString=postString+"&condition_id=4";
         Condition="4";
     }
     if (document.getElementById("5").checked) {
-        postString=postString+"&ConditionValue=5";
+        postString=postString+"&condition_id=5";
         Condition="5";
     }
-	
+    postString=postString+"&asset_name=" + assetName;
+    postString=postString+ "&condition_description=" + condition_description;
+	//postString=postString+ "&user_id=" + user;
     // get previous condition from hidden field
     let pre_Condition = document.getElementById("previousConditionValue").innerHTML;
-    postString =postString+"&previousConditionValue="+pre_Condition;
+    //postString =postString+"&previousConditionValue="+pre_Condition;
 	
     if (pre_Condition==Condition) {
         alert("Previous condition is the same as your selected");
@@ -123,7 +127,7 @@ function saveCondition() {
 function processCondition(postString) {
 	//alert(postString);
 
-	let serviceUrl = document.location.origin + "/api/insertAssetPoint";
+	let serviceUrl = document.location.origin + "/api/insertConditionInformation";
     $.ajax({
     url: serviceUrl,
     crossDomain: true,
