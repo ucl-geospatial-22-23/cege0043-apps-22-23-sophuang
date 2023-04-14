@@ -59,6 +59,7 @@ function setMapClickEvent() {
         // set up a point with click functionality
         // so that anyone clicking will add asset condition information 
         setUpPointClick();
+        loadUserAssets();
     }
 
 
@@ -80,6 +81,7 @@ function setMapClickEvent() {
 function setUpPointClick() {
     // create a geoJSON feature (in your assignment code this will be replaced
     // by an AJAX call to load the asset points on the map 
+    
     let geojsonFeature = {
     "type": "Feature", 
     "properties": {
@@ -103,6 +105,8 @@ function setUpPointClick() {
     console.log(popUpHTML);
     
     }
+
+
 
 
 function updateDescription(id) {
@@ -135,7 +139,41 @@ function updateDescription(id) {
         descriptionDiv.innerHTML = description;
 }
 
-      
+function loadUserAssets() {
+    let serviceUrl = document.location.origin + "/api/userAssets/600";
+  
+    $.ajax({
+      url: serviceUrl,
+      crossDomain: true,
+      type: "GET",
+      success: function(data) {
+        console.log(data);
+        displayAssetsOnMap(data);
+      }
+    });
+  }
+
+  function displayAssetsOnMap(assetData) {
+    // Assuming you have a Leaflet map instance called 'map'
+    let assetPoints = L.geoJSON(assetData, {
+      onEachFeature: function(feature, layer) {
+        layer.bindPopup("Asset Name: " + feature.properties.asset_name);
+      }
+    });
+  
+    assetPoints.addTo(mymap);
+  }
+  
+
+
+
+
+
+
+
+
+
+
 function getPopupHTML(){
         // (in the final assignment, all the required values for the asset pop-up will be 
         //derived from feature.properties.xxx – see the Earthquakes code for how this is done)
