@@ -144,3 +144,23 @@ function ConditionUploaded(data) {
     alert("Condition has been deleted:"+ JSON.stringify(data));
 
 }
+
+function deleteRecord() {
+	let deleteID = document.getElementById("delete_id").value;
+	let deleteString = "id="+deleteID;
+	let serviceUrl= document.location.origin + "/api/deleteConditionReport";
+	$.ajax({
+	    url: serviceUrl,
+	    crossDomain: true,
+	    type: "POST",
+	    success: function(data){console.log(data); 
+		dataDeleted(data);},
+	    data: deleteString
+});	
+}
+function dataDeleted(data){
+    document.getElementById("dataDeleteResult").innerHTML = JSON.stringify(data);
+	alert("Data has been deleted!")
+}
+
+

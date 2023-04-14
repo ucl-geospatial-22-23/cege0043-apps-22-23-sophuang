@@ -48,7 +48,7 @@ function startDataUpload() {
 function processData(postString) {
 	alert(postString);
 
-	let serviceUrl = document.location.origin + "/api/insertAssetPoint";
+	let serviceUrl = document.location.origin + "/api/insertConditionInformation";
     $.ajax({
     url: serviceUrl,
     crossDomain: true,
@@ -68,9 +68,9 @@ function dataUploaded(data) {
 
 
 function deleteRecord() {
-	let deleteID = document.getElementById("deleteID").value;
+	let deleteID = document.getElementById("delete_id").value;
 	let deleteString = "id="+deleteID;
-	let serviceUrl= document.location.origin + "/api/insertAssetPoint";
+	let serviceUrl= document.location.origin + "/api/deleteConditionReport";
 	$.ajax({
 	    url: serviceUrl,
 	    crossDomain: true,
