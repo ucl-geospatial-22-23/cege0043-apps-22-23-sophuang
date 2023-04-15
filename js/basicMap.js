@@ -59,6 +59,7 @@ function setMapClickEvent() {
         // set up a point with click functionality
         // so that anyone clicking will add asset condition information 
         setUpPointClick();
+        loadUserAssets();
     }
 
 
@@ -80,6 +81,7 @@ function setMapClickEvent() {
 function setUpPointClick() {
     // create a geoJSON feature (in your assignment code this will be replaced
     // by an AJAX call to load the asset points on the map 
+    
     let geojsonFeature = {
     "type": "Feature", 
     "properties": {
@@ -98,11 +100,77 @@ function setUpPointClick() {
     // and add it to the map and zoom to that location
     // use the mapPoint variable so that we can remove this point layer on 
     mapPoint= L.geoJSON(geojsonFeature).addTo(mymap).bindPopup(popUpHTML); 
-    mymap.setView([51.522449,-0.13263], 12)
+    //mymap.setView([51.522449,-0.13263], 12)
 
     console.log(popUpHTML);
     
     }
+
+
+
+
+function updateDescription(id) {
+        let description = '';
+        let descriptionDiv = document.getElementById('condition_description');
+      
+        switch (id) {
+          case '1':
+            description = 'Element is in very good condition';
+            break;
+          case '2':
+            description = 'Some aesthetic defects, needs minor repair';
+            break;
+          case '3':
+            description = 'Functional degradation of some parts, needs maintenance';
+            break;
+          case '4':
+            description = 'Not working and maintenance must be done as soon as reasonably possible';
+            break;
+          case '5':
+            description = 'Not working and needs immediate, urgent maintenance';
+            break;
+          case '6':
+            description = 'Unknown';
+            break;
+          default:
+            description = '';
+        }
+      
+        descriptionDiv.innerHTML = description;
+}
+
+function loadUserAssets() {
+    let serviceUrl = document.location.origin + "/api/userAssets/600";
+  
+    $.ajax({
+      url: serviceUrl,
+      crossDomain: true,
+      type: "GET",
+      success: function(data) {
+        console.log(data);
+        displayAssetsOnMap(data);
+      }
+    });
+  }
+
+  function displayAssetsOnMap(assetData) {
+    // Assuming you have a Leaflet map instance called 'map'
+    let assetPoints = L.geoJSON(assetData, {
+      onEachFeature: function(feature, layer) {
+        layer.bindPopup("Asset Name: " + feature.properties.asset_name);
+      }
+    });
+  
+    assetPoints.addTo(mymap);
+  }
+  
+
+
+
+
+
+
+
 
 
 
@@ -119,23 +187,25 @@ function getPopupHTML(){
 '<div>'+
 ''+
 ''+
-'<label for="asset_name">Asset name</label><input type="text" size="25" id="asset_name" value="University College London" readonly /><br />'+
+'<label for="asset_name">Asset name</label><input type="text" size="25" id="asset_name"/><br />'+
 ''+
-'<label for="installation_date">Asset Installation Date</label><input type="text" size="25" id="installation_date" value="01/Sep/1826" readonly/><br />'+
+'<label for="installation_date">Asset Installation Date</label><input type="date" id="installation_date" value="1826-09-01" readonly/><br />'+
 ''+
 ''+
 ''+
 '<p>What is the condition value?</p>'+
-'	1: <input type="radio" name="amorpm" id="1" /><br />'+
-'	2: <input type="radio" name="amorpm" id ="2"/><br />'+
-'    3: <input type="radio" name="amorpm" id ="3"/><br />'+
-'    4: <input type="radio" name="amorpm" id ="4"/><br />'+
-'    5: <input type="radio" name="amorpm" id ="5"/><br />'+
+'	1: <input type="radio" name="amorpm" id="1" onclick="updateDescription(this.id)"/><br />'+
+'	2: <input type="radio" name="amorpm" id ="2" onclick="updateDescription(this.id)"/><br />'+
+'    3: <input type="radio" name="amorpm" id ="3" onclick="updateDescription(this.id)"/><br />'+
+'    4: <input type="radio" name="amorpm" id ="4" onclick="updateDescription(this.id)"/><br />'+
+'    5: <input type="radio" name="amorpm" id ="5" onclick="updateDescription(this.id)"/><br />'+
+'    6: <input type="radio" name="amorpm" id ="6" onclick="updateDescription(this.id)"/><br />'+
 ''+
 ''+
+'<div id="condition_description"></div>'+
 '<div id="user_id" style="display: none;"> 1272 </div>'+
 '<div id="previousConditionValue" style="display: none;">1</div> '+
-'<div id="assetID" style="display: none;">2</div>'+
+'<div id="asset_id" style="display: none;">2</div>'+
 ''+
 ''+
 '<p>Click here to save condition</p>'+
@@ -155,7 +225,7 @@ function getPopupHTML(){
 ''+
 ''+
 ''+
-'<label for="deleteID">Delete ID</label><input type="text" size="25" id="deleteID"/><br />'+
+'<label for="deleteID">Delete ID</label><input type="text" size="25" id="delete_id"/><br />'+
 '<button id="startDelete" onclick="deleteRecord()">Delete Record</button>'+
 '<div id="dataDeleteResult">The result of the upload goes here</div>'+
 ''+
@@ -189,12 +259,12 @@ function basicFormHtml() {
     '<div>'+
     ''+
     ''+
-    '    <label for="Asset Name">Asset Name</label><input type="text" size="25" id="Asset Name"/><br />'+
-    '    <label for="Installation Date">Installation Date</label><input type="text" size="25" id="Installation Date"/><br />'+
+    '    <label for="Asset Name">Asset Name</label><input type="text" size="25" id="asset_name"/><br />'+
+    '    <label for="Installation Date">Installation Date</label><input type="date" id="installation_date"/><br />'+
     '    <br />'+
     '    <br />'+
-    '    <label for="Latitude">Latitude</label><input type="text" size="25" id="Latitude"/><br />'+
-    '    <label for="Longitude">Longitude</label><input type="text" size="25" id="Longitude"/><br />'+
+    '    <label for="Latitude">Latitude</label><input type="text" size="25" id="latitude"/><br />'+
+    '    <label for="Longitude">Longitude</label><input type="text" size="25" id="longitude"/><br />'+
     ''+
     ''+
     ''+
@@ -216,7 +286,7 @@ function basicFormHtml() {
     '    <hr>'+
     ''+
     ''+
-    '    <label for="deleteID">Delete ID</label><input type="text" size="25" id="deleteID"/><br />'+
+    '    <label for="deleteID">Delete ID</label><input type="text" size="25" id="delete_id"/><br />'+
     '    <button id="deleteAsset" onclick="deleteSingleAsset()">Delete Single Asset Data</button>'+
     '    <div id="deleteAssetResponse">The result of the delete operation goes here</div>'+
     ''+
@@ -238,6 +308,5 @@ function basicFormHtml() {
         
 
 }
-
 
 

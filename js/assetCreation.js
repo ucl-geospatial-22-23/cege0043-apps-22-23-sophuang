@@ -5,46 +5,15 @@
 function saveNewAsset() {
 	alert ("start data upload");
 
-	let asset_name = document.getElementById("Asset Name").value;
-	let date = document.getElementById("Installation Date").value;
-	let longtitude = document.getElementById("Longitude").value;
-    let lagtitude = document.getElementById("Latitude").value;
+	let asset_name = document.getElementById("asset_name").value;
+	let date = document.getElementById("installation_date").value;
+	let longitude = document.getElementById("longitude").value;
+    let latitude = document.getElementById("latitude").value;
     let user = document.getElementById("user_id").innerHTML;
 
 	//alert(asset_name + " "+ date + " "+module);
 	
-	let postString = "Asset Name="+asset_name +"&Installation Date="+date+"&Lagtitude="+lagtitude+"&Longtitude="+longtitude+ "userID=" + user;
-	
-		// now get the checkbox values - separate them with a | so that they can be // split later on if necessary
-	/*
-    let checkString = "";
-	for (let i = 1;i< 5;i++){
-		if (document.getElementById("check"+i).checked === true) {
-			checkString = checkString + document.getElementById("check"+i).value + "||"
-		}
-
-	}
-		// now get the select box values
-	let language = document.getElementById("languageselectbox").value;
-	postString = postString + "&language="+language;
-
-	// now get the geometry values
-	let latitude = document.getElementById("latitude").value;
-	let longitude = document.getElementById("longitude").value;
-	postString = postString + "&latitude=" + latitude + "&longitude=" + longitude;
-    
-
-	postString = postString + "&modulelist="+checkString;
-
-
-// now get the radio button values
-	if (document.getElementById("morning").checked) {
- 		 postString=postString+"&lecturetime=morning";
-	}
-	if (document.getElementById("afternoon").checked) {
- 		 postString=postString+"&lecturetime=afternoon";
-	}
-*/
+	let postString = "asset_name="+asset_name +"&installation_date="+date+"&latitude="+latitude+"&longitude="+longitude+ "&user_id=" + user;
 	
 	processData(postString);
 
@@ -55,7 +24,7 @@ function saveNewAsset() {
 function processData(postString) {
 	//alert(postString);
 
-	let serviceUrl = document.location.origin + "/api/testCRUD";
+	let serviceUrl = document.location.origin + "/api/insertAssetPoint";
     $.ajax({
     url: serviceUrl,
     crossDomain: true,
@@ -74,9 +43,9 @@ function dataUploaded(data) {
 
 
 function deleteSingleAsset() {
-	let deleteID = document.getElementById("deleteID").value;
+	let deleteID = document.getElementById("delete_id").value;
 	let deleteString = "id="+deleteID;
-	let serviceUrl= document.location.origin + "/api/testCRUD";
+	let serviceUrl= document.location.origin + "/api/deleteAsset";
 	$.ajax({
 	    url: serviceUrl,
 	    crossDomain: true,
@@ -105,38 +74,46 @@ function saveCondition() {
     alert ("start condition saving");
 
     // get ID of the asset
-    let assetID = document.getElementById("assetID").innerHTML;
+    let assetID = document.getElementById("asset_id").innerHTML;
     let assetName = document.getElementById("asset_name").value;
     let user = document.getElementById("user_id").innerHTML;
     let date = document.getElementById("installation_date").value;
-    let postString = "assetID=" + assetID + "AssetName=" + assetName + "Installation Date=" + date + "userID=" + user;
+    let postString="asset_id=" + assetID;
     let Condition = "";
-
+    let condition_description = document.getElementById("condition_description").innerHTML;
+    
     // now get the condition from radio button values
+    
 	if (document.getElementById("1").checked) {
-        postString=postString+"&ConditionValue=1";
+        postString=postString+"&condition_id=1";
         Condition="1";
     }
     if (document.getElementById("2").checked) {
-        postString=postString+"&ConditionValue=2";
+        postString=postString+"&condition_id=2";
         Condition="2";
     }
     if (document.getElementById("3").checked) {
-        postString=postString+"&ConditionValue=3";
+        postString=postString+"&condition_id=3";
         Condition="3";
     }
     if (document.getElementById("4").checked) {
-        postString=postString+"&ConditionValue=4";
+        postString=postString+"&condition_id=4";
         Condition="4";
     }
     if (document.getElementById("5").checked) {
-        postString=postString+"&ConditionValue=5";
+        postString=postString+"&condition_id=5";
         Condition="5";
     }
-	
+    if (document.getElementById("6").checked) {
+        postString=postString+"&condition_id=6";
+        Condition="6";
+    }
+    postString=postString+"&asset_name=" + assetName;
+    postString=postString+ "&condition_description=" + condition_description;
+	//postString=postString+ "&user_id=" + user;
     // get previous condition from hidden field
     let pre_Condition = document.getElementById("previousConditionValue").innerHTML;
-    postString =postString+"&previousConditionValue="+pre_Condition;
+    //postString =postString+"&previousConditionValue="+pre_Condition;
 	
     if (pre_Condition==Condition) {
         alert("Previous condition is the same as your selected");
@@ -154,7 +131,7 @@ function saveCondition() {
 function processCondition(postString) {
 	//alert(postString);
 
-	let serviceUrl = document.location.origin + "/api/testCRUD";
+	let serviceUrl = document.location.origin + "/api/insertConditionInformation";
     $.ajax({
     url: serviceUrl,
     crossDomain: true,
@@ -168,6 +145,42 @@ function processCondition(postString) {
 function ConditionUploaded(data) {
     // change the DIV to show the response
     document.getElementById("conditionResult").innerHTML = JSON.stringify(data);
-    alert("Condition has been deleted:"+ JSON.stringify(data));
+    alert("Condition has been uploaded:"+ JSON.stringify(data));
+
+    let serviceUrl = document.location.origin + "/api/userConditionReports/600";
+  
+    $.ajax({
+        url: serviceUrl,
+        crossDomain: true,
+        type: "GET",
+        success: function(data) {
+            // Extract the count from the response data and show an alert
+            let count = data[0].array_to_json[0].num_reports;
+            alert("You have saved " + count + " condition reports.");
+          },
+        error: function(err) {
+        console.error("Error fetching the count of condition reports:", err);
+        }
+    });
 
 }
+
+function deleteRecord() {
+	let deleteID = document.getElementById("delete_id").value;
+	let deleteString = "id="+deleteID;
+	let serviceUrl= document.location.origin + "/api/deleteConditionReport";
+	$.ajax({
+	    url: serviceUrl,
+	    crossDomain: true,
+	    type: "POST",
+	    success: function(data){console.log(data); 
+		dataDeleted(data);},
+	    data: deleteString
+});	
+}
+function dataDeleted(data){
+    document.getElementById("dataDeleteResult").innerHTML = JSON.stringify(data);
+	alert("Data has been deleted!")
+}
+
+
