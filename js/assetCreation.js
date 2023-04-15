@@ -104,6 +104,10 @@ function saveCondition() {
         postString=postString+"&condition_id=5";
         Condition="5";
     }
+    if (document.getElementById("6").checked) {
+        postString=postString+"&condition_id=6";
+        Condition="6";
+    }
     postString=postString+"&asset_name=" + assetName;
     postString=postString+ "&condition_description=" + condition_description;
 	//postString=postString+ "&user_id=" + user;
@@ -141,7 +145,23 @@ function processCondition(postString) {
 function ConditionUploaded(data) {
     // change the DIV to show the response
     document.getElementById("conditionResult").innerHTML = JSON.stringify(data);
-    alert("Condition has been deleted:"+ JSON.stringify(data));
+    alert("Condition has been uploaded:"+ JSON.stringify(data));
+
+    let serviceUrl = document.location.origin + "/api/userConditionReports/600";
+  
+    $.ajax({
+        url: serviceUrl,
+        crossDomain: true,
+        type: "GET",
+        success: function(data) {
+            // Extract the count from the response data and show an alert
+            let count = data[0].array_to_json[0].num_reports;
+            alert("You have saved " + count + " condition reports.");
+          },
+        error: function(err) {
+        console.error("Error fetching the count of condition reports:", err);
+        }
+    });
 
 }
 
