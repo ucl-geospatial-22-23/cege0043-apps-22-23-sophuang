@@ -94,7 +94,8 @@ function setUpPointClick(data) {
     let assetPoints = L.geoJSON(data, {
       onEachFeature: function (feature, layer) {
         let assetName = feature.properties.asset_name;
-        let popUpHTML = getPopupHTML(assetName);
+        let installationDate = feature.properties.installation_date;
+        let popUpHTML = getPopupHTML(assetName,installationDate);
         layer.bindPopup(popUpHTML);
       },
     });
@@ -139,7 +140,7 @@ function updateDescription(id) {
 }
   
 
-function getPopupHTML(assetName){
+function getPopupHTML(assetName,installationDate){
         // (in the final assignment, all the required values for the asset pop-up will be 
         //derived from feature.properties.xxx – see the Earthquakes code for how this is done)
         var conditionSurvey = '<!DOCTYPE html>'+
@@ -152,9 +153,9 @@ function getPopupHTML(assetName){
 '<div>'+
 ''+
 ''+
-'<label for="asset_name">Asset name</label><input type="text" size="25" value="'+ assetName +'" id="asset_name"/><br />'+
+'<label for="asset_name">Asset name</label><input type="text" size="25" value="'+ assetName +'" id="asset_name" readonly/><br />'+
 ''+
-'<label for="installation_date">Asset Installation Date</label><input type="date" id="installation_date" value="1826-09-01" readonly/><br />'+
+'<label for="installation_date">Asset Installation Date</label><input type="date" id="installation_date" value="'+ installationDate +'" readonly/><br />'+
 ''+
 ''+
 ''+
