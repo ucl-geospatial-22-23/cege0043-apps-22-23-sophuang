@@ -110,20 +110,21 @@ function loadUserAssets(userId) {
       success: function (data) {
         console.log(data);
         displayAssetsOnMap(data);
+        setUpPointClick(data);
       },
     });
   }
   
-
+  //setUpPointClick(assetData);
   function displayAssetsOnMap(assetData) {
-    // Assuming you have a Leaflet map instance called 'map'
+
     let assetPoints = L.geoJSON(assetData, {
       onEachFeature: function(feature, layer) {
         layer.bindPopup("Asset Name: " + feature.properties.asset_name);
       }
     });
-  
     assetPoints.addTo(mymap);
+    
   }
 
 ////////////////////////////////////////////

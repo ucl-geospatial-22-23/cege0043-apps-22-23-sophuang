@@ -65,7 +65,6 @@ function setMapClickEvent() {
         // set up a point with click functionality
         // so that anyone clicking will add asset condition information 
         setUpPointClick();
-        //loadUserAssets();
         fetchUserId()
     .then((userId) => {
       loadUserAssets(userId);
@@ -91,33 +90,20 @@ function setMapClickEvent() {
 }
 
 
-function setUpPointClick() {
-    // create a geoJSON feature (in your assignment code this will be replaced
-    // by an AJAX call to load the asset points on the map 
-    
-    let geojsonFeature = {
-    "type": "Feature", 
-    "properties": {
-        "name": "London",
-        "popupContent": "This is where UCL is based" 
-    },
-    "geometry": {
-        "type": "Point",
-        "coordinates": [-0.13263, 51.522449]
-    } 
-    };
-
-    // the on click functionality of the POINT should pop up partially populated condition form so that the user can select the condition they require
-    let popUpHTML = getPopupHTML(); 
-    
-    // and add it to the map and zoom to that location
-    // use the mapPoint variable so that we can remove this point layer on 
-    mapPoint= L.geoJSON(geojsonFeature).addTo(mymap).bindPopup(popUpHTML); 
-    //mymap.setView([51.522449,-0.13263], 12)
-
-    console.log(popUpHTML);
-    
-    }
+function setUpPointClick(data) {
+    let assetPoints = L.geoJSON(data, {
+      onEachFeature: function (feature, layer) {
+        let assetName = feature.properties.asset_name;
+        let popUpHTML = getPopupHTML(assetName);
+        layer.bindPopup(popUpHTML);
+      },
+    });
+  
+    // Add assetPoints to the map
+    mapPoint = assetPoints.addTo(mymap);
+    console.log("Asset Points added to the map");
+  }
+  
 
 
 
@@ -153,7 +139,7 @@ function updateDescription(id) {
 }
   
 
-function getPopupHTML(){
+function getPopupHTML(assetName){
         // (in the final assignment, all the required values for the asset pop-up will be 
         //derived from feature.properties.xxx – see the Earthquakes code for how this is done)
         var conditionSurvey = '<!DOCTYPE html>'+
@@ -166,7 +152,7 @@ function getPopupHTML(){
 '<div>'+
 ''+
 ''+
-'<label for="asset_name">Asset name</label><input type="text" size="25" id="asset_name"/><br />'+
+'<label for="asset_name">Asset name</label><input type="text" size="25" value="'+ assetName +'" id="asset_name"/><br />'+
 ''+
 '<label for="installation_date">Asset Installation Date</label><input type="date" id="installation_date" value="1826-09-01" readonly/><br />'+
 ''+
