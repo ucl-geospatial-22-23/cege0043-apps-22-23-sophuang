@@ -1,4 +1,34 @@
 "use strict";
+
+let userId;
+
+function fetchUserId() {
+    return new Promise((resolve, reject) => {
+      let serviceUrl = document.location.origin + "/api/userId";
+  
+      $.ajax({
+        url: serviceUrl,
+        crossDomain: true,
+        type: "GET",
+        success: function (data) {
+          if (data && data.length > 0) {
+            let userId = data[0].user_id;
+            resolve(userId);
+          } else {
+            reject("Error fetching user ID: empty response");
+          }
+        },
+        error: function (errorThrown) {
+          reject("Error fetching user ID: " + errorThrown);
+        },
+      });
+    });
+  }
+  
+  
+  
+
+  
 ////////////////////////////////////////////
 //function for assetForm
 ////////////////////////////////////////////
@@ -63,8 +93,31 @@ function dataDeleted1(data){
 }
 
 
+function loadUserAssets(userId) {
+    let serviceUrl = document.location.origin + "/api/userAssets/" + userId;
+  
+    $.ajax({
+      url: serviceUrl,
+      crossDomain: true,
+      type: "GET",
+      success: function (data) {
+        console.log(data);
+        displayAssetsOnMap(data);
+      },
+    });
+  }
+  
 
-
+  function displayAssetsOnMap(assetData) {
+    // Assuming you have a Leaflet map instance called 'map'
+    let assetPoints = L.geoJSON(assetData, {
+      onEachFeature: function(feature, layer) {
+        layer.bindPopup("Asset Name: " + feature.properties.asset_name);
+      }
+    });
+  
+    assetPoints.addTo(mymap);
+  }
 
 ////////////////////////////////////////////
 //function for conditionSurvey
@@ -146,7 +199,7 @@ function ConditionUploaded(data) {
     // change the DIV to show the response
     document.getElementById("conditionResult").innerHTML = JSON.stringify(data);
     alert("Condition has been uploaded:"+ JSON.stringify(data));
-
+    fetchUserId();
     let serviceUrl = document.location.origin + "/api/userConditionReports/600";
   
     $.ajax({

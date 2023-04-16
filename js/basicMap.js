@@ -1,9 +1,9 @@
 "use strict";
-
-
 let mymap; // global variable to store the map
         
 let popup = L.popup(); // create a custom popup as a global variable 
+
+
 
 // create an event detector to wait for the user's click event and then use the popup to show them where they clicked
 // note that you don't need to do any complicated maths to convert screen coordinates to real world coordiantes - the Leaflet API does this for you
@@ -35,6 +35,7 @@ function loadLeafletMap() {
 
                     console.log("check on map click");
     
+    
 } //end code to add the leaflet map
 
 
@@ -59,7 +60,14 @@ function setMapClickEvent() {
         // set up a point with click functionality
         // so that anyone clicking will add asset condition information 
         setUpPointClick();
-        loadUserAssets();
+        //loadUserAssets();
+        fetchUserId()
+    .then((userId) => {
+      loadUserAssets(userId);
+    })
+    .catch((error) => {
+      console.error("Error fetching user ID:", error);
+    });
     }
 
 
@@ -138,41 +146,7 @@ function updateDescription(id) {
       
         descriptionDiv.innerHTML = description;
 }
-
-function loadUserAssets() {
-    let serviceUrl = document.location.origin + "/api/userAssets/600";
   
-    $.ajax({
-      url: serviceUrl,
-      crossDomain: true,
-      type: "GET",
-      success: function(data) {
-        console.log(data);
-        displayAssetsOnMap(data);
-      }
-    });
-  }
-
-  function displayAssetsOnMap(assetData) {
-    // Assuming you have a Leaflet map instance called 'map'
-    let assetPoints = L.geoJSON(assetData, {
-      onEachFeature: function(feature, layer) {
-        layer.bindPopup("Asset Name: " + feature.properties.asset_name);
-      }
-    });
-  
-    assetPoints.addTo(mymap);
-  }
-  
-
-
-
-
-
-
-
-
-
 
 function getPopupHTML(){
         // (in the final assignment, all the required values for the asset pop-up will be 
