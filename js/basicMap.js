@@ -2,7 +2,8 @@
 let mymap; // global variable to store the map
         
 let popup = L.popup(); // create a custom popup as a global variable 
-
+let clickedLat;
+let clickedLng;
 
 
 // create an event detector to wait for the user's click event and then use the popup to show them where they clicked
@@ -10,7 +11,11 @@ let popup = L.popup(); // create a custom popup as a global variable
 
 
 function onMapClick(e) {
+    
+    clickedLat = e.latlng.lat;
+    clickedLng = e.latlng.lng;
     let formHTML = basicFormHtml();
+    
     popup
         .setLatLng(e.latlng)
         .setContent("You clicked the map at " + e.latlng.toString()+"<br>"+formHTML) 
@@ -237,8 +242,8 @@ function basicFormHtml() {
     '    <label for="Installation Date">Installation Date</label><input type="date" id="installation_date"/><br />'+
     '    <br />'+
     '    <br />'+
-    '    <label for="Latitude">Latitude</label><input type="text" size="25" id="latitude"/><br />'+
-    '    <label for="Longitude">Longitude</label><input type="text" size="25" id="longitude"/><br />'+
+    '    <label for="Latitude">Latitude</label><input type="text" size="25" value="'+ clickedLat +'" id="latitude"/><br />'+
+    '    <label for="Longitude">Longitude</label><input type="text" size="25" value="'+ clickedLng +'" id="longitude"/><br />'+
     ''+
     ''+
     ''+

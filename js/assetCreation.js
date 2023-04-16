@@ -60,7 +60,14 @@ function processData(postString) {
     crossDomain: true,
     type: "POST",
     data: postString,
-    success: function(data){console.log(data); dataUploaded(data);}
+    success: function(data){console.log(data); dataUploaded(data);},
+    error: function (jqXHR, textStatus, errorThrown) {
+        if (jqXHR.status === 400) {
+          alert(jqXHR.responseText);
+        } else {
+          alert("Error submitting form: " + errorThrown);
+        }
+      }
     }); 
 
 }
