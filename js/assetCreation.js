@@ -176,7 +176,7 @@ function saveCondition() {
     let pre_Condition = document.getElementById("previousConditionValue").innerHTML;
     //postString =postString+"&previousConditionValue="+pre_Condition;
 	
-    if (pre_Condition==Condition) {
+    if (pre_Condition==condition_description) {
         alert("Previous condition is the same as your selected");
     }
     else{

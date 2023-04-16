@@ -95,7 +95,8 @@ function setUpPointClick(data) {
       onEachFeature: function (feature, layer) {
         let assetName = feature.properties.asset_name;
         let installationDate = feature.properties.installation_date;
-        let popUpHTML = getPopupHTML(assetName,installationDate);
+        let lastCondition = feature.properties.condition_description;
+        let popUpHTML = getPopupHTML(assetName,installationDate,lastCondition);
         layer.bindPopup(popUpHTML);
       },
     });
@@ -140,7 +141,7 @@ function updateDescription(id) {
 }
   
 
-function getPopupHTML(assetName,installationDate){
+function getPopupHTML(assetName,installationDate,lastCondition){
         // (in the final assignment, all the required values for the asset pop-up will be 
         //derived from feature.properties.xxx – see the Earthquakes code for how this is done)
         var conditionSurvey = '<!DOCTYPE html>'+
@@ -170,7 +171,7 @@ function getPopupHTML(assetName,installationDate){
 ''+
 '<div id="condition_description"></div>'+
 '<div id="user_id" style="display: none;"> 1272 </div>'+
-'<div id="previousConditionValue" style="display: none;">1</div> '+
+'<div id="previousConditionValue" style="display: none;">'+ lastCondition +'</div> '+
 '<div id="asset_id" style="display: none;">2</div>'+
 ''+
 ''+
