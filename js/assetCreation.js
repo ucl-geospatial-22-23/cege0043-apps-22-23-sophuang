@@ -181,23 +181,25 @@ function saveCondition() {
         postString=postString+"&condition_id=5";
         Condition="5";
     }
-    if (document.getElementById("6").checked) {
-        postString=postString+"&condition_id=6";
-        Condition="6";
-    }
     postString=postString+"&asset_name=" + assetName;
     postString=postString+ "&condition_description=" + condition_description;
 	//postString=postString+ "&user_id=" + user;
     // get previous condition from hidden field
     let pre_Condition = document.getElementById("previousConditionValue").innerHTML;
     //postString =postString+"&previousConditionValue="+pre_Condition;
-	
-    if (pre_Condition==condition_description) {
-        alert("Previous condition is the same as your selected");
+
+	if (pre_Condition=='Unknown') {
+        alert("No Previous Condition Report Captured for this Asset");
     }
     else{
-        alert("Previous condition is different from your selected");
+        if (pre_Condition==condition_description) {
+            alert("Previous condition is the same as your selected");
+        }
+        else{
+            alert("Previous condition is different from your selected");
+        }
     }
+    
 
 
     processCondition(postString);
