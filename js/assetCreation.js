@@ -26,7 +26,23 @@ function fetchUserId() {
   }
   
   
+ function fetchUserRanking(userId) {
+    let serviceUrl = document.location.origin + "/api/userRanking/" + userId;
   
+        $.ajax({
+            url: serviceUrl,
+            crossDomain: true,
+            type: "GET",
+            success: function(data) {
+            // Extract the ranking from the response data and show an alert
+            let ranking = data[0].array_to_json[0].rank;
+            alert("Your ranking based on condition reports is: " + ranking);
+            },
+            error: function(err) {
+            console.error("Error while fetching user ranking:", err);
+            }
+        });
+ } 
 
   
 ////////////////////////////////////////////
@@ -60,7 +76,14 @@ function processData(postString) {
     crossDomain: true,
     type: "POST",
     data: postString,
-    success: function(data){console.log(data); dataUploaded(data);}
+    success: function(data){console.log(data); dataUploaded(data);},
+    error: function (jqXHR, textStatus, errorThrown) {
+        if (jqXHR.status === 400) {
+          alert(jqXHR.responseText);
+        } else {
+          alert("Error submitting form: " + errorThrown);
+        }
+      }
     }); 
 
 }
@@ -103,20 +126,21 @@ function loadUserAssets(userId) {
       success: function (data) {
         console.log(data);
         displayAssetsOnMap(data);
+        setUpPointClick(data);
       },
     });
   }
   
-
+  //setUpPointClick(assetData);
   function displayAssetsOnMap(assetData) {
-    // Assuming you have a Leaflet map instance called 'map'
+
     let assetPoints = L.geoJSON(assetData, {
       onEachFeature: function(feature, layer) {
         layer.bindPopup("Asset Name: " + feature.properties.asset_name);
       }
     });
-  
     assetPoints.addTo(mymap);
+    
   }
 
 ////////////////////////////////////////////
@@ -168,7 +192,7 @@ function saveCondition() {
     let pre_Condition = document.getElementById("previousConditionValue").innerHTML;
     //postString =postString+"&previousConditionValue="+pre_Condition;
 	
-    if (pre_Condition==Condition) {
+    if (pre_Condition==condition_description) {
         alert("Previous condition is the same as your selected");
     }
     else{

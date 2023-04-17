@@ -43,6 +43,15 @@ function UserRanking() {
     let aRegexResult = re.exec(new Error().stack);
     let sCallerName = aRegexResult[1] || aRegexResult[2];
     alert("menu UserRanking is called by: "+ sCallerName);
+    fetchUserId()
+    .then((userId) => {
+        fetchUserRanking(userId);
+    })
+    .catch((error) => {
+      console.error("Error fetching user ID:", error);
+    });
+    
+    /*
     let serviceUrl = document.location.origin + "/api/userRanking/600";
   
         $.ajax({
@@ -58,6 +67,8 @@ function UserRanking() {
             console.error("Error while fetching user ranking:", err);
             }
         });
+    */
+    
 }
 
 function Add5assets() {
