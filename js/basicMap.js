@@ -67,11 +67,12 @@ function setMapClickEvent() {
         setUpPointClick();
         fetchUserId()
     .then((userId) => {
-      loadUserAssets(userId);
+      loadUserAssets_C(userId);
     })
     .catch((error) => {
       console.error("Error fetching user ID:", error);
     });
+    trackLocation();
     }
 
 
@@ -82,6 +83,14 @@ function setMapClickEvent() {
             }
         // the on click functionality of the MAP should pop up a blank asset creation form
         mymap.on('click', onMapClick); 
+        setUpConditionClick();
+        fetchUserId()
+    .then((userId) => {
+        loadUserAssets_A(userId);
+    })
+    .catch((error) => {
+      console.error("Error fetching user ID:", error);
+    });
     }
 
     else{
@@ -97,6 +106,7 @@ function setUpPointClick(data) {
         let installationDate = feature.properties.installation_date;
         let lastCondition = feature.properties.condition_description;
         let popUpHTML = getPopupHTML(assetName,installationDate,lastCondition);
+        layer.bindPopup(lastCondition);
         layer.bindPopup(popUpHTML);
       },
     });
@@ -105,8 +115,42 @@ function setUpPointClick(data) {
     mapPoint = assetPoints.addTo(mymap);
     console.log("Asset Points added to the map");
   }
-  
 
+
+function setUpConditionClick(data) {
+    let assetPoints = L.geoJSON(data, {
+      onEachFeature: function (feature, layer) {
+        let lastCondition = feature.properties.condition_description;
+        let pre_con;
+        if (lastCondition=='Unknown') {
+            pre_con = "No Previous Condition Report Captured for this Asset";
+        }
+        else{
+            pre_con = "Last Condition: " + lastCondition;
+        }
+  
+        // Show lastCondition popup when the layer is clicked
+        layer.on("click", function (e) {
+          let lastConditionPopup = L.popup()
+            .setLatLng(layer.getLatLng())
+            .setContent(pre_con);
+  
+          lastConditionPopup.openOn(mymap);
+        });
+      },
+    });
+  
+    // Add assetPoints to the map
+    mapPoint = assetPoints.addTo(mymap);
+    console.log("Asset Points added to the map");
+  }
+  
+  
+  
+  
+  
+  
+  
 
 
 
@@ -166,7 +210,6 @@ function getPopupHTML(assetName,installationDate,lastCondition){
 '    3: <input type="radio" name="amorpm" id ="3" onclick="updateDescription(this.id)"/><br />'+
 '    4: <input type="radio" name="amorpm" id ="4" onclick="updateDescription(this.id)"/><br />'+
 '    5: <input type="radio" name="amorpm" id ="5" onclick="updateDescription(this.id)"/><br />'+
-'    6: <input type="radio" name="amorpm" id ="6" onclick="updateDescription(this.id)"/><br />'+
 ''+
 ''+
 '<div id="condition_description"></div>'+

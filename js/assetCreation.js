@@ -57,11 +57,22 @@ function saveNewAsset() {
     let latitude = document.getElementById("latitude").value;
     let user = document.getElementById("user_id").innerHTML;
 
-	//alert(asset_name + " "+ date + " "+module);
+	if (asset_name.trim() === "") {
+        // The user has not provided an asset_name
+        alert("Error: Please enter a valid asset name!");
+        console.error("Error: Please enter a valid asset name!");
+      }
+    else if (date === ""){
+        // The user has not provided an installation_date
+        alert("Error: Please choose a valid installation date!");
+        console.error("Error: Please choose a valid installation date!");
+    }
+    else{
+        let postString = "asset_name="+asset_name +"&installation_date="+date+"&latitude="+latitude+"&longitude="+longitude+ "&user_id=" + user;
+	    processData(postString);
+    }
 	
-	let postString = "asset_name="+asset_name +"&installation_date="+date+"&latitude="+latitude+"&longitude="+longitude+ "&user_id=" + user;
 	
-	processData(postString);
 
 }
 
@@ -115,8 +126,22 @@ function dataDeleted1(data){
 
 }
 
+function loadUserAssets_A(userId) {
+    let serviceUrl = document.location.origin + "/api/userAssets/" + userId;
+  
+    $.ajax({
+      url: serviceUrl,
+      crossDomain: true,
+      type: "GET",
+      success: function (data) {
+        console.log(data);
+        displayAssetsOnMap(data);
+        setUpConditionClick(data);
+      },
+    });
+  }
 
-function loadUserAssets(userId) {
+function loadUserAssets_C(userId) {
     let serviceUrl = document.location.origin + "/api/userAssets/" + userId;
   
     $.ajax({
@@ -131,7 +156,7 @@ function loadUserAssets(userId) {
     });
   }
   
-  //setUpPointClick(assetData);
+
   function displayAssetsOnMap(assetData) {
 
     let assetPoints = L.geoJSON(assetData, {
@@ -181,23 +206,23 @@ function saveCondition() {
         postString=postString+"&condition_id=5";
         Condition="5";
     }
-    if (document.getElementById("6").checked) {
-        postString=postString+"&condition_id=6";
-        Condition="6";
-    }
     postString=postString+"&asset_name=" + assetName;
     postString=postString+ "&condition_description=" + condition_description;
 	//postString=postString+ "&user_id=" + user;
     // get previous condition from hidden field
     let pre_Condition = document.getElementById("previousConditionValue").innerHTML;
     //postString =postString+"&previousConditionValue="+pre_Condition;
+
 	
-    if (pre_Condition==condition_description) {
-        alert("Previous condition is the same as your selected");
-    }
-    else{
-        alert("Previous condition is different from your selected");
-    }
+
+        if (pre_Condition==condition_description) {
+            alert("Previous condition is the same as your selected");
+        }
+        else{
+            alert("Previous condition is different from your selected");
+        }
+    
+    
 
 
     processCondition(postString);
