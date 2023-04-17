@@ -73,6 +73,7 @@ function setMapClickEvent() {
       console.error("Error fetching user ID:", error);
     });
     trackLocation();
+    closestFormPoint();
     }
 
 
@@ -106,7 +107,6 @@ function setUpPointClick(data) {
         let installationDate = feature.properties.installation_date;
         let lastCondition = feature.properties.condition_description;
         let popUpHTML = getPopupHTML(assetName,installationDate,lastCondition);
-        layer.bindPopup(lastCondition);
         layer.bindPopup(popUpHTML);
       },
     });
@@ -318,5 +318,10 @@ function basicFormHtml() {
         
 
 }
+
+
+
+
+
 
 
