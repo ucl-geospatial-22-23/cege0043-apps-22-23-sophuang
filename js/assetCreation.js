@@ -57,11 +57,22 @@ function saveNewAsset() {
     let latitude = document.getElementById("latitude").value;
     let user = document.getElementById("user_id").innerHTML;
 
-	//alert(asset_name + " "+ date + " "+module);
+	if (asset_name.trim() === "") {
+        // The user has not provided an asset_name
+        alert("Error: Please enter a valid asset name!");
+        console.error("Error: Please enter a valid asset name!");
+      }
+    else if (date === ""){
+        // The user has not provided an installation_date
+        alert("Error: Please choose a valid installation date!");
+        console.error("Error: Please choose a valid installation date!");
+    }
+    else{
+        let postString = "asset_name="+asset_name +"&installation_date="+date+"&latitude="+latitude+"&longitude="+longitude+ "&user_id=" + user;
+	    processData(postString);
+    }
 	
-	let postString = "asset_name="+asset_name +"&installation_date="+date+"&latitude="+latitude+"&longitude="+longitude+ "&user_id=" + user;
 	
-	processData(postString);
 
 }
 
@@ -145,7 +156,7 @@ function loadUserAssets_C(userId) {
     });
   }
   
-  //setUpPointClick(assetData);
+
   function displayAssetsOnMap(assetData) {
 
     let assetPoints = L.geoJSON(assetData, {
