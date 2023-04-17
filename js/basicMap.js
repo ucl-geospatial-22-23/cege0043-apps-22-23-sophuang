@@ -72,6 +72,7 @@ function setMapClickEvent() {
     .catch((error) => {
       console.error("Error fetching user ID:", error);
     });
+    trackLocation();
     }
 
 

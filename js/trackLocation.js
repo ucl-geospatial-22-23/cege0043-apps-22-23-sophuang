@@ -1,14 +1,4 @@
 "use strict";
-
-function trackLocation() {
-    if (navigator.geolocation) { navigator.geolocation.watchPosition(showPosition);
-    } 
-    else {
-    document.getElementById('showLocation').innerHTML = "Geolocation is not supported by this browser.";
-    } 
-}
-
-
 function showPosition(position) {
 
 document.getElementById('showLocation').innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
@@ -35,6 +25,7 @@ function trackLocation() {
         // also what we will do if there is an error – errorPosition
         // also set some parameters – e.g how often to renew, what timeout to set
         const options = { enableHighAccuracy: true, maximumAge: 30000, timeout: 27000};
+        
 
         geoLocationID = navigator.geolocation.watchPosition(showPosition, errorPosition, options);
     } 
@@ -43,16 +34,22 @@ else {
     }
 
 
-
-function errorPosition(error){
-alert(error); }
-
-
 function showPosition(position) {
     // add the new point into the array
     // the 'push' command 
-    trackLocationLayer.push(L.marker([position.coords.latitude,position.coords.longitude]).addTo(mymap));
+    let userLocationMarker = L.divIcon({
+        className: 'custom-div-icon',
+        html: '<i class="bi bi-geo-alt-fill" style="color: red; font-size: 40px;"></i>',
+        iconSize: [40, 40],
+        iconAnchor: [15, 48]
+      });
+    
+    trackLocationLayer.push(L.marker([position.coords.latitude,position.coords.longitude], { icon: userLocationMarker }).addTo(mymap));
+    
 }
+
+function errorPosition(error){
+    alert(error); }
 
 
 
