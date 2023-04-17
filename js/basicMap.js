@@ -97,6 +97,7 @@ function setUpPointClick(data) {
         let installationDate = feature.properties.installation_date;
         let lastCondition = feature.properties.condition_description;
         let popUpHTML = getPopupHTML(assetName,installationDate,lastCondition);
+        layer.bindPopup(lastCondition);
         layer.bindPopup(popUpHTML);
       },
     });
@@ -106,7 +107,72 @@ function setUpPointClick(data) {
     console.log("Asset Points added to the map");
   }
   
+/*
+  function setUpPointClick(data) {
+    let assetPoints = L.geoJSON(data, {
+      onEachFeature: function (feature, layer) {
+        let assetName = feature.properties.asset_name;
+        let installationDate = feature.properties.installation_date;
+        let lastCondition = feature.properties.condition_description;
+        let popUpHTML = getPopupHTML(assetName, installationDate, lastCondition);
 
+        if (pre_Condition=='Unknown') {
+            layer.bindPopup(popUpHTML + '<br>Last Condition: ' + lastCondition);
+            alert("No Previous Condition Report Captured for this Asset");
+        }
+    
+        layer.bindPopup(popUpHTML + '<br>Last Condition: ' + lastCondition);
+      },
+    });
+  
+    // Add assetPoints to the map
+    mapPoint = assetPoints.addTo(mymap);
+    console.log("Asset Points added to the map");
+  }
+*/
+
+function setUpPointClick(data) {
+    let assetPoints = L.geoJSON(data, {
+      onEachFeature: function (feature, layer) {
+        let assetName = feature.properties.asset_name;
+        let installationDate = feature.properties.installation_date;
+        let lastCondition = feature.properties.condition_description;
+        let popUpHTML = getPopupHTML(assetName, installationDate, lastCondition);
+        let pre_con;
+        if (lastCondition=='Unknown') {
+            pre_con = "No Previous Condition Report Captured for this Asset";
+        }
+        else{
+            pre_con = "Last Condition: " + lastCondition;
+        }
+  
+        // Show lastCondition popup when the layer is clicked
+        layer.on("click", function (e) {
+          let lastConditionPopup = L.popup()
+            .setLatLng(layer.getLatLng())
+            .setContent(pre_con);
+  
+          lastConditionPopup.openOn(mymap);
+  
+          setTimeout(function () {
+            lastConditionPopup.remove();
+            layer.bindPopup(popUpHTML).openPopup();
+          }, 3000); // Wait 3 second before opening the second popup
+        });
+      },
+    });
+  
+    // Add assetPoints to the map
+    mapPoint = assetPoints.addTo(mymap);
+    console.log("Asset Points added to the map");
+  }
+  
+  
+  
+  
+  
+  
+  
 
 
 

@@ -188,17 +188,15 @@ function saveCondition() {
     let pre_Condition = document.getElementById("previousConditionValue").innerHTML;
     //postString =postString+"&previousConditionValue="+pre_Condition;
 
-	if (pre_Condition=='Unknown') {
-        alert("No Previous Condition Report Captured for this Asset");
-    }
-    else{
+	
+
         if (pre_Condition==condition_description) {
             alert("Previous condition is the same as your selected");
         }
         else{
             alert("Previous condition is different from your selected");
         }
-    }
+    
     
 
 
