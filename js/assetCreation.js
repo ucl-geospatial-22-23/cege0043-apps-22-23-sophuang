@@ -115,8 +115,22 @@ function dataDeleted1(data){
 
 }
 
+function loadUserAssets_A(userId) {
+    let serviceUrl = document.location.origin + "/api/userAssets/" + userId;
+  
+    $.ajax({
+      url: serviceUrl,
+      crossDomain: true,
+      type: "GET",
+      success: function (data) {
+        console.log(data);
+        displayAssetsOnMap(data);
+        setUpConditionClick(data);
+      },
+    });
+  }
 
-function loadUserAssets(userId) {
+function loadUserAssets_C(userId) {
     let serviceUrl = document.location.origin + "/api/userAssets/" + userId;
   
     $.ajax({
