@@ -1,6 +1,8 @@
 "use strict";
 
 let userId;
+let assetLayers = {};
+
 
 function fetchUserId() {
     return new Promise((resolve, reject) => {
@@ -157,6 +159,7 @@ function loadUserAssets_C(userId) {
   }
   
 
+
   function displayAssetsOnMap(assetData) {
 
     let assetPoints = L.geoJSON(assetData, {
@@ -168,6 +171,33 @@ function loadUserAssets_C(userId) {
     
   }
 
+  
+  function displayAssetsOnMap1(assetData) {
+    let assetPoints = L.geoJSON(assetData, {
+      pointToLayer: function (feature, latlng) {
+        let assetID = feature.properties.asset_id;
+        let assetName = feature.properties.asset_name;
+        let installationDate = feature.properties.installation_date;
+        let lastCondition = feature.properties.condition_description;
+  
+        let icon = L.divIcon({
+          className: 'custom-div-icon',
+          html: '<i class="bi bi-geo-alt-fill" style="color: black; font-size: 20px;"></i>',
+          iconSize: [20, 20],
+          iconAnchor: [10, 10],
+        });
+        let marker = L.marker(latlng, { icon: icon });
+        assetLayers[assetID] = marker;
+        
+        let popUpHTML = getPopupHTML(assetName, installationDate, lastCondition);
+        marker.bindPopup(popUpHTML);
+        return marker;
+      },
+    });
+    assetPoints.addTo(mymap);
+  }
+  
+  
 ////////////////////////////////////////////
 //function for conditionSurvey
 ////////////////////////////////////////////
@@ -243,13 +273,13 @@ function processCondition(postString) {
     }); 
 
 }
-// create the code to process the response from the data server
+
 function ConditionUploaded(data) {
     // change the DIV to show the response
     document.getElementById("conditionResult").innerHTML = JSON.stringify(data);
     alert("Condition has been uploaded:"+ JSON.stringify(data));
     fetchUserId();
-    let serviceUrl = document.location.origin + "/api/userConditionReports/600";
+    let serviceUrl = document.location.origin + "/api/userConditionReports/"+fetchUserId();
   
     $.ajax({
         url: serviceUrl,
@@ -266,6 +296,71 @@ function ConditionUploaded(data) {
     });
 
 }
+
+
+// create the code to process the response from the data server
+/*
+function ConditionUploaded(data) {
+    // change the DIV to show the response
+    document.getElementById("conditionResult").innerHTML = JSON.stringify(data);
+    alert("Condition has been uploaded:" + JSON.stringify(data));
+    
+    let assetID = data.asset_id;
+    let condition = data.condition_id;
+    let color = getColorByCondition(condition);
+  
+    let icon = L.divIcon({
+      className: 'custom-div-icon',
+      html: `<i class="bi bi-geo-alt-fill" style="color: ${color}; font-size: 20px;"></i>`,
+      iconSize: [20, 20],
+      iconAnchor: [10, 10],
+    });
+  
+    let marker = assetLayers[assetID];
+    if (marker) {
+      marker.setIcon(icon);
+    }
+  
+    fetchUserId();
+    let serviceUrl = document.location.origin + "/api/userConditionReports/600";
+  
+    $.ajax({
+      url: serviceUrl,
+      crossDomain: true,
+      type: "GET",
+      success: function (data) {
+        // Extract the count from the response data and show an alert
+        let count = data[0].array_to_json[0].num_reports;
+        alert("You have saved " + count + " condition reports.");
+      },
+      error: function (err) {
+        console.error("Error fetching the count of condition reports:", err);
+      },
+    });
+  }
+*/
+  
+
+  // Function to get color based on the asset condition
+  function getColorByCondition(condition) {
+    switch (condition) {
+      case '1':
+        return 'green';
+      case '2':
+        return 'lime';
+      case '3':
+        return 'yellow';
+      case '4':
+        return 'orange';
+      case '5':
+        return 'red';
+      default:
+        return 'black';
+    }
+  }
+  
+
+
 
 function deleteRecord() {
 	let deleteID = document.getElementById("delete_id").value;

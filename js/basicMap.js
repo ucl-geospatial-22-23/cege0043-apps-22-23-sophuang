@@ -73,7 +73,6 @@ function setMapClickEvent() {
       console.error("Error fetching user ID:", error);
     });
     trackLocation();
-    closestFormPoint();
     }
 
 
@@ -210,6 +209,7 @@ function getPopupHTML(assetName,installationDate,lastCondition){
 '    3: <input type="radio" name="amorpm" id ="3" onclick="updateDescription(this.id)"/><br />'+
 '    4: <input type="radio" name="amorpm" id ="4" onclick="updateDescription(this.id)"/><br />'+
 '    5: <input type="radio" name="amorpm" id ="5" onclick="updateDescription(this.id)"/><br />'+
+'    6: <input type="radio" name="amorpm" id ="6" onclick="updateDescription(this.id)"/><br />'+
 ''+
 ''+
 '<div id="condition_description"></div>'+
