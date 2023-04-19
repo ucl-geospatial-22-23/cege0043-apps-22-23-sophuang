@@ -1,16 +1,12 @@
 "use strict";
-function showPosition(position) {
-
-document.getElementById('showLocation').innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
-
-}
-
-
 // create an array to store all the location tracking points 
 let trackLocationLayer = [];
 
 // store the ID of the location tracker so that it can be used to switch the location tracking off 
 let geoLocationID;
+
+let trackedLatitude;
+let trackedLongitude;
 
 function trackLocation() {
     if (navigator.geolocation) {
@@ -44,7 +40,13 @@ function showPosition(position) {
         iconAnchor: [15, 48]
       });
     
+    trackedLatitude = position.coords.latitude;
+    trackedLongitude = position.coords.longitude;
+    
     trackLocationLayer.push(L.marker([position.coords.latitude,position.coords.longitude], { icon: userLocationMarker }).addTo(mymap));
+
+    // Call the findClosestFormPoint function
+    closestFormPoint();
     
 }
 
@@ -76,3 +78,42 @@ function removeTracks(){
         trackLocationLayer.pop();
         }   
     }
+
+
+//Proximity alert
+function closestFormPoint() {
+    let minDistance = 100000000000;
+    let closestLayer = null;
+    let proximityThreshold = 0.025; // Set your proximity threshold in kilometers
+  
+    mapPoint.eachLayer(function (layer) {
+        let distance = calculateDistance(
+          trackedLatitude,
+          trackedLongitude,
+          layer.getLatLng().lat,
+          layer.getLatLng().lng,
+          "K"
+        );
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestLayer = layer;
+        }
+      });
+    console.log("Minimum Distance"+minDistance);
+    // Check if the closest point is within the proximity threshold
+  if (minDistance <= proximityThreshold) {
+    // Get asset properties
+    let assetName = closestLayer.feature.properties.asset_name;
+    let installationDate = closestLayer.feature.properties.installation_date;
+    let lastCondition = closestLayer.feature.properties.condition_description;
+    let assetID= closestLayer.feature.properties.asset_id;
+    let popUpHTML = getPopupHTML(assetID,assetName, installationDate, lastCondition);
+
+    // Show the popup for the closest point
+    closestLayer.bindPopup(popUpHTML);
+    closestLayer.openPopup();
+  } else {
+    console.log("No assets within proximity threshold");
+  }
+  }
+  
