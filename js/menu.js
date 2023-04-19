@@ -324,7 +324,10 @@ function displayNo3(assetData) {
     NoReports = L.geoJSON(assetData, {
         pointToLayer: function (feature, latlng) {
         return L.marker(latlng, { icon: greyIcon });
-        }
+        },
+        onEachFeature: function (feature, layer) {
+            layer.bindPopup("Asset Name: " + feature.properties.asset_name);
+          },
     });
     if (NoReports) {
         mymap.removeLayer(mapPoint);
@@ -335,6 +338,9 @@ function displayNo3(assetData) {
     let NoReportsBounds = NoReports.getBounds();
     mymap.fitBounds(NoReportsBounds);
 }
+
+
+  
 
 function removeNo3() {
     if (NoReports) {
