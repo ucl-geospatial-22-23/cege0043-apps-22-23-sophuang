@@ -140,6 +140,46 @@ function Remove5assets() {
     removeClosest5();
 }
 
+function loadClosest5() {
+    let serviceUrl = document.location.origin + "/api/userFiveClosestAssets/" + trackedLatitude + "/" + trackedLongitude;
+  
+    $.ajax({
+      url: serviceUrl,
+      crossDomain: true,
+      type: "GET",
+      success: function (data) {
+        console.log(data);
+        displayClosest5(data);
+      },
+    });
+}
+
+
+
+// Declare ClosestPoints as a global variable
+let ClosestPoints;
+
+function displayClosest5(assetData) {
+
+    let goldIcon = createCustomIcon('gold');
+
+     ClosestPoints = L.geoJSON(assetData, {
+        pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, { icon: goldIcon });
+        }
+    });
+    if (ClosestPoints) {
+        mymap.removeLayer(mapPoint);
+      }
+      mapPoint = ClosestPoints.addTo(mymap);
+}
+
+function removeClosest5() {
+    if (ClosestPoints) {
+        mymap.removeLayer(mapPoint);
+      }
+    }
+
 function Add5reports() {
     let re = /([^(]+)@|at ([^(]+) \(/g;
     let aRegexResult = re.exec(new Error().stack);
