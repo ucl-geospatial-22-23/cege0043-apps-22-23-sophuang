@@ -122,6 +122,9 @@ function UserRanking() {
     
 }
 
+ /*
+    Functions for Closest 5 assets
+    */
 function Add5assets() {
     let re = /([^(]+)@|at ([^(]+) \(/g;
     let aRegexResult = re.exec(new Error().stack);
@@ -155,7 +158,6 @@ function loadClosest5() {
 }
 
 
-
 // Declare ClosestPoints as a global variable
 let ClosestPoints;
 
@@ -180,11 +182,16 @@ function removeClosest5() {
       }
     }
 
+
+ /*
+    Functions for last 5 reports
+    */
 function Add5reports() {
     let re = /([^(]+)@|at ([^(]+) \(/g;
     let aRegexResult = re.exec(new Error().stack);
     let sCallerName = aRegexResult[1] || aRegexResult[2];
     alert("menu Add5reports is called by: "+ sCallerName);
+    loadLast5();
 }
 
 function Remove5reports() {
@@ -192,7 +199,66 @@ function Remove5reports() {
     let aRegexResult = re.exec(new Error().stack);
     let sCallerName = aRegexResult[1] || aRegexResult[2];
     alert("menu Remove5reports is called by: "+ sCallerName);
+    removeLast5()
 }
+
+
+
+function loadLast5() {
+    fetchUserId()
+    .then((userId) => {
+        let serviceUrl = document.location.origin + "/api/lastFiveConditionReports/" + userId ;
+        $.ajax({
+            url: serviceUrl,
+            crossDomain: true,
+            type: "GET",
+            success: function (data) {
+              console.log(data);
+              displayLast5(data);
+            },
+          });
+
+
+    })
+    .catch((error) => {
+      console.error("Error fetching user ID:", error);
+    }); 
+}
+
+
+// Declare ClosestPoints as a global variable
+let LastAssets;
+
+function displayLast5(assetData) {
+
+    let goldIcon = createCustomIcon('gold');
+
+    LastAssets = L.geoJSON(assetData, {
+        pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, { icon: goldIcon });
+        }
+    });
+    if (LastAssets) {
+        mymap.removeLayer(mapPoint);
+      }
+      mapPoint = LastAssets.addTo(mymap);
+}
+
+function removeLast5() {
+    if (LastAssets) {
+        mymap.removeLayer(mapPoint);
+      }
+    }
+
+
+
+
+
+
+
+
+
+
 
 function Add3rated() {
     let re = /([^(]+)@|at ([^(]+) \(/g;
