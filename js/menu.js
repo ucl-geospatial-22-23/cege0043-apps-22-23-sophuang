@@ -136,6 +136,8 @@ function Remove5assets() {
     let aRegexResult = re.exec(new Error().stack);
     let sCallerName = aRegexResult[1] || aRegexResult[2];
     alert("menu Remove5assets is called by: "+ sCallerName);
+
+    removeClosest5();
 }
 
 function Add5reports() {

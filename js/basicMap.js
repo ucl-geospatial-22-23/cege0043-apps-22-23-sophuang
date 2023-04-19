@@ -273,21 +273,31 @@ function createCustomIcon(color) {
 }
 
 
-let goldIcon = createCustomIcon('gold');
+
+// Declare ClosestPoints as a global variable
+let ClosestPoints;
 
 function displayClosest5(assetData) {
 
-let ClosestPoints = L.geoJSON(assetData, {
-    pointToLayer: function (feature, latlng) {
-      return L.marker(latlng, { icon: goldIcon });
-    }
-  });
+    let goldIcon = createCustomIcon('gold');
 
-ClosestPoints.addTo(mymap);
-
+     ClosestPoints = L.geoJSON(assetData, {
+        pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, { icon: goldIcon });
+        }
+    });
+    if (ClosestPoints) {
+        mymap.removeLayer(mapPoint);
+      }
+      mapPoint = ClosestPoints.addTo(mymap);
 }
-  
-  
+
+function removeClosest5() {
+    if (ClosestPoints) {
+        mymap.removeLayer(mapPoint);
+      }
+    }
+
   
 
 
