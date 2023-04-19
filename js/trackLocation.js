@@ -106,7 +106,8 @@ function closestFormPoint() {
     let assetName = closestLayer.feature.properties.asset_name;
     let installationDate = closestLayer.feature.properties.installation_date;
     let lastCondition = closestLayer.feature.properties.condition_description;
-    let popUpHTML = getPopupHTML(assetName, installationDate, lastCondition);
+    let assetID= closestLayer.feature.properties.asset_id;
+    let popUpHTML = getPopupHTML(assetID,assetName, installationDate, lastCondition);
 
     // Show the popup for the closest point
     closestLayer.bindPopup(popUpHTML);

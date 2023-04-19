@@ -100,8 +100,6 @@ function setMapClickEvent() {
 }
 
 
-// Create an object to store the markers
-let markers = {};
 function setUpPointClick(data) {
     let assetPoints = L.geoJSON(data, {
       onEachFeature: function (feature, layer) {
@@ -111,11 +109,7 @@ function setUpPointClick(data) {
         let asset_id = feature.properties.asset_id;
         let popUpHTML = getPopupHTML(asset_id,assetName, installationDate, lastCondition);
         layer.bindPopup(popUpHTML);
-        
-        // Store the marker in the markers object
-      let assetId = feature.properties.asset_id;
-      markers[assetId] = layer;
-      layer.assetId = assetId;
+        layer.assetId = feature.properties.asset_id; // Attach the asset ID to the layer
       },
     });
 
@@ -181,12 +175,12 @@ function createCustomIcon(color) {
 
 
   
-
-  
-  function updateLayerColor(assetId, condition) {
-    let marker = markers[assetId];
-    if (marker) {
-      let icon;
+  function updateLayerColor(layerGroup, assetId, condition) {
+    layerGroup.eachLayer(function (layer) {
+        console.log("layer.assetId:"+layer.assetId);
+        console.log("assetId:"+assetId);
+        if (layer.assetId === assetId) {
+            let icon;
       switch (condition) {
         case '1':
           icon = greenIcon;
@@ -207,9 +201,11 @@ function createCustomIcon(color) {
           icon = grayIcon;
           break;
       }
-  
-      marker.setIcon(icon);
-    }
+      layer.setIcon(icon);
+            return; // Exit the loop once the matching asset is found and updated
+          }
+      
+    });
   
     console.log("updateLayerColor");
   }

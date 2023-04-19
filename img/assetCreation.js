@@ -258,7 +258,7 @@ function saveCondition() {
     processCondition(postString);
 
 
-    updateLayerColor(assetID, Condition);
+    updateLayerColor(mapPoint,assetID, Condition);
 
 
 }
