@@ -170,32 +170,6 @@ function loadUserAssets_C(userId) {
     assetPoints.addTo(mymap);
     
   }
-
-  
-  function displayAssetsOnMap1(assetData) {
-    let assetPoints = L.geoJSON(assetData, {
-      pointToLayer: function (feature, latlng) {
-        let assetID = feature.properties.asset_id;
-        let assetName = feature.properties.asset_name;
-        let installationDate = feature.properties.installation_date;
-        let lastCondition = feature.properties.condition_description;
-  
-        let icon = L.divIcon({
-          className: 'custom-div-icon',
-          html: '<i class="bi bi-geo-alt-fill" style="color: black; font-size: 20px;"></i>',
-          iconSize: [20, 20],
-          iconAnchor: [10, 10],
-        });
-        let marker = L.marker(latlng, { icon: icon });
-        assetLayers[assetID] = marker;
-        
-        let popUpHTML = getPopupHTML(assetName, installationDate, lastCondition);
-        marker.bindPopup(popUpHTML);
-        return marker;
-      },
-    });
-    assetPoints.addTo(mymap);
-  }
   
   
 ////////////////////////////////////////////
@@ -208,8 +182,6 @@ function saveCondition() {
     // get ID of the asset
     let assetID = document.getElementById("asset_id").innerHTML;
     let assetName = document.getElementById("asset_name").value;
-    let user = document.getElementById("user_id").innerHTML;
-    let date = document.getElementById("installation_date").value;
     let postString="asset_id=" + assetID;
     let Condition = "";
     let condition_description = document.getElementById("condition_description").innerHTML;
@@ -256,8 +228,6 @@ function saveCondition() {
 
 
     processCondition(postString);
-
-
     updateLayerColor(assetID, Condition);
 
 
@@ -273,17 +243,29 @@ function processCondition(postString) {
     crossDomain: true,
     type: "POST",
     data: postString,
-    success: function(data){console.log(data); ConditionUploaded(data);}
+    success: function(data){console.log(data); 
+    // Fetch the userId using the fetchUserId function
+  fetchUserId()
+  .then((userId) => {
+    // Call ConditionUploaded with the fetched userId
+    ConditionUploaded(data,userId);
+  })
+  .catch((error) => {
+    console.error("Error fetching user ID:", error);
+  });}
     }); 
 
 }
 
-function ConditionUploaded(data) {
+function ConditionUploaded(data,userId) {
     // change the DIV to show the response
     document.getElementById("conditionResult").innerHTML = JSON.stringify(data);
     alert("Condition has been uploaded:"+ JSON.stringify(data));
 
-    let serviceUrl = document.location.origin + "/api/userConditionReports/600";
+
+
+
+    let serviceUrl = document.location.origin + "/api/userConditionReports/"+userId;
   
     $.ajax({
         url: serviceUrl,
@@ -298,8 +280,6 @@ function ConditionUploaded(data) {
         console.error("Error fetching the count of condition reports:", err);
         }
     });
-
-    
 
 }
 

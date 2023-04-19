@@ -102,8 +102,18 @@ function setMapClickEvent() {
 
 // Create an object to store the markers
 let markers = {};
+let updatedConditions = {};
+
 function setUpPointClick(data) {
     let assetPoints = L.geoJSON(data, {
+        pointToLayer: function (feature, latlng) {
+            let assetId = feature.properties.asset_id;
+            let condition = updatedConditions[assetId] || feature.properties.condition;
+            let icon = getIconByCondition(condition);
+            let marker = L.marker(latlng, {icon: icon});
+            marker.assetId = assetId;
+            return marker;
+          },
       onEachFeature: function (feature, layer) {
         let assetName = feature.properties.asset_name;
         let installationDate = feature.properties.installation_date;
@@ -125,8 +135,7 @@ function setUpPointClick(data) {
 
     return assetPoints;
 }
-
-
+  
 
   
 
@@ -176,16 +185,42 @@ function createCustomIcon(color) {
   let orangeIcon = createCustomIcon('orange');
   let redIcon = createCustomIcon('red');
   let purpleIcon = createCustomIcon('purple');
-  let grayIcon = createCustomIcon('gray');
+  let blueIcon = createCustomIcon('blue');
   
 
-
+  function getIconByCondition(condition) {
+    let icon;
+    switch (condition) {
+      case '1':
+        icon = greenIcon;
+        break;
+      case '2':
+        icon = yellowIcon;
+        break;
+      case '3':
+        icon = orangeIcon;
+        break;
+      case '4':
+        icon = redIcon;
+        break;
+      case '5':
+        icon = purpleIcon;
+        break;
+      default:
+        icon = blueIcon;
+        break;
+    }
+    return icon;
+  }
+  
   
 
   
   function updateLayerColor(assetId, condition) {
     let marker = markers[assetId];
+    updatedConditions[assetId] = condition;
     if (marker) {
+        marker.remove();
       let icon;
       switch (condition) {
         case '1':
@@ -204,11 +239,17 @@ function createCustomIcon(color) {
           icon = purpleIcon;
           break;
         default:
-          icon = grayIcon;
+          icon = blueIcon;
           break;
       }
   
-      marker.setIcon(icon);
+      // Create a new marker with the updated icon and add it to the map
+    let newMarker = L.marker(marker.getLatLng(), {icon: icon}).addTo(mymap);
+    newMarker.bindPopup(marker.getPopup().getContent());
+
+    // Update the marker in the markers object
+    markers[assetId] = newMarker;
+    newMarker.assetId = assetId;
     }
   
     console.log("updateLayerColor");
