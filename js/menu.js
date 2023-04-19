@@ -230,23 +230,33 @@ function loadLast5() {
 let LastAssets;
 
 function displayLast5(assetData) {
-
     let goldIcon = createCustomIcon('gold');
-
-    LastAssets = L.geoJSON(assetData, {
-        pointToLayer: function (feature, latlng) {
-        return L.marker(latlng, { icon: goldIcon });
-        }
-    });
+  
+    // Remove any existing LastAssets layer from the map before adding a new one
     if (LastAssets) {
-        mymap.removeLayer(mapPoint);
-      }
-      mapPoint = LastAssets.addTo(mymap);
-}
+      mymap.removeLayer(LastAssets);
+    }
+  
+    LastAssets = L.geoJSON(assetData, {
+      pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, { icon: goldIcon });
+      },
+      onEachFeature: function (feature, layer) {
+        layer.bindPopup("Asset Name: " + feature.properties.asset_name);
+      },
+    });
+  
+    LastAssets.addTo(mymap);
+  
+    // Set the map view to fit the LastAssets layer
+    let lastAssetsBounds = LastAssets.getBounds();
+    mymap.fitBounds(lastAssetsBounds);
+  }
+  
 
 function removeLast5() {
     if (LastAssets) {
-        mymap.removeLayer(mapPoint);
+        mymap.removeLayer(LastAssets);
       }
     }
 
