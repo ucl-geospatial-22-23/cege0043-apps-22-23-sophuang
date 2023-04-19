@@ -243,7 +243,7 @@ function displayLast5(assetData) {
         return L.marker(latlng, { icon: conditionIcon });
       },
       onEachFeature: function (feature, layer) {
-        layer.bindPopup("Asset Name: " + feature.properties.asset_name);
+        layer.bindPopup("Asset Name: " + feature.properties.asset_name +". Last Condition: " +feature.properties.condition_description);
       },
     });
   
