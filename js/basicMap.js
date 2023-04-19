@@ -181,10 +181,10 @@ function createCustomIcon(color) {
   }
   
   let greenIcon = createCustomIcon('green');
-  let yellowIcon = createCustomIcon('yellow');
+  let goldIcon = createCustomIcon('gold');
   let orangeIcon = createCustomIcon('orange');
   let redIcon = createCustomIcon('red');
-  let purpleIcon = createCustomIcon('purple');
+  let violetIcon = createCustomIcon('violet');
   let blueIcon = createCustomIcon('blue');
   
 
@@ -195,7 +195,7 @@ function createCustomIcon(color) {
         icon = greenIcon;
         break;
       case '2':
-        icon = yellowIcon;
+        icon = goldIcon;
         break;
       case '3':
         icon = orangeIcon;
@@ -204,7 +204,7 @@ function createCustomIcon(color) {
         icon = redIcon;
         break;
       case '5':
-        icon = purpleIcon;
+        icon = violetIcon;
         break;
       default:
         icon = blueIcon;
@@ -227,7 +227,7 @@ function createCustomIcon(color) {
           icon = greenIcon;
           break;
         case '2':
-          icon = yellowIcon;
+          icon = goldIcon;
           break;
         case '3':
           icon = orangeIcon;
@@ -236,7 +236,7 @@ function createCustomIcon(color) {
           icon = redIcon;
           break;
         case '5':
-          icon = purpleIcon;
+          icon = violetIcon;
           break;
         default:
           icon = blueIcon;
