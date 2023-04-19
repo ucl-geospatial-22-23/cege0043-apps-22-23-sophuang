@@ -143,6 +143,37 @@ function closeAssetData(){
        .attr("width", x.bandwidth())
        .attr("height", d => height - y(d.reports_submitted));
  */
+// Add a legend
+const legendData = [
+  { label: "Reports Submitted", color: 'slateblue' },
+  { label: "Reports Not Working", color: '#71EEB8' },
+];
+
+const legend = svg
+  .selectAll(".legend")
+  .data(legendData)
+  .enter()
+  .append("g")
+  .attr("class", "legend")
+  .attr("transform", function (_, i) {
+    return "translate(0," + (i * 20) + ")";
+  });
+
+legend
+  .append("rect")
+  .attr("x", width - 18)
+  .attr("width", 18)
+  .attr("height", 18)
+  .style("fill", (d) => d.color);
+
+legend
+  .append("text")
+  .attr("x", width - 24)
+  .attr("y", 9)
+  .attr("dy", ".35em")
+  .style("text-anchor", "end")
+  .text((d) => d.label);
+
  })
  .catch(err => {
     svg.append("text")         
