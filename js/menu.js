@@ -1,4 +1,5 @@
 "use strict";
+/*
 function AssetBest() {
     let re = /([^(]+)@|at ([^(]+) \(/g;
     let aRegexResult = re.exec(new Error().stack);
@@ -21,8 +22,58 @@ function AssetBest() {
       }
     });
   }
+*/
+async function AssetBest() {
+    let re = /([^(]+)@|at ([^(]+) \(/g;
+    let aRegexResult = re.exec(new Error().stack);
+    let sCallerName = aRegexResult[1] || aRegexResult[2];
+    alert("menu AssetBest is called by: " + sCallerName);
+  
+    let serviceUrl = document.location.origin + "/api/assetsInGreatCondition";
+  
+    $.ajax({
+      url: serviceUrl,
+      crossDomain: true,
+      type: "GET",
+      success: function (assets) {
+        displayAssetsList(assets);
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.error("Error fetching assets in great condition:", errorThrown);
+        alert("Error fetching assets in great condition. Please check the console for more details.");
+      },
+    });
+  }
+  
+  function displayAssetsList(assets) {
+    let popupContent = "<h3>Assets in Best Condition</h3><div style='max-height: 700px; width: 400px; overflow-y: scroll;'><ul>";
+  
+    assets.forEach(function (asset) {
+      popupContent += "<li>" + JSON.stringify(asset, null, 2) + "</li>";
+    });
+  
+    popupContent += "</ul></div>";
+  
+    // Get the center coordinates of the current map view
+    var mapCenter = mymap.getCenter();
+  
+    var popup = L.popup({maxWidth: 400})
+        .setLatLng(mapCenter) // Set the position of the popup to the map's center
+        .setContent(popupContent) // Set the content of the popup
+        .openOn(mymap);
+  }
+  
+  
+  
+  
   
 
+
+
+
+
+
+  
 
 function RatesGraph() {
     let re = /([^(]+)@|at ([^(]+) \(/g;
