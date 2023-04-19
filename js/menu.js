@@ -127,6 +127,8 @@ function Add5assets() {
     let aRegexResult = re.exec(new Error().stack);
     let sCallerName = aRegexResult[1] || aRegexResult[2];
     alert("menu Add5assets is called by: "+ sCallerName);
+
+    loadClosest5();
 }
 
 function Remove5assets() {

@@ -181,7 +181,8 @@ function createCustomIcon(color) {
   }
   
   let greenIcon = createCustomIcon('green');
-  let goldIcon = createCustomIcon('gold');
+  let yellowIcon = createCustomIcon('yellow');
+ 
   let orangeIcon = createCustomIcon('orange');
   let redIcon = createCustomIcon('red');
   let violetIcon = createCustomIcon('violet');
@@ -195,7 +196,7 @@ function createCustomIcon(color) {
         icon = greenIcon;
         break;
       case '2':
-        icon = goldIcon;
+        icon = yellowIcon;
         break;
       case '3':
         icon = orangeIcon;
@@ -227,7 +228,7 @@ function createCustomIcon(color) {
           icon = greenIcon;
           break;
         case '2':
-          icon = goldIcon;
+          icon = yellowIcon;
           break;
         case '3':
           icon = orangeIcon;
@@ -257,7 +258,34 @@ function createCustomIcon(color) {
   
   
 
+  function loadClosest5() {
+    let serviceUrl = document.location.origin + "/api/userFiveClosestAssets/" + trackedLatitude + "/" + trackedLongitude;
   
+    $.ajax({
+      url: serviceUrl,
+      crossDomain: true,
+      type: "GET",
+      success: function (data) {
+        console.log(data);
+        displayClosest5(data);
+      },
+    });
+}
+
+
+let goldIcon = createCustomIcon('gold');
+
+function displayClosest5(assetData) {
+
+let ClosestPoints = L.geoJSON(assetData, {
+    pointToLayer: function (feature, latlng) {
+      return L.marker(latlng, { icon: goldIcon });
+    }
+  });
+
+ClosestPoints.addTo(mymap);
+
+}
   
   
   
