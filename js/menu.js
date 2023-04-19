@@ -232,7 +232,7 @@ let LastAssets;
 function displayLast5(assetData) {
     // Remove any existing LastAssets layer from the map before adding a new one
     if (LastAssets) {
-      mymap.removeLayer(LastAssets);
+      mymap.removeLayer(mapPoint);
     }
   
     LastAssets = L.geoJSON(assetData, {
@@ -247,7 +247,7 @@ function displayLast5(assetData) {
       },
     });
   
-    LastAssets.addTo(mymap);
+    mapPoint = LastAssets.addTo(mymap);
   
     // Set the map view to fit the LastAssets layer
     let lastAssetsBounds = LastAssets.getBounds();
@@ -258,7 +258,7 @@ function displayLast5(assetData) {
 
 function removeLast5() {
     if (LastAssets) {
-        mymap.removeLayer(LastAssets);
+        mymap.removeLayer(mapPoint);
       }
     }
 
@@ -271,12 +271,15 @@ function removeLast5() {
 
 
 
-
+ /*
+    Functions for assets with no condition in 3 days
+    */
 function Add3rated() {
     let re = /([^(]+)@|at ([^(]+) \(/g;
     let aRegexResult = re.exec(new Error().stack);
     let sCallerName = aRegexResult[1] || aRegexResult[2];
     alert("menu Add3rated is called by: "+ sCallerName);
+    loadNo3();
 }
 
 function Remove3rated() {
@@ -284,5 +287,57 @@ function Remove3rated() {
     let aRegexResult = re.exec(new Error().stack);
     let sCallerName = aRegexResult[1] || aRegexResult[2];
     alert("menu Remove3rated is called by: "+ sCallerName);
+    removeNo3();
 }
 
+
+
+function loadNo3() {
+    fetchUserId()
+    .then((userId) => {
+        let serviceUrl = document.location.origin + "/api/conditionReportMissing/" + userId ;
+        $.ajax({
+            url: serviceUrl,
+            crossDomain: true,
+            type: "GET",
+            success: function (data) {
+              console.log(data);
+              displayNo3(data);
+            },
+          });
+
+
+    })
+    .catch((error) => {
+      console.error("Error fetching user ID:", error);
+    }); 
+}
+
+
+// Declare ClosestPoints as a global variable
+let NoReports;
+
+function displayNo3(assetData) {
+
+    let greyIcon = createCustomIcon('grey');
+
+    NoReports = L.geoJSON(assetData, {
+        pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, { icon: greyIcon });
+        }
+    });
+    if (NoReports) {
+        mymap.removeLayer(mapPoint);
+      }
+      mapPoint = NoReports.addTo(mymap);
+
+    // Set the map view to fit the LastAssets layer
+    let NoReportsBounds = NoReports.getBounds();
+    mymap.fitBounds(NoReportsBounds);
+}
+
+function removeNo3() {
+    if (NoReports) {
+        mymap.removeLayer(mapPoint);
+      }
+    }
