@@ -230,8 +230,6 @@ function loadLast5() {
 let LastAssets;
 
 function displayLast5(assetData) {
-    let goldIcon = createCustomIcon('gold');
-  
     // Remove any existing LastAssets layer from the map before adding a new one
     if (LastAssets) {
       mymap.removeLayer(LastAssets);
@@ -239,7 +237,10 @@ function displayLast5(assetData) {
   
     LastAssets = L.geoJSON(assetData, {
       pointToLayer: function (feature, latlng) {
-        return L.marker(latlng, { icon: goldIcon });
+        // Get the icon based on the condition of the feature
+        let conditionIcon = getIconByCondition(feature.properties.condition_description);
+        
+        return L.marker(latlng, { icon: conditionIcon });
       },
       onEachFeature: function (feature, layer) {
         layer.bindPopup("Asset Name: " + feature.properties.asset_name);
@@ -252,6 +253,7 @@ function displayLast5(assetData) {
     let lastAssetsBounds = LastAssets.getBounds();
     mymap.fitBounds(lastAssetsBounds);
   }
+  
   
 
 function removeLast5() {

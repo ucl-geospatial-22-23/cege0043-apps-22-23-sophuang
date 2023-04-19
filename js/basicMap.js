@@ -193,18 +193,23 @@ function createCustomIcon(color) {
     let icon;
     switch (condition) {
       case '1':
+        case 'Element is in very good condition':
         icon = greenIcon;
         break;
       case '2':
+        case 'Some aesthetic defects, needs minor repair':
         icon = yellowIcon;
         break;
       case '3':
+        case 'Functional degradation of some parts, needs maintenance':
         icon = orangeIcon;
         break;
       case '4':
+        case 'Not working and maintenance must be done as soon as reasonably possible':
         icon = redIcon;
         break;
       case '5':
+        case 'Not working and needs immediate, urgent maintenance':
         icon = violetIcon;
         break;
       default:
