@@ -55,6 +55,15 @@ function errorPosition(error){
 
 
 
+
+
+
+
+
+
+
+
+
 function removePositionPoints() {
     // disable the location tracking so that a new point won't be added while you are removing the old points 
     // use the geoLocationID to do this

@@ -181,7 +181,8 @@ function createCustomIcon(color) {
   }
   
   let greenIcon = createCustomIcon('green');
-  let goldIcon = createCustomIcon('gold');
+  let yellowIcon = createCustomIcon('yellow');
+ 
   let orangeIcon = createCustomIcon('orange');
   let redIcon = createCustomIcon('red');
   let violetIcon = createCustomIcon('violet');
@@ -192,18 +193,23 @@ function createCustomIcon(color) {
     let icon;
     switch (condition) {
       case '1':
+        case 'Element is in very good condition':
         icon = greenIcon;
         break;
       case '2':
-        icon = goldIcon;
+        case 'Some aesthetic defects, needs minor repair':
+        icon = yellowIcon;
         break;
       case '3':
+        case 'Functional degradation of some parts, needs maintenance':
         icon = orangeIcon;
         break;
       case '4':
+        case 'Not working and maintenance must be done as soon as reasonably possible':
         icon = redIcon;
         break;
       case '5':
+        case 'Not working and needs immediate, urgent maintenance':
         icon = violetIcon;
         break;
       default:
@@ -227,7 +233,7 @@ function createCustomIcon(color) {
           icon = greenIcon;
           break;
         case '2':
-          icon = goldIcon;
+          icon = yellowIcon;
           break;
         case '3':
           icon = orangeIcon;
@@ -257,9 +263,7 @@ function createCustomIcon(color) {
   
   
 
-  
-  
-  
+
   
 
 

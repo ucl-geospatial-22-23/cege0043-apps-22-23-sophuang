@@ -171,6 +171,10 @@ function loadUserAssets_C(userId) {
     
   }
   
+
+
+
+
   
 ////////////////////////////////////////////
 //function for conditionSurvey

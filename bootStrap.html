@@ -30,6 +30,11 @@
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
 
+    <!-- D3 library -->
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+
+    
+
 
     <!-- getLocation Javascript -->
     <script src="js/getLocation.js"></script>
@@ -43,6 +48,12 @@
     <!-- uploadData Javascript -->
     <script src="js/assetCreation.js"></script>
 
+    <!-- Menu Javascript -->
+    <script src="js/menu.js"></script>
+
+    <!-- graph Javascript -->
+    <script src="js/graph.js"></script>
+
     <!-- code for Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" 
     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" 
@@ -51,9 +62,26 @@
     integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" 
     crossorigin=""></script>
 
-    <style type="text/css"> 
+    <!--style type="text/css"> 
         #mapid { height: 180px; } 
-    </style>
+    </style-->
+    <style>
+        .bar {
+          fill: #71EEB8;
+        }
+        
+        .bar rect:hover {
+          fill: #545a5c;
+        }
+        
+        .axis-x path {
+          display: none;
+        }
+        
+        .axis text {
+          font-weight: bold;
+        }
+        </style>
     
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
@@ -115,7 +143,7 @@
             <a href="#" class="nav-link" onclick="AssetBest()"><i class="fa fa-laptop me-2"></i>Asset in Best Condition</a>
         </div>
         <div class="nav-item d-none d-lg-block d-xl-none">
-            <a href="#" class="nav-link" onclick="RatesGraph()"><i class="fa fa-chart-line me-2"></i>Daily Reporting Rates Graph</a>
+            <a href="#" class="nav-link" onclick="loadGraph()"><i class="fa fa-chart-line me-2"></i>Daily Reporting Rates Graph</a>
         </div>
 
 
@@ -199,10 +227,29 @@
 
                 </div>
             </nav><!-- Navbar End -->
-                <div id="mapid" class="vh-100 vw-100" style="z-index: 0;"  ></div>
+
+                <!--div id="mapid" class="vh-100 vw-100" style="z-index: 0;"  ></div-->
               <!-- z-index = 0 is required to ensure that the menu items from the template
                 appear on top of the map -->
              <!-- <div class="col-md-6 col-sm-12 map-container rounded flex-fill" id="mapid"></div>  -->
+
+            
+             <div class="container_fluid px-0">
+                <div class="row d-flex">
+                    <div class="col d-flex">
+                        <div id="mapWrapper" class="col vh-100 collapse show" aria-expanded="true" style="margin-top:65px;z-order:0">
+                            <div id="mapid" class="vh-100 vw-100" style="height:calc(100% - 65px);"  >
+                            </div> <!-- map id -->
+                        </div> <!-- map wrapper -->
+            
+                        <div id="assetDataWrapperWrapper" class="col vh-100 collapse hide" style="background-color:lightgray; margin-top:65px;z-order:0;" >
+                            <div  id="assetDataWrapper" style="height:calc(100% - 65px);">
+                            </div> <!-- asset data wrapper -->
+                        </div> <!-- asset data wrapper wrapper wrapper -->
+
+                    </div>
+                </div>
+            </div>
 
 
 
@@ -224,8 +271,7 @@
     <!-- Template Javascript -->
     <script src="js/bootstrapTemplate.js"></script>
 
-    <!-- Menu Javascript -->
-    <script src="js/menu.js"></script>
+    
 </body>
 
 </html>
