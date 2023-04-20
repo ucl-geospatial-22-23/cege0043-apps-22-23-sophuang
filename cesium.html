@@ -90,22 +90,44 @@ function loadVectorLayer() {
           viewer.dataSources.add(dataSource);
 
           geoJSONData[0].features.forEach((feature) => {
-            const longitude = feature.geometry.coordinates[0];
-            const latitude = feature.geometry.coordinates[1];
-            const condition = feature.properties.condition_description;
-            const color = getStrokeColor(condition);
-
-            viewer.entities.add({
-            position: Cesium.Cartesian3.fromDegrees(longitude, latitude),
-            point: {
-                pixelSize: 10,
-                color: color,
+            let conditionDescription = feature.properties.condition_description;
+            let strokeColor = getStrokeColor(conditionDescription);
+            
+            dataSource.entities.add({
+              name: feature.properties.asset_name,
+              position: Cesium.Cartesian3.fromDegrees(
+                feature.geometry.coordinates[0],
+                feature.geometry.coordinates[1]
+              ),
+              /*
+              point: {
+                pixelSize: 8,
+                color: strokeColor,
                 outlineColor: Cesium.Color.BLACK,
                 outlineWidth: 1,
+              },
+              */
+
+              label: {
+                text: '*',
+                font: '100px sans-serif',
+                fillColor: strokeColor,
+                outlineColor: Cesium.Color.BLACK,
+                outlineWidth: 1,
+                style: Cesium.LabelStyle.FILL_AND_OUTLINE,
             },
-            name: feature.properties.asset_name,
+            description: `
+                <table>
+                  <tr><th>Asset ID</th><td>${feature.properties.asset_id}</td></tr>
+                  <tr><th>Asset Name</th><td>${feature.properties.asset_name}</td></tr>
+                  <tr><th>Installation Date</th><td>${feature.properties.installation_date}</td></tr>
+                  <tr><th>Latest Condition Report Date</th><td>${feature.properties.latest_condition_report_date}</td></tr>
+                  <tr><th>Last Condition Description</th><td>${conditionDescription}</td></tr>
+                </table>
+              `,
+
             });
-        });
+          });
 
           viewer.flyTo(dataSource);
         })
@@ -117,6 +139,8 @@ function loadVectorLayer() {
       console.error("Error fetching user ID:", error);
     });
 }
+
+
 
 
     
