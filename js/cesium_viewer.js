@@ -53,20 +53,14 @@ fetch(serviceUrl)
       let conditionDescription = feature.properties.condition_description;
       let strokeColor = getStrokeColor(conditionDescription);
       
-      dataSource.entities.add({
+      const entity = dataSource.entities.add({
+
         name: feature.properties.asset_name,
+
         position: Cesium.Cartesian3.fromDegrees(
           feature.geometry.coordinates[0],
           feature.geometry.coordinates[1]
         ),
-        /*
-        point: {
-          pixelSize: 8,
-          color: strokeColor,
-          outlineColor: Cesium.Color.BLACK,
-          outlineWidth: 1,
-        },
-        */
 
         label: {
           text: '*',
@@ -76,6 +70,7 @@ fetch(serviceUrl)
           outlineWidth: 1,
           style: Cesium.LabelStyle.FILL_AND_OUTLINE,
       },
+
       description: `
           <table>
             <tr><th>Asset ID</th><td>${feature.properties.asset_id}</td></tr>
@@ -87,9 +82,33 @@ fetch(serviceUrl)
         `,
 
       });
+
+      // Add a click event handler to the entity
+      entity.onClick = function () {
+
+        const assetName = this.name;
+
+        // Find the corresponding bar in the bar chart
+        const bar = d3
+          .selectAll(".bar")
+          .filter((d) => d.name === assetName);
+
+        // Trigger a click event on the bar
+        bar.dispatch("click");
+      };
+
     });
 
     viewer.flyTo(dataSource);
+
+    // Set up the click event handler for the entities
+    viewer.screenSpaceEventHandler.setInputAction(function (event) {
+        const pickedObject = viewer.scene.pick(event.position);
+        if (Cesium.defined(pickedObject) && pickedObject.id.onClick) {
+          pickedObject.id.onClick();
+        }
+      }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
   })
   .catch((error) => {
     console.error("Error fetching GeoJSON data:", error);
