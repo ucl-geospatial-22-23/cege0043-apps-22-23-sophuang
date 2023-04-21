@@ -67,14 +67,12 @@
          console.log(xLen);
            });
    
-     // adjust the space available for the x-axis titles, depending on the length of the text
-     if (xLen > 100) {
-       marginBottom = Math.round(xLen/3,0);
-     }
-     else {
-       marginBottom = xLen + 20;  // the 20 allows for the close button 
-     } //rough approximation for now
-     console.log(marginBottom);
+     // Increase the marginBottom value
+      if (xLen > 100) {
+        marginBottom = Math.round(xLen / 3, 0) + 40;
+      } else {
+        marginBottom = xLen + 40;  // the 20 allows for the close button 
+      }
      
       let   svg   = d3.select("#svg1"),
          margin  = {top: marginTop, right: marginRight, bottom: marginBottom, left: marginLeft},
