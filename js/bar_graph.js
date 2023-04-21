@@ -5,6 +5,8 @@
     showGraph();
   });
 
+  window.addEventListener("resize", showGraph);
+
   let selectedBar = null;
 
   function onBarClick(d) {
@@ -81,7 +83,12 @@
   // code to create the graph
   let widtha = document.getElementById("barChartContainer").clientWidth;
   let heighta = document.getElementById("barChartContainer").offsetHeight;
+  d3.select("#svg1")
+    .attr("width", widtha)
+    .attr("height", heighta);
   console.log(widtha + " " + heighta);
+
+  
 
   // add the SVG element for the graph
   document.getElementById("barChartContainer").innerHTML =
