@@ -6,8 +6,45 @@
   });
 
   function onBarClick(d) {
+    // Deselect the previously selected bar
+    d3.selectAll(".selected").classed("selected", false);
+    
     const isSelected = d3.select(this).classed("selected");
     d3.select(this).classed("selected", !isSelected);
+    const coordinates = d.geometry;
+
+    if(!isSelected) {
+      zoomToAsset(coordinates);
+    }
+    else{
+      setDefaultView(viewer);
+    }
+    
+    
+  }
+
+  function zoomToAsset(coordinates) {
+    if (coordinates && coordinates.length === 2) {
+      const [longitude, latitude] = coordinates;
+      viewer.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(longitude, latitude, 1000),
+        duration: 2,
+      });
+    }
+  }
+
+  function setDefaultView(viewer) {
+    // Define the default camera position
+    const defaultPosition = Cesium.Cartesian3.fromDegrees(0, 0, 30000000);
+  
+    // Define the default camera orientation
+    const defaultOrientation = new Cesium.HeadingPitchRoll.fromDegrees(0, -90, 0);
+  
+    // Set the camera's position and orientation
+    viewer.camera.setView({
+      destination: defaultPosition,
+      orientation: defaultOrientation,
+    });
   }
 
   function preprocessData(data) {
@@ -22,7 +59,8 @@
   
     return data.map(asset => ({
       name: asset.properties.asset_name,
-      condition_number: conditionMapping[asset.properties.condition_description]
+      condition_number: conditionMapping[asset.properties.condition_description],
+      geometry: asset.geometry.coordinates,
     }));
   }
 
