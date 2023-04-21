@@ -5,12 +5,21 @@
     showGraph();
   });
 
+  let selectedBar = null;
+
   function onBarClick(d) {
     // Deselect the previously selected bar
-    d3.selectAll(".selected").classed("selected", false);
-    
+    if (selectedBar && selectedBar !== this) {
+    d3.select(selectedBar).classed("selected", false);
+  }
+  
+    // Toggle the selected state of the current bar
     const isSelected = d3.select(this).classed("selected");
     d3.select(this).classed("selected", !isSelected);
+
+    // Update the selectedBar reference
+  selectedBar = isSelected ? null : this;
+
     const coordinates = d.geometry;
 
     if(!isSelected) {
@@ -35,7 +44,7 @@
 
   function setDefaultView(viewer) {
     // Define the default camera position
-    const defaultPosition = Cesium.Cartesian3.fromDegrees(0, 0, 30000000);
+    const defaultPosition = Cesium.Cartesian3.fromDegrees(0, 0, 10000000);
   
     // Define the default camera orientation
     const defaultOrientation = new Cesium.HeadingPitchRoll.fromDegrees(0, -90, 0);
