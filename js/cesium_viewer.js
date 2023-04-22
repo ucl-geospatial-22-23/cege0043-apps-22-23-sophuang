@@ -118,12 +118,32 @@ fetch(serviceUrl)
     viewer.flyTo(dataSource);
 
     // Set up the click event handler for the entities
-    viewer.screenSpaceEventHandler.setInputAction(function (event) {
-        const pickedObject = viewer.scene.pick(event.position);
-        if (Cesium.defined(pickedObject) && pickedObject.id.onClick) {
-          pickedObject.id.onClick();
-        }
-      }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+    viewer.screenSpaceEventHandler.setInputAction((click) => {
+      const pickedFeature = viewer.scene.pick(click.position);
+    
+      if (pickedFeature && pickedFeature.id) {
+        const entity = pickedFeature.id;
+    
+        // Open the description table
+        viewer.selectedEntity = entity;
+    
+        // Zoom to asset
+        zoomToAsset(entity.position.getValue(Cesium.JulianDate.now()));
+    
+        // Highlight corresponding bar in the bar chart
+        const assetName = entity.name;
+        const bar = d3.selectAll(".bar").filter((d) => d.name === assetName);
+        bar.dispatch("click");
+    
+        // Highlight corresponding radar marker
+        const radarMarker = d3
+          .selectAll(".radarMarker")
+          .filter((d) => d.axis === assetName);
+        radarMarker.dispatch("click");
+      }
+    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+    
+    
 
   })
   .catch((error) => {

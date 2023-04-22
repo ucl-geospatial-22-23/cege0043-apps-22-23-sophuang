@@ -40,7 +40,7 @@
       const [longitude, latitude] = coordinates;
       viewer.camera.flyTo({
         destination: Cesium.Cartesian3.fromDegrees(longitude, latitude, 1000),
-        duration: 2,
+        duration: 1,
       });
     }
   }
