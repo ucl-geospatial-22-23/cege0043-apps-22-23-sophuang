@@ -4,7 +4,7 @@
 ////////////////// VisualCinnamon.com ///////////////////
 /////////// Inspired by the code of alangrafu ///////////
 /////////////////////////////////////////////////////////
-	
+
 function RadarChart(id, data, options) {
 	var cfg = {
 	 w: 600,				//Width of the circle
@@ -225,6 +225,7 @@ function RadarChart(id, data, options) {
             .style("fill-opacity", 0.65);
 
             // Add circle markers at each condition_number value
+            /*
             blobWrapper.selectAll(".radarMarker")
             .data(function(d, i) {
             return d.axes;
@@ -242,12 +243,38 @@ function RadarChart(id, data, options) {
             return cfg.color(j);
             })
             .style("fill-opacity", 1);
+            */
+
+                // Append the circles
+                blobWrapper
+                .selectAll(".radarMarker")
+                .data(function (d, i) {
+                    return d.axes;
+                })
+                .enter()
+                .append("circle")
+                .attr("class", "radarCircle")
+                .attr("r", cfg.dotRadius)
+                .attr("cx", function (d, i) {
+                    return rScale(d.value) * Math.cos(angleSlice * i - Math.PI / 2);
+                })
+                .attr("cy", function (d, i) {
+                    return rScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2);
+                })
+                .style("fill", function (d, i, j) {
+                    return cfg.color(j);
+                })
+                .style("fill-opacity", 1)
+                .on("click", onCircleClick); // Add this line
+
+
 
 	/////////////////////////////////////////////////////////
 	//////// Append invisible circles for tooltip ///////////
 	/////////////////////////////////////////////////////////
 	
 	//Wrapper for the invisible circles on top
+    /*
 	var blobCircleWrapper = g.selectAll(".radarCircleWrapper")
 		.data(data)
 		.enter().append("g")
@@ -283,7 +310,7 @@ function RadarChart(id, data, options) {
 	var tooltip = g.append("text")
 		.attr("class", "tooltip")
 		.style("opacity", 0);
-	
+	*/
 	/////////////////////////////////////////////////////////
 	/////////////////// Helper Function /////////////////////
 	/////////////////////////////////////////////////////////

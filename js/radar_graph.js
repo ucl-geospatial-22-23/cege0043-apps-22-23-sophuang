@@ -5,6 +5,33 @@ document.addEventListener("DOMContentLoaded", function() {
 
   window.addEventListener("resize", showRadarChart);
 
+ 
+  let selectedCircle = null;
+
+  function onCircleClick(d) {
+    console.log("Circle clicked:", d);
+    console.log("Coordinates:", d.coordinates);
+    // Deselect the previously selected circle
+    if (selectedCircle && selectedCircle !== this) {
+      d3.select(selectedCircle).classed("selected", false);
+    }
+  
+    // Toggle the selected state of the current circle
+    const isSelected = d3.select(this).classed("selected");
+    d3.select(this).classed("selected", !isSelected);
+  
+    // Update the selectedCircle reference
+    selectedCircle = isSelected ? null : this;
+  
+    const coordinates = d.coordinates;
+  
+    if (!isSelected) {
+      zoomToAsset(coordinates);
+    } else {
+      setDefaultView(viewer);
+    }
+  }
+  
 
 
 
@@ -19,13 +46,17 @@ document.addEventListener("DOMContentLoaded", function() {
   
             // Prepare the radar chart data
             let radarChartData = [
-              {
-                className: "radar-data",
-                axes: data.map((d) => {
-                  return { axis: d.name, value: d.condition_number };
-                }),
-              },
-            ];
+                {
+                  className: "radar-data",
+                  axes: data.map((d) => {
+                    return {
+                      axis: d.name,
+                      value: d.condition_number,
+                      coordinates: d.geometry, // add this line
+                    };
+                  }),
+                },
+              ];
             console.log(radarChartData);
 
             // Get the container dimensions
