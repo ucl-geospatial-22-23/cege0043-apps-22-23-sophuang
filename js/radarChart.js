@@ -265,7 +265,7 @@ function RadarChart(id, data, options) {
                     return cfg.color(j);
                 })
                 .style("fill-opacity", 1)
-                .on("click", onCircleClick); // Add this line
+                .on("click", function(d) { onCircleClick.call(this, d, cfg); });
 
 
 

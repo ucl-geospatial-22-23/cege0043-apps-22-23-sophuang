@@ -8,27 +8,28 @@ document.addEventListener("DOMContentLoaded", function() {
  
   let selectedCircle = null;
 
-  function onCircleClick(d) {
+  function onCircleClick(d,cfg) {
     console.log("Circle clicked:", d);
     console.log("Coordinates:", d.coordinates);
     // Deselect the previously selected circle
-    if (selectedCircle && selectedCircle !== this) {
-      d3.select(selectedCircle).classed("selected", false);
-    }
+  if (selectedCircle && selectedCircle !== this) {
+    d3.select(selectedCircle).classed("selected", false).style("fill", function(d, i, j) { return cfg.color(j); } );
+  }
   
     // Toggle the selected state of the current circle
     const isSelected = d3.select(this).classed("selected");
-    d3.select(this).classed("selected", !isSelected);
+    d3.select(this).classed("selected", !isSelected).style("fill", isSelected ? function(d, i, j) { return cfg.color(j); } : "#71EEB8");
   
     // Update the selectedCircle reference
     selectedCircle = isSelected ? null : this;
-  
+    
     const coordinates = d.coordinates;
   
     if (!isSelected) {
       zoomToAsset(coordinates);
     } else {
       setDefaultView(viewer);
+      d3.select(this).style("fill", "#FFA500");
     }
   }
   
