@@ -88,6 +88,10 @@ fetch(serviceUrl)
 
         const assetName = this.name;
 
+        // Log the data bound to radar markers
+        console.log("Data bound to radar markers:", d3.selectAll(".radarMarker").data());
+
+
         // Find the corresponding bar in the bar chart
         const bar = d3
           .selectAll(".bar")
@@ -95,6 +99,18 @@ fetch(serviceUrl)
 
         // Trigger a click event on the bar
         bar.dispatch("click");
+
+        const radarMarker = d3
+        .selectAll(".radarMarker")
+        .filter((d) => d.axis === assetName)
+        .node(); // Get the DOM element
+
+        console.log("Clicked radar marker: ", radarMarker);
+
+        // Trigger a click event on the radar marker
+        if (radarMarker) {
+          radarMarker.dispatchEvent(new MouseEvent("click"));
+        }
       };
 
     });

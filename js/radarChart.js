@@ -253,7 +253,7 @@ function RadarChart(id, data, options) {
                 })
                 .enter()
                 .append("circle")
-                .attr("class", "radarCircle")
+                .attr("class", "radarMarker")
                 .attr("r", cfg.dotRadius)
                 .attr("cx", function (d, i) {
                     return rScale(d.value) * Math.cos(angleSlice * i - Math.PI / 2);

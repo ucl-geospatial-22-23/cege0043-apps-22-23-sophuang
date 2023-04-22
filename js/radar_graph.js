@@ -33,6 +33,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
   
+  // Find the corresponding circle marker in the radar chart
+    console.log("Data bound to radar markers:", d3.selectAll(".radarMarker").data());
 
 
 
