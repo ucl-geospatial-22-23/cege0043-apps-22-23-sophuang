@@ -25,6 +25,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- D3 library -->
   <script src="https://d3js.org/d3.v5.min.js"></script>
 
+<!-- radar chart library -->
+<!--script src="https://d3js.org/d3.v3.min.js"></script-->
+<script src="js/radarChart.js"></script>
+
+
+
       <style>
           @import url(Build/Cesium/Widgets/widgets.css);
           html, body, #cesiumContainer {
@@ -46,9 +52,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               display: none;
             }
 
-            .axis text {
-              font-weight: bold;
-            }
+
       </style>
 
 </head>
@@ -226,24 +230,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <h5 class="m-0">Barchart</h5>
             </div>
             <div class="card-body">
-      <div id="barChartContainer" style="width: 100%; height: 250px;"></div>
+            <div id="barChartContainer" style="width: 100%; height: 200px;"></div>
             </div>
           </div>
 
+        <!-- Add a new card for the radar chart -->
+
+        <div class="card card-primary card-outline">
+          <div class="card-header">
+            <h5 class="m-0">Radar Chart</h5>
+          </div>
+          <div class="card-body">
+            <div id="radarChartContainer" class="chart-container" style="width: 100%; height: 300px;"></div>
+          </div>
+        </div>
 
           
 
-          <div class="card card-primary card-outline">
-            <div class="card-header">
-              <h5 class="m-0">Featured</h5>
-            </div>
-            <div class="card-body">
-              <h6 class="card-title">Special title treatment</h6>
+        
 
-              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
-          </div>
+
+
         </div>
         <!-- /.col-lg-4 -->
       </div>
@@ -297,5 +304,8 @@ crossorigin="anonymous"></script>
 
 <!-- bar graph js -->
 <script src="js/bar_graph.js"></script>
+
+<!-- radar graph js -->
+<script src="js/radar_graph.js"></script>
 
 </html>

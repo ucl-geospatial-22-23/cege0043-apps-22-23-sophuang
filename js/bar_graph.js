@@ -3,6 +3,7 @@
    "use strict";
    document.addEventListener("DOMContentLoaded", function() {
     showGraph();
+    
   });
 
   window.addEventListener("resize", showGraph);
@@ -60,7 +61,7 @@
 
   function preprocessData(data) {
     const conditionMapping = {
-      "Unknown": 0,
+      "Unknown": 6,
       "Not working and maintenance must be done as soon as reasonably possible": 1,
       "Functional degradation of some parts, needs maintenance": 2,
       "Some aesthetic defects, needs minor repair": 3,
@@ -80,6 +81,8 @@
   
    // create the graph
   function showGraph() {
+    // Clear the existing graph elements
+  d3.select("#svg1").selectAll("*").remove();
   // code to create the graph
   let widtha = document.getElementById("barChartContainer").clientWidth;
   let heighta = document.getElementById("barChartContainer").offsetHeight;
