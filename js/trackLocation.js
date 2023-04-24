@@ -95,7 +95,7 @@ function closestFormPoint() {
     let closestLayer = null;
     let proximityThreshold = 0.025; // Set your proximity threshold in kilometers
   
-    mapPoint.eachLayer(function (layer) {
+    mapCondition.eachLayer(function (layer) {
         let distance = calculateDistance(
           trackedLatitude,
           trackedLongitude,
