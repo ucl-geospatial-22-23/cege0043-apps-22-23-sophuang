@@ -9,7 +9,7 @@ function RadarChart(id, data, options) {
 	var cfg = {
 	 w: 400,				//Width of the circle
 	 h: 400,				//Height of the circle
-	 margin: {top: 40, right: 20, bottom: 40, left: 20}, //The margins of the SVG
+	 margin: {top: 20, right: 20, bottom: 20, left: 20}, //The margins of the SVG
 	 levels: 3,				//How many levels or inner circles should there be drawn
 	 maxValue: 0, 			//What is the value that the biggest circle will represent
 	 labelFactor: 1.05, 	//How much farther than the radius of the outer circle should the labels be placed
@@ -62,7 +62,7 @@ function RadarChart(id, data, options) {
 			.attr("height", cfg.h + cfg.margin.top + cfg.margin.bottom)
 			.attr("class", "radar"+id);
 
-    const g = svg.append("g").attr("transform", "translate(" + (cfg.w / 2 + cfg.margin.left) + "," + (cfg.h / 2.3 + 25) + ")");
+    const g = svg.append("g").attr("transform", "translate(" + (cfg.w / 2 + cfg.margin.left) + "," + (cfg.h / 2 + cfg.margin.bottom) + ")");
 
 
 

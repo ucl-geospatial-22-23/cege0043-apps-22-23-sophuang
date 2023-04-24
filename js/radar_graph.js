@@ -33,8 +33,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
   
-  // Find the corresponding circle marker in the radar chart
-    console.log("Data bound to radar markers:", d3.selectAll(".radarMarker").data());
 
 
 
@@ -73,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function() {
             // Create the radar chart
             var chartConfig = {
               w: containerWidth,
-              h: containerHeight,
+              h: containerHeight-10,
               maxValue: Math.max(...data.map(d => d.condition_number)),
               levels: 5
             };
