@@ -9,11 +9,8 @@
   let selectedBar = null;
 
   function getMaxConditionValue(data) {
-    console.log("Data for getMaxConditionValue:", data);
   const conditions = data.map(d => d.condition_number);
-  console.log("Conditions:", conditions);
   const maxCondition = Math.max(...conditions);
-  console.log("Max condition:", maxCondition);
   return maxCondition;
   }
   
@@ -67,16 +64,10 @@
     });
   }
 
-  function preprocessData(data) {
-    const conditionMapping = {
-      "Unknown": 6,
-      "Not working and maintenance must be done as soon as reasonably possible": 1,
-      "Functional degradation of some parts, needs maintenance": 2,
-      "Some aesthetic defects, needs minor repair": 3,
-      "Not working and needs immediate, urgent maintenance": 4,
-      "Element is in very good condition": 5
-    };
   
+
+  function preprocessData(data,conditionMapping) {
+    
     return data.map(asset => ({
       name: asset.properties.asset_name,
       condition_number: conditionMapping[asset.properties.condition_description],
@@ -118,9 +109,21 @@
           let  serviceUrl = document.location.origin + "/api/userAssets/" + userId;
             
    // download the data and create the graph
-   d3.json(serviceUrl).then(data => {
-    data = preprocessData(data[0].features);
-    console.log(data);
+   d3.json(serviceUrl).then(rawData => {
+    rawData = rawData[0].features;
+    //data = preprocessData(data[0].features);
+
+    fetchConditionMapping()
+      .then(conditionMapping => {
+        // Fetch your data here
+        return { rawData, conditionMapping };
+      })
+      .then(({ rawData, conditionMapping }) => {
+        // Preprocess data using the fetched conditionMapping
+        const data = preprocessData(rawData, conditionMapping);
+  
+        // Continue with the rest of your code using the processedData
+        console.log(data);
 
     const maxCondition = getMaxConditionValue(data);
     
@@ -200,6 +203,9 @@
 
        
   
+      });
+    
+    
       })
       .catch(err => {
           svg.append("text")         
