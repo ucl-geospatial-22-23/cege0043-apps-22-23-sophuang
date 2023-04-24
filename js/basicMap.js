@@ -97,6 +97,7 @@ function setMapClickEvent() {
       });
   } else {
     mymap.off('click', onMapClick);
+    initialize();
   }
 }
 
