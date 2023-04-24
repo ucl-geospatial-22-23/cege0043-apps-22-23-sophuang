@@ -45,8 +45,7 @@ function loadLeafletMap() {
 
 
 let width; // NB – keep this as a global variable
-let mapPoint; // store the geoJSON feature so that we can remove it if the screen is resized
-let mapCondition;
+
 let assetPoints;
 
 function setMapClickEvent() {
@@ -63,13 +62,12 @@ function setMapClickEvent() {
 
     fetchUserId()
       .then((userId) => {
-        loadUserAssets_C(userId);
-        setUpPointClick();
+        loadUserAssets_C(userId,trackLocation);
       })
       .catch((error) => {
         console.error("Error fetching user ID:", error);
       });
-    trackLocation();
+    
   } else if (width >= 992 && width < 1200) {
     // the asset creation page
     if (mapPoint) {
@@ -92,72 +90,12 @@ function setMapClickEvent() {
 
 
 
-// Create an object to store the markers
-let markers = {};
-let updatedConditions = {};
 
-function setUpPointClick(data) {
-    let assetPoints = L.geoJSON(data, {
-        pointToLayer: function (feature, latlng) {
-            let assetId = feature.properties.asset_id;
-            let condition = updatedConditions[assetId] || feature.properties.condition;
-            let icon = getIconByCondition(condition);
-            let marker = L.marker(latlng, {icon: icon});
-            marker.assetId = assetId;
-            return marker;
-          },
-      onEachFeature: function (feature, layer) {
-        let assetName = feature.properties.asset_name;
-        let installationDate = feature.properties.installation_date;
-        let lastCondition = feature.properties.condition_description;
-        let asset_id = feature.properties.asset_id;
-        let popUpHTML = getPopupHTML(asset_id,assetName, installationDate, lastCondition);
-        layer.bindPopup(popUpHTML);
-        
-        // Store the marker in the markers object
-      let assetId = feature.properties.asset_id;
-      markers[assetId] = layer;
-      layer.assetId = assetId;
-      },
-    });
 
-    // Add assetPoints to the map
-    mapPoint = assetPoints.addTo(mymap);
-    console.log("Asset Points added to the map");
-
-    return assetPoints;
-}
-  
 
   
 
-function setUpConditionClick(data) {
-    let assetPoints = L.geoJSON(data, {
-      onEachFeature: function (feature, layer) {
-        let lastCondition = feature.properties.condition_description;
-        let pre_con;
-        if (lastCondition=='Unknown') {
-            pre_con = "No Previous Condition Report Captured for this Asset";
-        }
-        else{
-            pre_con = "Last Condition: " + lastCondition;
-        }
-  
-        // Show lastCondition popup when the layer is clicked
-        layer.on("click", function (e) {
-          let lastConditionPopup = L.popup()
-            .setLatLng(layer.getLatLng())
-            .setContent(pre_con);
-  
-          lastConditionPopup.openOn(mymap);
-        });
-      },
-    });
-  
-    // Add assetPoints to the map
-    mapCondition = assetPoints.addTo(mymap);
-    console.log("Asset Points added to the map");
-  }
+
 
 
 
