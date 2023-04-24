@@ -1,12 +1,28 @@
+/* ////////////////////////////////////////////////////////////////////////////////////////
+
+This file stores functions that are used to track user's location, 
+and popup the condition survey form automatically,
+when the user is close to an asset.
+
+Note: In this application, assets that are within 25m of user's current location
+are defined as 'closed'.
+
+Code here are adapted from the example code provided and modified in previous praticals
+
+*/ ////////////////////////////////////////////////////////////////////////////////////////
+
 "use strict";
+
 // create an array to store all the location tracking points 
 let trackLocationLayer = [];
 
 // store the ID of the location tracker so that it can be used to switch the location tracking off 
 let geoLocationID;
 
+//Define global variable to store tracked user's latitude and logitude
 let trackedLatitude;
 let trackedLongitude;
+
 
 function trackLocation() {
     if (navigator.geolocation) {
@@ -17,11 +33,11 @@ function trackLocation() {
 
         // clear any existing data from the map
         removeTracks();
+
         // need to tell the tracker what we will do with the coordinates – showPosition
         // also what we will do if there is an error – errorPosition
         // also set some parameters – e.g how often to renew, what timeout to set
         const options = { enableHighAccuracy: true, maximumAge: 30000, timeout: 27000};
-        
 
         geoLocationID = navigator.geolocation.watchPosition(showPosition, errorPosition, options);
     } 
@@ -30,9 +46,14 @@ else {
     }
 
 
+
+
+// This function create a marker to show the position of user
+// To distinguish with other asset makers, user's location marker uses bootStrap marker provided from:
+// https://icons.getbootstrap.com/icons/geo-alt-fill/
+// It also call the findClosestFormPoint function to get proximity alert
 function showPosition(position) {
-    // add the new point into the array
-    // the 'push' command 
+    
     let userLocationMarker = L.divIcon({
         className: 'custom-div-icon',
         html: '<i class="bi bi-geo-alt-fill" style="color: red; font-size: 40px;"></i>',
@@ -43,27 +64,23 @@ function showPosition(position) {
     trackedLatitude = position.coords.latitude;
     trackedLongitude = position.coords.longitude;
     
+    // add the new point into the array
+    // the 'push' command 
     trackLocationLayer.push(L.marker([position.coords.latitude,position.coords.longitude], { icon: userLocationMarker }).addTo(mymap));
 
-    // Call the findClosestFormPoint function
     closestFormPoint();
-    
 }
 
-function errorPosition(error){
-    alert(error); }
 
 
 
-
+//Functions for removing tracked points.
 function removePositionPoints() {
     // disable the location tracking so that a new point won't be added while you are removing the old points 
     // use the geoLocationID to do this
     navigator.geolocation.clearWatch(geoLocationID);
     removeTracks();
     }
-
-
 
 function removeTracks(){
     // now loop through the array and remove any points
@@ -81,15 +98,23 @@ function removeTracks(){
     }
 
 
-//Proximity alert
+
+
+
+// Proximity alert function provided in the material 
 function closestFormPoint() {
-    let minDistance = 100000000000;
-    let closestLayer = null;
-    let proximityThreshold = 1; // Set your proximity threshold in kilometers
+
+  // set default value for minDistance and layer to store the cloest point
+  let minDistance = 100000000000;
+  let closestLayer = null;
+
+  // Set proximity threshold to be 25m
+  let proximityThreshold = 0.025; 
 
     
-  
-    mapCondition.eachLayer(function (layer) {
+  mapCondition.eachLayer(function (layer) {
+
+      //calculate the distance between every asset potin and current location
         let distance = calculateDistance(
           trackedLatitude,
           trackedLongitude,
@@ -97,13 +122,17 @@ function closestFormPoint() {
           layer.getLatLng().lng,
           "K"
         );
+      
+      //Compare them to get the closet one
         if (distance < minDistance) {
           minDistance = distance;
           closestLayer = layer;
         }
-      });
-    console.log("Minimum Distance"+minDistance);
-    // Check if the closest point is within the proximity threshold
+  });
+
+  console.log("Minimum Distance:"+minDistance);
+
+  // Check if the closest point is within the proximity threshold
   if (minDistance <= proximityThreshold) {
     // Get asset properties
     let assetName = closestLayer.feature.properties.asset_name;
@@ -118,5 +147,36 @@ function closestFormPoint() {
   } else {
     console.log("No assets within proximity threshold");
   }
-  }
+}
+
+
+
+
+// Function to calculte the distance
+// code adapted from https://www.htmlgoodies.com/beyond/javascript/calculate-the-distance-between-two-points-in- your-web-apps.html
+function calculateDistance(lat1, lon1, lat2, lon2, unit) {
+  let radlat1 = Math.PI * lat1/180; 
+  let radlat2 = Math.PI * lat2/180; 
+  let radlon1 = Math.PI * lon1/180; 
+  let radlon2 = Math.PI * lon2/180; 
+  let theta = lon1-lon2;
+  let radtheta = Math.PI * theta/180;
+  let subAngle = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta); 
   
+  subAngle = Math.acos(subAngle);
+  subAngle = subAngle * 180/Math.PI; // convert the degree value returned by acos back to degrees from radians 
+  let dist = (subAngle/360) * 2 * Math.PI * 3956; // ((subtended angle in degrees)/360) * 2 * pi * radius )
+  
+  // where radius of the earth is 3956 miles
+  if (unit=="K") { dist = dist * 1.609344 ;} // convert miles to km
+  if (unit=="N") { dist = dist * 0.8684 ;} // convert miles to nautical miles 
+  return dist;
+  }
+
+
+
+
+// Error handling function
+function errorPosition(error){
+  alert(error); 
+}
