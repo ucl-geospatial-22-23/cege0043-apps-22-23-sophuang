@@ -17,23 +17,38 @@ document.addEventListener('DOMContentLoaded', function() {
  loadVectorLayer();
 }, false);
 
+let conditionMapping;
+
 
 
 function getStrokeColor(conditionDescription) {
-switch (conditionDescription) {
-case 'Element is in very good condition':
-return Cesium.Color.GREEN;
-case 'Some aesthetic defects, needs minor repair':
-return Cesium.Color.YELLOW;
-case 'Functional degradation of some parts, needs maintenance':
-return Cesium.Color.ORANGE;
-case 'Not working and maintenance must be done as soon as reasonably possible':
-return Cesium.Color.RED;
-case 'Not working and needs immediate, urgent maintenance':
-return Cesium.Color.VIOLET;
-default:
-return Cesium.Color.BLUE;
-}
+  
+  const conditionNumber = conditionMapping[conditionDescription];
+
+  switch (conditionNumber) {
+    case 1:
+      return Cesium.Color.VIOLET;
+    case 2:
+      return Cesium.Color.YELLOW;
+    case 3:
+      return Cesium.Color.ORANGE;
+    case 4:
+      return Cesium.Color.RED;
+    case 5:
+      return Cesium.Color.GREEN;
+    case 6:
+      return Cesium.Color.BLUE;
+    case 7:
+      return Cesium.Color.BROWN;
+    case 8:
+      return Cesium.Color.BURLYWOOD;
+    case 9:
+      return Cesium.Color.CADETBLUE;
+    default:
+      return Cesium.Color.BLUE;
+  }
+
+
 }
 
 function loadVectorLayer() {
@@ -50,7 +65,10 @@ fetch(serviceUrl)
     viewer.dataSources.add(dataSource);
 
     geoJSONData[0].features.forEach((feature) => {
-      let conditionDescription = feature.properties.condition_description;
+
+      fetchConditionMapping().then(mapping => {
+        conditionMapping = mapping;
+        let conditionDescription = feature.properties.condition_description;
       let strokeColor = getStrokeColor(conditionDescription);
       
       const entity = dataSource.entities.add({
@@ -112,6 +130,8 @@ fetch(serviceUrl)
           radarMarker.dispatchEvent(new MouseEvent("click"));
         }
       };
+
+      });
 
     });
 
