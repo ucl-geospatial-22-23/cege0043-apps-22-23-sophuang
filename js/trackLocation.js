@@ -93,7 +93,7 @@ function removeTracks(){
 function closestFormPoint() {
     let minDistance = 100000000000;
     let closestLayer = null;
-    let proximityThreshold = 0.025; // Set your proximity threshold in kilometers
+    let proximityThreshold = 1; // Set your proximity threshold in kilometers
   
     mapCondition.eachLayer(function (layer) {
         let distance = calculateDistance(

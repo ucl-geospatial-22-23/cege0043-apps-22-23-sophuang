@@ -48,14 +48,24 @@ let width; // NB – keep this as a global variable
 
 let assetPoints;
 
+function initialize() {
+  if (mapCondition) {
+    mymap.removeLayer(mapCondition);
+  }
+  if (mapPoint) {
+    mymap.removeLayer(mapPoint);
+  }
+}
+
 function setMapClickEvent() {
   // get the window width
   width = $(window).width();
 
   if (width < 768) {
+    
     //the condition capture
-    if (mapPoint) {
-      mymap.removeLayer(mapPoint);
+    if (mapCondition) {
+      mymap.removeLayer(mapCondition);
     }
     // cancel the map onclick event using off ..
     mymap.off('click', onMapClick);
@@ -63,6 +73,7 @@ function setMapClickEvent() {
     fetchUserId()
       .then((userId) => {
         loadUserAssets_C(userId,trackLocation);
+
       })
       .catch((error) => {
         console.error("Error fetching user ID:", error);
@@ -73,6 +84,7 @@ function setMapClickEvent() {
     if (mapPoint) {
       mymap.removeLayer(mapPoint);
     }
+    removePositionPoints();
     // the on click functionality of the MAP should pop up a blank asset creation form
     mymap.on('click', onMapClick);
 

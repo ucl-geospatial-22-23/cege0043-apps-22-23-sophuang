@@ -64,7 +64,7 @@ function fetchUserRanking(userId) {
 } 
 
 
-function loadUserAssets_C(userId, callback) {
+function loadUserAssets_C(userId) {
     let serviceUrl = document.location.origin + "/api/userAssets/" + userId;
   
     $.ajax({
@@ -74,9 +74,10 @@ function loadUserAssets_C(userId, callback) {
       success: function (data) {
         console.log(data);
         displayConditionOnMap(data); // Call displayAssetsOnMap here
-        if (callback) {
-            callback(); // Execute the callback function
-          }
+        let width = $(window).width();
+      if (!(width >= 992 && width < 1200)) {
+        trackLocation();
+      }
       },
     });
   }
@@ -104,6 +105,7 @@ let markers = {};
 let updatedConditions = {};
 
   function displayConditionOnMap(assetData) {
+    initialize();
     let assetPoints = L.geoJSON(assetData, {
       pointToLayer: function (feature, latlng) {
         let assetId = feature.properties.asset_id;
@@ -140,6 +142,7 @@ let updatedConditions = {};
 
 
   function displayAssetsOnMap(data) {
+    initialize();
     let assetPoints = L.geoJSON(data, {
         pointToLayer: function (feature, latlng) {
             let assetId = feature.properties.asset_id;
