@@ -36,8 +36,8 @@ function trackLocation() {
 
         // need to tell the tracker what we will do with the coordinates – showPosition
         // also what we will do if there is an error – errorPosition
-        // also set some parameters – e.g how often to renew, what timeout to set
-        const options = { enableHighAccuracy: true, maximumAge: 30000, timeout: 27000};
+        // set the timeout to be half minuite
+        const options = { enableHighAccuracy: true, maximumAge: 30000, timeout: 30000};
 
         geoLocationID = navigator.geolocation.watchPosition(showPosition, errorPosition, options);
     } 
