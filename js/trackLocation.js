@@ -56,14 +56,6 @@ function errorPosition(error){
 
 
 
-
-
-
-
-
-
-
-
 function removePositionPoints() {
     // disable the location tracking so that a new point won't be added while you are removing the old points 
     // use the geoLocationID to do this
@@ -94,6 +86,8 @@ function closestFormPoint() {
     let minDistance = 100000000000;
     let closestLayer = null;
     let proximityThreshold = 1; // Set your proximity threshold in kilometers
+
+    
   
     mapCondition.eachLayer(function (layer) {
         let distance = calculateDistance(
