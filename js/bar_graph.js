@@ -1,6 +1,4 @@
-
-  
-   "use strict";
+"use strict";
    document.addEventListener("DOMContentLoaded", function() {
     showGraph();
     
@@ -9,6 +7,16 @@
   window.addEventListener("resize", showGraph);
 
   let selectedBar = null;
+
+  function getMaxConditionValue(data) {
+    console.log("Data for getMaxConditionValue:", data);
+  const conditions = data.map(d => d.condition_number);
+  console.log("Conditions:", conditions);
+  const maxCondition = Math.max(...conditions);
+  console.log("Max condition:", maxCondition);
+  return maxCondition;
+  }
+  
 
   function onBarClick(d) {
     // Deselect the previously selected bar
@@ -114,6 +122,8 @@
     data = preprocessData(data[0].features);
     console.log(data);
 
+    const maxCondition = getMaxConditionValue(data);
+    
    
      // loop through the data and get the length of the x axis titles
      let xLen = 0;
@@ -155,23 +165,12 @@
          .call(d3.axisBottom(x))
          .selectAll(".tick text")
          .call(wrap,x.bandwidth());
-   
-   
+
+         
          g.append("g")
          .attr("class", "axis axis-y")
-         .call(d3.axisLeft(y).ticks(10).tickSize(8));
-       /*
-       g.selectAll(".bar")
-         .data(data)
-         .enter()
-         .append("rect")
-         .attr("class", "bar")
-         .attr("x", d => x(d.name))
-         .attr("y", d => y(d.condition_number))
-         .attr("width", x.bandwidth())
-         .attr("height", d => height - y(d.condition_number))
-         .attr("fill", 'slateblue');
-        */
+         .call(d3.axisLeft(y).tickFormat(d3.format("d")).tickValues(d3.range(0, maxCondition + 1, 1)));
+
       // Modify the bars' part of the code with the click event listener
         g.selectAll(".bar")
         .data(data)
