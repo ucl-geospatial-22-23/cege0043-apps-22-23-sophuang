@@ -1,50 +1,14 @@
 "use strict";
 
-let userId;
+
 let assetLayers = {};
 
 
-function fetchUserId() {
-    return new Promise((resolve, reject) => {
-      let serviceUrl = document.location.origin + "/api/userId";
+
+
+
   
-      $.ajax({
-        url: serviceUrl,
-        crossDomain: true,
-        type: "GET",
-        success: function (data) {
-          if (data && data.length > 0) {
-            let userId = data[0].user_id;
-            resolve(userId);
-          } else {
-            reject("Error fetching user ID: empty response");
-          }
-        },
-        error: function (errorThrown) {
-          reject("Error fetching user ID: " + errorThrown);
-        },
-      });
-    });
-  }
-  
-  
- function fetchUserRanking(userId) {
-    let serviceUrl = document.location.origin + "/api/userRanking/" + userId;
-  
-        $.ajax({
-            url: serviceUrl,
-            crossDomain: true,
-            type: "GET",
-            success: function(data) {
-            // Extract the ranking from the response data and show an alert
-            let ranking = data[0].array_to_json[0].rank;
-            alert("Your ranking based on condition reports is: " + ranking);
-            },
-            error: function(err) {
-            console.error("Error while fetching user ranking:", err);
-            }
-        });
- } 
+ 
 
   
 ////////////////////////////////////////////

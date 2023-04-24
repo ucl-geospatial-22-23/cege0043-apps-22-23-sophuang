@@ -8,7 +8,7 @@
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <!--link href="img/favicon.ico" rel="icon"-->
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,6 +44,8 @@
 
     <!-- trackLocation Javascript -->
     <script src="js/trackLocation.js"></script>
+
+    
 
     <!-- uploadData Javascript -->
     <script src="js/assetCreation.js"></script>
@@ -87,6 +89,16 @@
 
     <!-- the following script will load the map and set the default view and zoom, as well as loading the basemap tiles -->
     <script src="js/basicMap.js"></script> 
+    <!-- fetch Javascript -->
+    <script src="js/fetch.js"></script>
+
+    <!-- uploadData Javascript -->
+    <script src="js/icon_change.js"></script>
+
+    <!-- uploadData Javascript -->
+    <script src="js/popup.js"></script>
+
+    
     <script>
         //code to load the map when the page is loaded 
         document.addEventListener('DOMContentLoaded', function() {
@@ -94,8 +106,8 @@
         
         function loadMap() {
             loadLeafletMap(); 
-            window.addEventListener('resize', setMapClickEvent); 
             setMapClickEvent();
+            window.addEventListener('resize', setMapClickEvent); 
             }   
             alert("Your location cllected and shown in red markers");
     </script>
@@ -237,12 +249,12 @@
              <div class="container_fluid px-0">
                 <div class="row d-flex">
                     <div class="col d-flex">
-                        <div id="mapWrapper" class="col vh-100 collapse show" aria-expanded="true" style="margin-top:65px;z-order:0">
+                        <div id="mapWrapper" class="col vh-100 collapse show" aria-expanded="true" style="margin-top:0px;z-order:0">
                             <div id="mapid" class="vh-100 vw-100" style="height:calc(100% - 65px);"  >
                             </div> <!-- map id -->
                         </div> <!-- map wrapper -->
             
-                        <div id="assetDataWrapperWrapper" class="col vh-100 collapse hide" style="background-color:lightgray; margin-top:65px;z-order:0;" >
+                        <div id="assetDataWrapperWrapper" class="col vh-100 collapse hide" style="background-color:lightgray; margin-top:0px;z-order:0;" >
                             <div  id="assetDataWrapper" style="height:calc(100% - 65px);">
                             </div> <!-- asset data wrapper -->
                         </div> <!-- asset data wrapper wrapper wrapper -->
