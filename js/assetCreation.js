@@ -26,7 +26,25 @@ function fetchUserId() {
       });
     });
   }
+
+  function fetchConditionMapping() {
+    let serviceUrl = document.location.origin + "/api/conditionDetails";
+    return fetch(serviceUrl)
+      .then(response => response.json())
+      .then(mapping => {
+        const conditionMapping = {};
   
+        mapping.forEach(condition => {
+          conditionMapping[condition.condition_description] = condition.id;
+          console.log("condition:"+condition.condition_description)
+          console.log("conditionMapping:"+conditionMapping[condition.condition_description]);
+        });
+        
+        
+        return conditionMapping;
+      });
+  }
+  fetchConditionMapping();
   
  function fetchUserRanking(userId) {
     let serviceUrl = document.location.origin + "/api/userRanking/" + userId;
