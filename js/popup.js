@@ -39,21 +39,8 @@ function getPopupHTML(asset_id,assetName,installationDate,lastCondition){
 '<div id="conditionResult">The result of the upload goes here</div>'+
 '<br />'+
 '<br />'+
-''+
-''+
-''+
-''+
-''+
 '<hr>'+
 '<hr>'+
-''+
-''+
-''+
-'<label for="deleteID">Delete ID</label><input type="text" size="25" id="delete_id"/><br />'+
-'<button id="startDelete" onclick="deleteRecord()">Delete Record</button>'+
-'<div id="dataDeleteResult">The result of the upload goes here</div>'+
-''+
-''+
 ''+
 '</div>'+
 ''+
@@ -108,13 +95,6 @@ var assetCreat = '<!DOCTYPE html>'+
 ''+
 '    <hr>'+
 '    <hr>'+
-''+
-''+
-'    <label for="deleteID">Delete ID</label><input type="text" size="25" id="delete_id"/><br />'+
-'    <button id="deleteAsset" onclick="deleteSingleAsset()">Delete Single Asset Data</button>'+
-'    <div id="deleteAssetResponse">The result of the delete operation goes here</div>'+
-''+
-''+
 '</div>'+
 ''+
 ''+

@@ -153,6 +153,7 @@ function loadClosest5() {
 let ClosestPoints;
 
 function displayClosest5(assetData) {
+  initialize();
 
     let goldIcon = createCustomIcon('gold');
 
@@ -246,8 +247,9 @@ let LastAssets;
 
 function displayLast5(assetData) {
     // Remove any existing LastAssets layer from the map before adding a new one
+    initialize();
     if (LastAssets) {
-      mymap.removeLayer(mapPoint);
+      mymap.removeLayer(mapCondition);
     }
   
     LastAssets = L.geoJSON(assetData, {
@@ -262,7 +264,7 @@ function displayLast5(assetData) {
       },
     });
   
-    mapPoint = LastAssets.addTo(mymap);
+    mapCondition = LastAssets.addTo(mymap);
   
     // Set the map view to fit the LastAssets layer
     let lastAssetsBounds = LastAssets.getBounds();
@@ -273,7 +275,7 @@ function displayLast5(assetData) {
 
 function removeLast5() {
     if (LastAssets) {
-        mymap.removeLayer(mapPoint);
+        mymap.removeLayer(mapCondition);
       };
       // Reload points in mapCondition
   fetchUserId()
@@ -341,6 +343,7 @@ function loadNo3() {
 let NoReports;
 
 function displayNo3(assetData) {
+  initialize();
 
     let greyIcon = createCustomIcon('grey');
 
@@ -353,9 +356,9 @@ function displayNo3(assetData) {
           },
     });
     if (NoReports) {
-        mymap.removeLayer(mapPoint);
+        mymap.removeLayer(mapCondition);
       }
-      mapPoint = NoReports.addTo(mymap);
+      mapCondition = NoReports.addTo(mymap);
 
     // Set the map view to fit the LastAssets layer
     let NoReportsBounds = NoReports.getBounds();
@@ -367,6 +370,13 @@ function displayNo3(assetData) {
 
 function removeNo3() {
     if (NoReports) {
-        mymap.removeLayer(mapPoint);
+        mymap.removeLayer(mapCondition);
       }
+      fetchUserId()
+  .then((userId) => {
+    loadUserAssets_C(userId);
+  })
+  .catch((error) => {
+    console.error("Error fetching user ID:", error);
+  });
     }
