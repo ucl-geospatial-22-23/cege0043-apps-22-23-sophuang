@@ -1,7 +1,24 @@
+/* ////////////////////////////////////////////////////////////////////////////////////////
+
+This file stores functions that are used to fetch and load data from endpoints, 
+and then store is as viarables such that they can be called in other functions, 
+to use the endpoints data 
+
+To allow other functions dependent on the AJAX call loading before it runs,
+AJAX Promisify is required
+
+The code to promisify Ajax call is adapted from:
+https://www.taniarascia.com/how-to-promisify-an-ajax-call/
+
+*/ ////////////////////////////////////////////////////////////////////////////////////////
+
+
 "use strict";
 
-// fetch user ID
-//let userId;
+
+// This function fetches the user_id from endpoint "/userId"
+// And stores it as variable userId
+// This function allows the user_id in other endpoints to be not hard-coded
 function fetchUserId() {
     return new Promise((resolve, reject) => {
       let serviceUrl = document.location.origin + "/api/userId";
@@ -14,6 +31,7 @@ function fetchUserId() {
           if (data && data.length > 0) {
             let userId = data[0].user_id;
             resolve(userId);
+            console.log("Fetched user_id:" + userId);
           } else {
             reject("Error fetching user ID: empty response");
           }
@@ -26,7 +44,10 @@ function fetchUserId() {
   }
 
 
-//fetch condition description
+// This function fetches the the condition values and descriptions from endpoint "/conditionDetails"
+// And stores the condition_option table as a dictionary
+// This function allows the condtion_descriptions in the dashboard application to be not-hardcoded
+// In the bootStrap, our main application, this function is not implemented
 function fetchConditionMapping() {
     let serviceUrl = document.location.origin + "/api/conditionDetails";
     return fetch(serviceUrl)
@@ -44,144 +65,6 @@ function fetchConditionMapping() {
   }
 
 
-//fetch User Ranking
-function fetchUserRanking(userId) {
-    let serviceUrl = document.location.origin + "/api/userRanking/" + userId;
-  
-        $.ajax({
-            url: serviceUrl,
-            crossDomain: true,
-            type: "GET",
-            success: function(data) {
-            // Extract the ranking from the response data and show an alert
-            let ranking = data[0].array_to_json[0].rank;
-            alert("Your ranking based on condition reports is: " + ranking);
-            },
-            error: function(err) {
-            console.error("Error while fetching user ranking:", err);
-            }
-        });
-} 
 
 
-function loadUserAssets_C(userId, callback) {
-    let serviceUrl = document.location.origin + "/api/userAssets/" + userId;
-  
-    $.ajax({
-      url: serviceUrl,
-      crossDomain: true,
-      type: "GET",
-      success: function (data) {
-        console.log(data);
-        displayConditionOnMap(data); // Call displayAssetsOnMap here
-        let width = $(window).width();
-      if (!(width >= 992 && width < 1200)) {
-        if (callback) {
-            callback(); // Execute the callback function
-          }
-      }
-      
-        
-      }
-    });
-  }
 
-function loadUserAssets_A(userId) {
-    let serviceUrl = document.location.origin + "/api/userAssets/" + userId;
-  
-    $.ajax({
-      url: serviceUrl,
-      crossDomain: true,
-      type: "GET",
-      success: function (data) {
-        console.log(data);
-        displayAssetsOnMap(data); // Call displayAssetsOnMap here
-      },
-    });
-  }
-
-  
-  
-let mapPoint; // store the geoJSON feature so that we can remove it if the screen is resized
-let mapCondition;
-// Create an object to store the markers
-let markers = {};
-let updatedConditions = {};
-
-  function displayConditionOnMap(assetData) {
-    initialize();
-    let assetPoints = L.geoJSON(assetData, {
-      pointToLayer: function (feature, latlng) {
-        let assetId = feature.properties.asset_id;
-        let condition = feature.properties.condition_description;
-        console.log(assetId);
-        console.log(condition);
-        let icon = getIconByCondition(condition);
-        
-        let marker = L.marker(latlng, { icon: icon });
-        marker.assetId = assetId;
-        return marker;
-      },
-
-      onEachFeature: function (feature, layer) {
-        let assetName = feature.properties.asset_name;
-        let installationDate = feature.properties.installation_date;
-        let lastCondition = feature.properties.condition_description;
-        let asset_id = feature.properties.asset_id;
-        let popUpHTML = getPopupHTML(asset_id,assetName, installationDate, lastCondition);
-        layer.bindPopup(popUpHTML);
-        
-        // Store the marker in the markers object
-      let assetId = feature.properties.asset_id;
-      markers[assetId] = layer;
-      layer.assetId = assetId;
-      },
-    });
-
-    // Add assetPoints to the map
-    mapCondition = assetPoints.addTo(mymap);
-    console.log("Asset Points added to the map");
-    return assetPoints;
-  }
-
-
-  function displayAssetsOnMap(data) {
-    initialize();
-    let assetPoints = L.geoJSON(data, {
-        pointToLayer: function (feature, latlng) {
-            let assetId = feature.properties.asset_id;
-            let condition = feature.properties.condition_description;
-            console.log(assetId);
-            console.log(condition);
-            let icon = getIconByCondition(condition);
-            
-            let marker = L.marker(latlng, { icon: icon });
-            marker.assetId = assetId;
-            return marker;
-          },
-
-      onEachFeature: function (feature, layer) {
-        let lastCondition = feature.properties.condition_description;
-        let pre_con;
-        if (lastCondition=='Unknown') {
-            pre_con = "No Previous Condition Report Captured for this Asset";
-        }
-        else{
-            pre_con = "Last Condition: " + lastCondition;
-        }
-  
-        // Show lastCondition popup when the layer is clicked
-        layer.on("click", function (e) {
-          let lastConditionPopup = L.popup()
-            .setLatLng(layer.getLatLng())
-            .setContent(pre_con);
-  
-          lastConditionPopup.openOn(mymap);
-        });
-      }
-    });
-  
-    // Add assetPoints to the map
-    mapPoint = assetPoints.addTo(mymap);
-    console.log("Asset Points added to the map");
-  }

@@ -1,5 +1,4 @@
 "use strict";
-let conditionMapping = null;
 
 function createCustomIcon(color) {
     return L.icon({
@@ -14,7 +13,6 @@ function createCustomIcon(color) {
   
   let greenIcon = createCustomIcon('green');
   let yellowIcon = createCustomIcon('yellow');
- 
   let orangeIcon = createCustomIcon('orange');
   let redIcon = createCustomIcon('red');
   let violetIcon = createCustomIcon('violet');
@@ -56,9 +54,6 @@ function createCustomIcon(color) {
 
   
 
-
-
-
 function updateLayerColor(assetId, condition) {
     let marker = markers[assetId];
     updatedConditions[assetId] = condition;
@@ -98,7 +93,9 @@ function updateLayerColor(assetId, condition) {
     console.log("updateLayerColor");
   }
 
-  function updateDescription(id) {
+
+
+function updateDescription(id) {
     let description = '';
     let descriptionDiv = document.getElementById('condition_description');
   
@@ -121,6 +118,5 @@ function updateLayerColor(assetId, condition) {
       default:
         description = '';
     }
-  
     descriptionDiv.innerHTML = description;
 }
