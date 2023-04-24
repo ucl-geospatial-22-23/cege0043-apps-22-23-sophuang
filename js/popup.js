@@ -1,6 +1,22 @@
+/* ////////////////////////////////////////////////////////////////////////////////////////
+
+This file defines two functions that create the popup HTML at asset point createion 
+and Condition Assement reporting
+
+The inner HTML string is transformed by the website:
+http://pojo.sodhanalibrary.com/string.html
+
+*/ ////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+//This the function of Condition Survey Form Creation HTML
+//This function take asset_id,assetName,installationDate,lastCondition from the data returned by endpoint as input
+//and return the condition form corresponding to different asset
+
 function getPopupHTML(asset_id,assetName,installationDate,lastCondition){
-    // (in the final assignment, all the required values for the asset pop-up will be 
-    //derived from feature.properties.xxx – see the Earthquakes code for how this is done)
+
     var conditionSurvey = '<!DOCTYPE html>'+
 '<head>'+
 '<title>Condition Survey Form Creation</title>'+
@@ -11,6 +27,8 @@ function getPopupHTML(asset_id,assetName,installationDate,lastCondition){
 '<div>'+
 ''+
 ''+
+
+//Asset Name andinstallation date are read only here
 '<label for="asset_name">Asset name</label><input type="text" size="25" value="'+ assetName +'" id="asset_name" readonly/><br />'+
 ''+
 '<label for="installation_date">Asset Installation Date</label><input type="date" id="installation_date" value="'+ installationDate +'" readonly/><br />'+
@@ -54,18 +72,20 @@ function getPopupHTML(asset_id,assetName,installationDate,lastCondition){
 
 
 return conditionSurvey;
-
-    
 }
+
+
+//This the function of Asset Creation Form HTML
+//This function returns the asset creation form corresponding to the place where the user click
     
 function basicFormHtml() {
 
 var assetCreat = '<!DOCTYPE html>'+
 '<head>'+
-'<title>Asset Form Creation</title>'+
+'<title>Asset Creation Form</title>'+
 '</head>'+
 '<body>'+
-'<h1> Asset Form Creation</h1>'+
+'<h1> Asset Creation Form </h1>'+
 ''+
 '<div>'+
 ''+
@@ -74,6 +94,8 @@ var assetCreat = '<!DOCTYPE html>'+
 '    <label for="Installation Date">Installation Date</label><input type="date" id="installation_date"/><br />'+
 '    <br />'+
 '    <br />'+
+
+// Latitude and Longitude are get from the clicked Latitude and Longitude by the user click event
 '    <label for="Latitude">Latitude</label><input type="text" size="25" value="'+ clickedLat +'" id="latitude"/><br />'+
 '    <label for="Longitude">Longitude</label><input type="text" size="25" value="'+ clickedLng +'" id="longitude"/><br />'+
 ''+
@@ -104,9 +126,6 @@ var assetCreat = '<!DOCTYPE html>'+
 'integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="'+
 'crossorigin="anonymous"></script> '+
 '<script src="js/assetCreation.js"> </script>';
-    
-
-
 
 return assetCreat;
     
