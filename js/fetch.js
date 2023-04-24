@@ -64,7 +64,7 @@ function fetchUserRanking(userId) {
 } 
 
 
-function loadUserAssets_C(userId) {
+function loadUserAssets_C(userId, callback) {
     let serviceUrl = document.location.origin + "/api/userAssets/" + userId;
   
     $.ajax({
@@ -76,9 +76,13 @@ function loadUserAssets_C(userId) {
         displayConditionOnMap(data); // Call displayAssetsOnMap here
         let width = $(window).width();
       if (!(width >= 992 && width < 1200)) {
-        trackLocation();
+        if (callback) {
+            callback(); // Execute the callback function
+          }
       }
-      },
+      
+        
+      }
     });
   }
 

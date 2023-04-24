@@ -123,6 +123,15 @@ function Remove5assets() {
     alert("menu Remove5assets is called by: "+ sCallerName);
 
     removeClosest5();
+
+    // Reload points in mapCondition
+  fetchUserId()
+  .then((userId) => {
+    loadUserAssets_C(userId);
+  })
+  .catch((error) => {
+    console.error("Error fetching user ID:", error);
+  });
 }
 
 function loadClosest5() {
@@ -156,9 +165,9 @@ function displayClosest5(assetData) {
           }
     });
     if (ClosestPoints) {
-        mymap.removeLayer(mapPoint);
+        mymap.removeLayer(mapCondition);
       }
-      mapPoint = ClosestPoints.addTo(mymap);
+      mapCondition = ClosestPoints.addTo(mymap);
 
       // Set the map view to fit the LastAssets layer
         let ClosestPointsBounds = ClosestPoints.getBounds();
@@ -168,8 +177,16 @@ function displayClosest5(assetData) {
 
 function removeClosest5() {
     if (ClosestPoints) {
-        mymap.removeLayer(mapPoint);
+        mymap.removeLayer(mapCondition);
       }
+      // Reload points in mapCondition
+  fetchUserId()
+  .then((userId) => {
+    loadUserAssets_C(userId);
+  })
+  .catch((error) => {
+    console.error("Error fetching user ID:", error);
+  });
     }
 
 
@@ -189,7 +206,15 @@ function Remove5reports() {
     let aRegexResult = re.exec(new Error().stack);
     let sCallerName = aRegexResult[1] || aRegexResult[2];
     alert("menu Remove5reports is called by: "+ sCallerName);
-    removeLast5()
+    removeLast5();
+    // Reload points in mapCondition
+  fetchUserId()
+  .then((userId) => {
+    loadUserAssets_C(userId);
+  })
+  .catch((error) => {
+    console.error("Error fetching user ID:", error);
+  });
 }
 
 
@@ -249,7 +274,15 @@ function displayLast5(assetData) {
 function removeLast5() {
     if (LastAssets) {
         mymap.removeLayer(mapPoint);
-      }
+      };
+      // Reload points in mapCondition
+  fetchUserId()
+  .then((userId) => {
+    loadUserAssets_C(userId);
+  })
+  .catch((error) => {
+    console.error("Error fetching user ID:", error);
+  });
     }
 
 
