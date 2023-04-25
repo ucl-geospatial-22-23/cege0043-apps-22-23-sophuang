@@ -1,21 +1,37 @@
+/* ////////////////////////////////////////////////////////////////////////////////////////
+
+This file sotres functions that create barchart on the dash board
+It also include the interaction between the cesium viewer
+
+*/ ////////////////////////////////////////////////////////////////////////////////////////
+
 "use strict";
+//load the graph when the page is load
    document.addEventListener("DOMContentLoaded", function() {
     showGraph();
     
   });
 
+//the graph size change with window resize
   window.addEventListener("resize", showGraph);
 
-  let selectedBar = null;
+//define global varable to store slected condition of bars
+let selectedBar = null;
 
-  function getMaxConditionValue(data) {
+
+// The condition value and condition description are not hard coded in the dash board component
+// They are get from the endpoint /conditionDetails
+// Details of conditionmaping functions are in cesium_viewer.js
+function getMaxConditionValue(data) {
   const conditions = data.map(d => d.condition_number);
   const maxCondition = Math.max(...conditions);
   return maxCondition;
   }
   
 
-  function onBarClick(d) {
+// This function allow when a bar is clicked, the bar will be highlighted
+// And the cesium viewer will zoom to corresponding asset
+function onBarClick(d) {
     // Deselect the previously selected bar
     if (selectedBar && selectedBar !== this) {
     d3.select(selectedBar).classed("selected", false);
@@ -43,24 +59,24 @@
     else{
       setDefaultView(viewer);
       
-    }
-    
-    
-  }
+    }  
+}
 
-  function zoomToAsset(coordinates) {
+
+// Function to zoom the cesium viewer when the bar is clicked
+function zoomToAsset(coordinates) {
     if (coordinates && coordinates.length === 2) {
       const [longitude, latitude] = coordinates;
       viewer.camera.flyTo({
         destination: Cesium.Cartesian3.fromDegrees(longitude, latitude, 1000),
         duration: 1,
       });
-    }
-
-    
+    } 
   }
 
-  function setDefaultView(viewer) {
+
+// Once the bar is clicked again, the cesium view will reload to the default view.
+function setDefaultView(viewer) {
     // Define the default camera position
     const defaultPosition = Cesium.Cartesian3.fromDegrees(0, 0, 10000000);
   
