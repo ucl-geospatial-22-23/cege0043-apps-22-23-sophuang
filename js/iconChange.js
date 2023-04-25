@@ -1,5 +1,6 @@
 "use strict";
 
+
 function createCustomIcon(color) {
     return L.icon({
       iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`,

@@ -1,17 +1,25 @@
+/* ////////////////////////////////////////////////////////////////////////////////////////
+
+This file sotres basic functions realting to map.
+Including initialize map, load map, set on map click
+
+*/ ////////////////////////////////////////////////////////////////////////////////////////
+
 "use strict";
-let mymap; // global variable to store the map
-        
-let popup = L.popup(); // create a custom popup as a global variable 
+// global variable to store the map
+let mymap; 
+// create a custom popup as a global variable         
+let popup = L.popup(); 
+
+// Store Latitude and Longitude by user clicking
 let clickedLat;
 let clickedLng;
 
 
+
+
 // create an event detector to wait for the user's click event and then use the popup to show them where they clicked
-// note that you don't need to do any complicated maths to convert screen coordinates to real world coordiantes - the Leaflet API does this for you
-
-
 function onMapClick(e) {
-    
     clickedLat = e.latlng.lat;
     clickedLng = e.latlng.lng;
     let formHTML = basicFormHtml();
@@ -24,6 +32,7 @@ function onMapClick(e) {
 
 
 
+// Function to load leaflet map
 function loadLeafletMap() {
     if(mymap) {
         mymap.remove();
@@ -39,15 +48,13 @@ function loadLeafletMap() {
                     mymap.on('click', onMapClick);
 
                     console.log("check on map click");
-    
-    
-} //end code to add the leaflet map
+} 
 
 
-let width; // NB – keep this as a global variable
 
-let assetPoints;
 
+
+// Initialze the map by removing any existing layer 
 function initialize() {
   if (mapCondition) {
     mymap.removeLayer(mapCondition);
@@ -57,37 +64,56 @@ function initialize() {
   }
 }
 
+
+
+// Store the screen width as global variable
+let width; 
+let assetPoints;
+
+// Function to set map click events according to different screen size
 function setMapClickEvent() {
+
   // get the window width
   width = $(window).width();
 
+  // If the screen size is small, the condition app will start
   if (width < 768) {
     
-    //the condition capture
+    //the existing layer condition capture
     if (mapCondition) {
       mymap.removeLayer(mapCondition);
     }
+
     // cancel the map onclick event using off ..
+    // Only allow click on the asset point
     mymap.off('click', onMapClick);
 
+    // Pass the fetched user_id to allow loadUserAssets_C() function
     fetchUserId()
       .then((userId) => {
         loadUserAssets_C(userId,trackLocation);
-
       })
       .catch((error) => {
         console.error("Error fetching user ID:", error);
       });
-    
-  } else if (width >= 992 && width < 1200) {
-    // the asset creation page
+  } 
+
+  // If the screen size is Large, the asset creation app will start
+  else if (width >= 992 && width < 1200) {
+
+    // the existing layer condition capture
     if (mapPoint) {
       mymap.removeLayer(mapPoint);
     }
+
+    // Remove the tracked location markers
     removePositionPoints();
-    // the on click functionality of the MAP should pop up a blank asset creation form
+
+    // the on click functionality of the map start
+    // And popup the asset creation html
     mymap.on('click', onMapClick);
 
+    // Pass the fetched user_id to allow loadUserAssets_A() function
     fetchUserId()
       .then((userId) => {
         loadUserAssets_A(userId);
@@ -95,146 +121,11 @@ function setMapClickEvent() {
       .catch((error) => {
         console.error("Error fetching user ID:", error);
       });
-  } else {
+  } 
+  
+  // If neither the small, extra small or large screen size, nothing should appear
+  else {
     mymap.off('click', onMapClick);
     initialize();
   }
 }
-
-function loadUserAssets_C(userId, callback) {
-  let serviceUrl = document.location.origin + "/api/userAssets/" + userId;
-
-  $.ajax({
-    url: serviceUrl,
-    crossDomain: true,
-    type: "GET",
-    success: function (data) {
-      console.log(data);
-      displayConditionOnMap(data); // Call displayAssetsOnMap here
-      let width = $(window).width();
-    if (!(width >= 992 && width < 1200)) {
-      if (callback) {
-          callback(); // Execute the callback function
-        }
-    }
-    
-      
-    }
-  });
-}
-
-function loadUserAssets_A(userId) {
-  let serviceUrl = document.location.origin + "/api/userAssets/" + userId;
-
-  $.ajax({
-    url: serviceUrl,
-    crossDomain: true,
-    type: "GET",
-    success: function (data) {
-      console.log(data);
-      displayAssetsOnMap(data); // Call displayAssetsOnMap here
-    },
-  });
-}
-
-
-
-let mapPoint; // store the geoJSON feature so that we can remove it if the screen is resized
-let mapCondition;
-// Create an object to store the markers
-let markers = {};
-let updatedConditions = {};
-
-function displayConditionOnMap(assetData) {
-  initialize();
-  let assetPoints = L.geoJSON(assetData, {
-    pointToLayer: function (feature, latlng) {
-      let assetId = feature.properties.asset_id;
-      let condition = feature.properties.condition_description;
-      console.log(assetId);
-      console.log(condition);
-      let icon = getIconByCondition(condition);
-      
-      let marker = L.marker(latlng, { icon: icon });
-      marker.assetId = assetId;
-      return marker;
-    },
-
-    onEachFeature: function (feature, layer) {
-      let assetName = feature.properties.asset_name;
-      let installationDate = feature.properties.installation_date;
-      let lastCondition = feature.properties.condition_description;
-      let asset_id = feature.properties.asset_id;
-      let popUpHTML = getPopupHTML(asset_id,assetName, installationDate, lastCondition);
-      layer.bindPopup(popUpHTML);
-      
-      // Store the marker in the markers object
-    let assetId = feature.properties.asset_id;
-    markers[assetId] = layer;
-    layer.assetId = assetId;
-    },
-  });
-
-  // Add assetPoints to the map
-  mapCondition = assetPoints.addTo(mymap);
-  console.log("Asset Points added to the map");
-  return assetPoints;
-}
-
-
-function displayAssetsOnMap(data) {
-  initialize();
-  let assetPoints = L.geoJSON(data, {
-      pointToLayer: function (feature, latlng) {
-          let assetId = feature.properties.asset_id;
-          let condition = feature.properties.condition_description;
-          console.log(assetId);
-          console.log(condition);
-          let icon = getIconByCondition(condition);
-          
-          let marker = L.marker(latlng, { icon: icon });
-          marker.assetId = assetId;
-          return marker;
-        },
-
-    onEachFeature: function (feature, layer) {
-      let lastCondition = feature.properties.condition_description;
-      let pre_con;
-      if (lastCondition=='Unknown') {
-          pre_con = "; Last Condition: " +"No Previous Condition Report Captured for this Asset";
-      }
-      else{
-          pre_con = "; Last Condition: " + lastCondition;
-      }
-
-      let Content = "Asset Name: "+feature.properties.asset_name + pre_con;
-      // Show lastCondition popup when the layer is clicked
-      layer.on("click", function (e) {
-        let lastConditionPopup = L.popup()
-          .setLatLng(layer.getLatLng())
-          .setContent(Content);
-
-        lastConditionPopup.openOn(mymap);
-      });
-    }
-  });
-
-  // Add assetPoints to the map
-  mapPoint = assetPoints.addTo(mymap);
-  console.log("Asset Points added to the map");
-}
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
