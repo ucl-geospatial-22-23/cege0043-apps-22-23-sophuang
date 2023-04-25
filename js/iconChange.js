@@ -58,7 +58,7 @@ function getIconByCondition(condition) {
         break;
       case '5':
         case 'Unknown':
-        icon = violetIcon;
+        icon = blueIcon;
         break;
       default:
         icon = blueIcon;
@@ -68,7 +68,8 @@ function getIconByCondition(condition) {
 }
 
 
-
+let makers = {};
+let updatedConditions={};
   
 // This function is used for update the color when a new condtion report is submitted
 function updateLayerColor(assetId, condition) {
