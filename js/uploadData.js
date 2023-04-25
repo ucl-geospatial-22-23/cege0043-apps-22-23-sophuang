@@ -41,6 +41,7 @@ function saveNewAsset() {
     }
 
     popup.close();
+    setMapClickEvent();
 }
 
 
@@ -52,7 +53,7 @@ function processData(postString) {
     crossDomain: true,
     type: "POST",
     data: postString,
-    success: function(data){console.log(data); dataUploaded(data);},
+    success: function(data){ dataUploaded(data);},
     error: function (jqXHR, textStatus, errorThrown) {
         //This will alert the message if the user gives a asset_name that has been in the dataset
         if (jqXHR.status === 400) {
@@ -67,7 +68,7 @@ function processData(postString) {
 // Store and show the upladed data in the responseDIV
 function dataUploaded(data) {
     document.getElementById("responseDIV").innerHTML = JSON.stringify(data);
-    alert("Data has been uploaded:" + JSON.stringify(data));
+    alert("Data has been uploaded");
 }
 
 /* Delete functions are not required in the app
@@ -162,7 +163,7 @@ function processCondition(postString) {
     crossDomain: true,
     type: "POST",
     data: postString,
-    success: function(data){console.log(data); 
+    success: function(data){
     // Fetch the userId using the fetchUserId function
   fetchUserId()
   .then((userId) => {
@@ -183,7 +184,7 @@ function processCondition(postString) {
 function ConditionUploaded(data,userId) {
     // change the DIV to show the response
     document.getElementById("conditionResult").innerHTML = JSON.stringify(data);
-    alert("Condition has been uploaded:"+ JSON.stringify(data));
+    alert("Condition has been uploaded");
 
 
     let serviceUrl = document.location.origin + "/api/userConditionReports/"+userId;
