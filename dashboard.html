@@ -1,8 +1,7 @@
-<!DOCTYPE html>
 <!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
+This dashboard is adapted from the ADMIN LTE template from here: https://adminlte.io/
 -->
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -11,8 +10,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
 
@@ -28,8 +29,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- D3 library -->
   <script src="https://d3js.org/d3.v5.min.js"></script>
 
-<!-- radar chart library -->
-<!--script src="https://d3js.org/d3.v3.min.js"></script-->
 <!-- radar graph js -->
 <script src="js/radar_graph.js"></script>
 <script src="js/radarChart.js"></script>
@@ -123,12 +122,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </div>
         <div class="info">
           <a href="#" class="d-block">CEGE0043 Dashboard</a>
-          <!-- 
+
           <p class="small-text">GitHub Username:</p>
           <p class="small-text">sophuang</p>
           <p class="small-text">UCL Username:</p>
           <p class="small-text">zcahuag</p>
-          -->
+
         </div>
       </div>
 
@@ -176,7 +175,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   </div>
   <!-- /.content-header -->
 
-  <!-- Main content -->
+  <!-- Cesium Viewer container -->
   <div class="content">
     <div class="container-fluid">
       <div class="row">
@@ -191,7 +190,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </div>
         </div>
 
-        <!-- /.col-lg-8 -->
+        <!-- bar chart container -->
         <div class="col-lg-6">
           <div class="card">
             <div class="card-header">
@@ -202,8 +201,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </div>
           </div>
 
-        <!-- Add a new card for the radar chart -->
-
+        <!-- radar chart container -->
         <div class="card card-primary card-outline">
           <div class="card-header">
             <h5 class="m-0">Radar Chart</h5>
@@ -212,13 +210,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div id="radarChartContainer" class="chart-container" style="width: 100%; height: 400px;"></div>
           </div>
         </div>
-
-          
-
-        
-
-
-
         </div>
         <!-- /.col-lg-4 -->
       </div>
@@ -274,7 +265,5 @@ crossorigin="anonymous"></script>
 
 <!-- bar graph js -->
 <script src="js/bar_graph.js"></script>
-
-
 
 </html>
