@@ -24,12 +24,17 @@ document.addEventListener("DOMContentLoaded", function() {
     selectedCircle = isSelected ? null : this;
     
     const coordinates = d.coordinates;
+
   
     if (!isSelected) {
       zoomToAsset(coordinates);
+      // Trigger a click event on the bar
+
     } else {
       setDefaultView(viewer);
       d3.select(this).style("fill", "#FFA500");
+
+    
     }
   }
   

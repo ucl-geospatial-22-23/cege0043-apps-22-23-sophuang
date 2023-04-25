@@ -30,11 +30,19 @@
 
     const coordinates = d.geometry;
 
+    // Find the corresponding circle in the radar chart
+    const radarCircle = d3
+    .selectAll("#radarChartContainer .radar-data .radarMarker")
+    .filter((circleData) => circleData.axis === d.name)
+    .node(); // Get the DOM element
+
     if(!isSelected) {
       zoomToAsset(coordinates);
+      
     }
     else{
       setDefaultView(viewer);
+      
     }
     
     
@@ -48,6 +56,8 @@
         duration: 1,
       });
     }
+
+    
   }
 
   function setDefaultView(viewer) {
