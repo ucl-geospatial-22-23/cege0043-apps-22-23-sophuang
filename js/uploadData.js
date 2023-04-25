@@ -39,6 +39,8 @@ function saveNewAsset() {
         let postString = "asset_name="+asset_name +"&installation_date="+date+"&latitude="+latitude+"&longitude="+longitude+ "&user_id=" + user;
 	    processData(postString);
     }
+
+    popup.close();
 }
 
 
@@ -203,7 +205,7 @@ function ConditionUploaded(data,userId) {
   
 
 
-
+/*
 function deleteRecord() {
 	let deleteID = document.getElementById("delete_id").value;
 	let deleteString = "id="+deleteID;
@@ -221,4 +223,4 @@ function dataDeleted(data){
     document.getElementById("dataDeleteResult").innerHTML = JSON.stringify(data);
 	alert("Data has been deleted!")
 }
-
+*/
