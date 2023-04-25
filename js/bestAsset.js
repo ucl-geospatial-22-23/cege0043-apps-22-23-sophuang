@@ -1,6 +1,6 @@
 /* ////////////////////////////////////////////////////////////////////////////////////////
 
-This file stores functions ti show the Asset information which are in Best Condition.
+This file stores functions to show the Asset information which are in Best Condition.
 AssetBest() function will be called when the menu item of "Asset in Best" is clicked
 displayAssetsList() function create a popup html in the center of current map view
 to store the geoJSON result from endpoint: /assetsInGreatCondition
