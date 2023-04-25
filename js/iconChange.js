@@ -58,7 +58,7 @@ function getIconByCondition(condition) {
         break;
       case '5':
         case 'Unknown':
-        icon = violetIcon;
+        icon = blueIcon;
         break;
       default:
         icon = blueIcon;
