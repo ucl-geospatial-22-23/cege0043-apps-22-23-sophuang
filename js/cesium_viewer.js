@@ -1,3 +1,15 @@
+/* ////////////////////////////////////////////////////////////////////////////////////////
+
+This script is adapted from previous practical materials
+
+This file sotres functions that create cesium viewer on the dash board
+It also include the interaction between the other two graphs
+
+The condition value and condition description are not hard coded in the dash board component
+They are get from the endpoint /conditionDetails
+
+*/ ////////////////////////////////////////////////////////////////////////////////////////
+
 "use strict";
 Cesium.Ion.defaultAccessToken ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3NmQ2NmVmNy0zZGY4LTQ1ZDAtYmUwOC03MjkzM2JjNzQ2OTQiLCJpZCI6MTU2NjMsInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1Njg1MjQwNTl9.siDvMt3fH91XzE39FU_xqVrx-i6M1wWOBl_2vCrY6Xo';
 
@@ -17,12 +29,14 @@ document.addEventListener('DOMContentLoaded', function() {
  loadVectorLayer();
 }, false);
 
+// Initialize the global variable to store a dictionary of 
+// condtion details from data base
 let conditionMapping;
 
 
-
+// Allow 10 cases in total in the condtion details table,
+// And generate different color for different condition
 function getStrokeColor(conditionDescription) {
-  
   const conditionNumber = conditionMapping[conditionDescription];
 
   switch (conditionNumber) {
@@ -47,14 +61,15 @@ function getStrokeColor(conditionDescription) {
     default:
       return Cesium.Color.BLUE;
   }
-
-
 }
 
+
+// This function load the asset features on the cesium map
+// by downloading the data from endpoint /userAssets/:user:id
 function loadVectorLayer() {
-fetchUserId()
-.then((userId) => {
-let serviceUrl = document.location.origin + "/api/userAssets/" + userId;
+  fetchUserId()
+  .then((userId) => {
+  let serviceUrl = document.location.origin + "/api/userAssets/" + userId;
 
 fetch(serviceUrl)
   .then((response) => response.json())
@@ -80,6 +95,8 @@ fetch(serviceUrl)
           feature.geometry.coordinates[1]
         ),
 
+        // The original geoJSON options cannot be changed the color
+        // Hence the text label of "*" is used
         label: {
           text: '*',
           font: '100px sans-serif',
@@ -89,6 +106,7 @@ fetch(serviceUrl)
           style: Cesium.LabelStyle.FILL_AND_OUTLINE,
       },
 
+      // Also add description table on the cesium viewer to show details of asset features
       description: `
           <table>
             <tr><th>Asset ID</th><td>${feature.properties.asset_id}</td></tr>

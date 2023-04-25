@@ -2,6 +2,7 @@
 
 This file sotres functions that create barchart on the dash board
 It also include the interaction between the cesium viewer
+This script is adapted from the previous practical material
 
 */ ////////////////////////////////////////////////////////////////////////////////////////
 
@@ -21,7 +22,7 @@ let selectedBar = null;
 
 // The condition value and condition description are not hard coded in the dash board component
 // They are get from the endpoint /conditionDetails
-// Details of conditionmaping functions are in cesium_viewer.js
+// Details of conditionmaping functions are in the fetch.js
 function getMaxConditionValue(data) {
   const conditions = data.map(d => d.condition_number);
   const maxCondition = Math.max(...conditions);
