@@ -1,14 +1,25 @@
+/* ////////////////////////////////////////////////////////////////////////////////////////
+
+This file sotres functions that create barchart on the dash board
+It also include the interaction between the cesium viewer
+
+*/ ////////////////////////////////////////////////////////////////////////////////////////
+
+//load the graph when the page is load
 document.addEventListener("DOMContentLoaded", function() {
     showRadarChart()
-    
   });
 
-  window.addEventListener("resize", showRadarChart);
+//the graph size change with window resize
+window.addEventListener("resize", showRadarChart);
 
- 
-  let selectedCircle = null;
+//define global varable to store slected condition of bars 
+let selectedCircle = null;
 
-  function onCircleClick(d,cfg) {
+
+// This function allow when a bar is clicked, the bar will be highlighted
+// And the cesium viewer will zoom to corresponding asset
+function onCircleClick(d,cfg) {
     console.log("Circle clicked:", d);
     console.log("Coordinates:", d.coordinates);
     // Deselect the previously selected circle
@@ -24,26 +35,31 @@ document.addEventListener("DOMContentLoaded", function() {
     selectedCircle = isSelected ? null : this;
     
     const coordinates = d.coordinates;
+
   
     if (!isSelected) {
       zoomToAsset(coordinates);
+      // Trigger a click event on the bar
+
     } else {
       setDefaultView(viewer);
       d3.select(this).style("fill", "#FFA500");
+
+    
     }
   }
   
 
 
-
-  function showRadarChart() {
+// This function load the data from endpoint and call RadarChart() to draw the radar chart in the 
+// radarChart container
+function showRadarChart() {
     fetchUserId()
       .then((userId) => {
         let serviceUrl = document.location.origin + "/api/userAssets/" + userId;
         d3.json(serviceUrl).then((rawData) => {
 
-            //data = preprocessData(data[0].features);
-            fetchConditionMapping()
+      fetchConditionMapping()
       .then(conditionMapping => {
         // Fetch your data here
         return { rawData, conditionMapping };
@@ -76,8 +92,6 @@ document.addEventListener("DOMContentLoaded", function() {
       const containerWidth = containerRect.width;
       const containerHeight = containerRect.height;
 
-
-
       // Create the radar chart
       var chartConfig = {
         w: containerWidth,
@@ -88,8 +102,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
       RadarChart("#radarChartContainer", radarChartData, chartConfig);
       });
-            
-  
            
           })
           .catch((error) => {

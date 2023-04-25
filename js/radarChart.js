@@ -1,9 +1,12 @@
-/////////////////////////////////////////////////////////
-/////////////// The Radar Chart Function ////////////////
-/////////////// Written by Nadieh Bremer ////////////////
-////////////////// VisualCinnamon.com ///////////////////
-/////////// Inspired by the code of alangrafu ///////////
-/////////////////////////////////////////////////////////
+/* ////////////////////////////////////////////////////////////////////////////////////////
+
+This script is adapted from here: https://gist.github.com/nbremer/21746a9668ffdf6d8242
+by Nadieh Bremer
+
+Circle markers are added, where on click event is added on them
+To trigger the highlighted markers and interactions between other graphs
+
+*/ ////////////////////////////////////////////////////////////////////////////////////////
 
 function RadarChart(id, data, options) {
 	var cfg = {
@@ -227,25 +230,6 @@ function RadarChart(id, data, options) {
             .style("fill-opacity", 0.65);
 
             // Add circle markers at each condition_number value
-            /*
-            blobWrapper.selectAll(".radarMarker")
-            .data(function(d, i) {
-            return d.axes;
-            })
-            .enter().append("circle")
-            .attr("class", "radarMarker")
-            .attr("r", cfg.dotRadius * 1)
-            .attr("cx", function(d, i) {
-            return rScale(d.value) * Math.cos(angleSlice * i - Math.PI / 2);
-            })
-            .attr("cy", function(d, i) {
-            return rScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2);
-            })
-            .style("fill", function(d, i, j) {
-            return cfg.color(j);
-            })
-            .style("fill-opacity", 1);
-            */
 
                 // Append the circles
                 blobWrapper
@@ -267,52 +251,9 @@ function RadarChart(id, data, options) {
                     return cfg.color(j);
                 })
                 .style("fill-opacity", 0.8)
-                .on("click", function(d) { onCircleClick.call(this, d, cfg); });
+                .on("click", function (d) { onCircleClick.call(this, d, cfg); });
+				
 
-
-
-	/////////////////////////////////////////////////////////
-	//////// Append invisible circles for tooltip ///////////
-	/////////////////////////////////////////////////////////
-	
-	//Wrapper for the invisible circles on top
-    /*
-	var blobCircleWrapper = g.selectAll(".radarCircleWrapper")
-		.data(data)
-		.enter().append("g")
-		.attr("class", "radarCircleWrapper");
-		
-	//Append a set of invisible circles on top for the mouseover pop-up
-	blobCircleWrapper.selectAll(".radarInvisibleCircle")
-		.data(function(d,i) { return d; })
-		.enter().append("circle")
-		.attr("class", "radarInvisibleCircle")
-		.attr("r", cfg.dotRadius*1.5)
-		.attr("cx", function(d,i){ return rScale(d.value) * Math.cos(angleSlice*i - Math.PI/2); })
-		.attr("cy", function(d,i){ return rScale(d.value) * Math.sin(angleSlice*i - Math.PI/2); })
-		.style("fill", "none")
-		.style("pointer-events", "all")
-		.on("mouseover", function(d,i) {
-			newX =  parseFloat(d3.select(this).attr('cx')) - 10;
-			newY =  parseFloat(d3.select(this).attr('cy')) - 10;
-					
-			tooltip
-				.attr('x', newX)
-				.attr('y', newY)
-				.text(Format(d.value))
-				.transition().duration(200)
-				.style('opacity', 1);
-		})
-		.on("mouseout", function(){
-			tooltip.transition().duration(200)
-				.style("opacity", 0);
-		});
-		
-	//Set up the small tooltip for when you hover over a circle
-	var tooltip = g.append("text")
-		.attr("class", "tooltip")
-		.style("opacity", 0);
-	*/
 	/////////////////////////////////////////////////////////
 	/////////////////// Helper Function /////////////////////
 	/////////////////////////////////////////////////////////

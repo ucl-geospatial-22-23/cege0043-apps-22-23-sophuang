@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <!-- Include Bootstrap Icons CSS -->
+    <link href="
+    https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.min.css
+    " rel="stylesheet">
+
+
+    <title> User Guide for Asset Point Creation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        ul {
+            margin-left: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>User Guidance for Asset Point Creation</h1>
+
+    <h2> <i class="bi bi-map-fill"></i> Map view</h2>
+    <ul>
+        <li>When the application is opened on a large screen, the Asset Point Creation application starts working.</li>
+        <br>
+        <li>When the page is loaded, you should see a map, with the assets marked by the current user.</li>
+        <br>
+        <img src="img/help1.jpg" alt="Description of the image" style="display: inline; vertical-align: middle; max-width: 80%">
+        <br>
+
+
+        <li>The different colors of the markers indicate the latest condition of that asset:</li>
+        <ul>
+            <li>
+                <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png" style="width:20px" alt="green marker icon">
+                'Element is in very good condition'
+            </li>
+
+            <li>
+                <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-yellow.png" style="width:20px" alt="green marker icon">
+                'Some aesthetic defects, needs minor repair'
+            </li>
+
+            <li>
+                <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png" style="width:20px" alt="orange marker icon">
+                'Functional degradation of some parts, needs maintenance'
+            </li>
+
+            <li>
+                <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png" style="width:20px" alt="red marker icon">
+                Red: 'Not working and maintenance must be done as soon as reasonably possible'
+            </li>
+
+            <li>
+                <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png" style="width:20px" alt="violet marker icon">
+                Violet: 'Not working and needs immediate, urgent maintenance'
+            </li>
+
+            <li>
+                <img src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png" style="width:20px" alt="blue marker icon">
+                Blue: default color and 'Unknown' condition
+            </li>
+        </ul>
+        <br>
+        <li>Click on the markers, the Asset Name and the latest condition will pop up.</li>
+        <br>
+        <img src="img/help2.jpg" alt="Description of the image" style="display: inline; vertical-align: middle; max-width: 80%">
+        <br>
+    </ul>
+
+    <h2> <i class="bi bi-building-fill-add"></i> Asset Creation</h2>
+    <ul>
+        <li>To create a new asset, you just need to click a point on the map, and then a creation form will pop up.</li>
+        <br>
+        <img src="img/help3.jpg" alt="Description of the image" style="display: inline; vertical-align: middle; max-width: 80%">
+        <br>
+        <li>In this form, you need to provide the following information:</li>
+        <br>
+        <ul>
+            <li>Name of the asset. The asset name cannot be an empty string and it must be unique. The asset name cannot be used by other users. 
+                If the name is not valid or has been taken, an alert message will tell you.</li>
+            <br>
+            <li>Installation date. You must provide the installation date; otherwise, an alert message will pop up.</li>
+            <br>
+            <li>Location of the asset: The location of the asset will be captured by your click automatically. The location will be shown on the form.</li>
+            <br>
+        </ul>
+        <li>Finally, click the "Save Asset Data" button to create the asset and store the asset data into the database.</li>
+    </ul>
+
+    <h2> <i class="bi bi-gear-wide-connected"></i> Other Functionalities</h2>
+    <ul>
+        <li>In the side-bar menu, there are two functionalities:</li>
+        <br>
+        <ul>
+            <li> <i class="bi bi-building-check"></i> Asset in Best Condition:</li>
+            <br>
+            <ul>
+                <li>Click this, and the information about all the assets with the best condition will be shown in the popup HTML in the middle of the map.</li>
+                <br>
+                <li>You can scroll down to see all the details and click the close button to exit.</li>
+                <br>
+                <img src="img/help4.jpg" alt="Description of the image" style="display: inline; vertical-align: middle; max-width: 80%">
+                <br>
+            </ul>
+            <li> <i class="bi bi-clipboard2-data-fill"></i> Daily Reporting Rates graph:</li>
+            <br>
+            <ul>
+                <li>Click this, and a bar chart showing daily condition reporting rates in the database for the past week will appear.</li>
+                <br>
+                <img src="img/help5.jpg" alt="Description of the image" style="display: inline; vertical-align: middle; max-width: 80%">
+                <br>
+                <li>The blue bars show the daily number of condition reports submitted.</li>
+                <br>
+                <li>The green bars show the daily number of condition reports
+                    with the following conditions:</li>
+                    <br>
+                    <ul>
+                    <li>'Not working and maintenance must be done as soon as reasonably possible'.</li>
+                    <br>
+                    <li>'Not working and needs immediate, urgent maintenance'.</li>
+                    <br>
+                    </ul>
+                <li>Click the close button on the top left to exit.</li>
+            </ul>
+        </ul>
+    </ul>
+                    
+</body>
+</html>
