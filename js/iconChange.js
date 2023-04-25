@@ -68,7 +68,8 @@ function getIconByCondition(condition) {
 }
 
 
-
+let makers = {};
+let updatedConditions={};
   
 // This function is used for update the color when a new condtion report is submitted
 function updateLayerColor(assetId, condition) {
