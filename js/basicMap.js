@@ -201,17 +201,18 @@ function displayAssetsOnMap(data) {
       let lastCondition = feature.properties.condition_description;
       let pre_con;
       if (lastCondition=='Unknown') {
-          pre_con = "No Previous Condition Report Captured for this Asset";
+          pre_con = "; Last Condition: " +"No Previous Condition Report Captured for this Asset";
       }
       else{
-          pre_con = "Last Condition: " + lastCondition;
+          pre_con = "; Last Condition: " + lastCondition;
       }
 
+      let Content = "Asset Name: "+feature.properties.asset_name + pre_con;
       // Show lastCondition popup when the layer is clicked
       layer.on("click", function (e) {
         let lastConditionPopup = L.popup()
           .setLatLng(layer.getLatLng())
-          .setContent(pre_con);
+          .setContent(Content);
 
         lastConditionPopup.openOn(mymap);
       });
