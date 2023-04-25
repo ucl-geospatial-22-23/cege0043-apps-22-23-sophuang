@@ -29,15 +29,8 @@ function Remove5assets() {
     alert("User Assets will be reloaded");
     removeClosest5();
     
-    // Reload points in mapCondition, by passing user_id to loadUserAssets_C
-    // using the promise return in fetchUserId()
-    fetchUserId()
-      .then((userId) => {
-        loadUserAssets_C(userId);
-      })
-      .catch((error) => {
-        console.error("Error fetching user ID:", error);
-      });
+    // Reload points in mapCondition, and restart 
+    setMapClickEvent();
 }
 
 
@@ -68,6 +61,9 @@ function displayClosest5(assetData) {
 
     // Delete current layers
     initialize();
+
+    //disable track location
+    removePositionPoints();
     
     //Define the gold icon
     let goldIcon = createCustomIcon('gold');
@@ -164,6 +160,10 @@ function displayLast5(assetData) {
 
     // Remove any existing LastAssets layer from the map before adding a new one
     initialize();
+
+    //disable track location
+    removePositionPoints();
+
     if (LastAssets) {
       mymap.removeLayer(mapCondition);
     }
@@ -193,14 +193,9 @@ function removeLast5() {
     if (LastAssets) {
         mymap.removeLayer(mapCondition);
     };
-      // Reload points in mapCondition
-    fetchUserId()
-     .then((userId) => {
-      loadUserAssets_C(userId);
-    })
-     .catch((error) => {
-      console.error("Error fetching user ID:", error);
-    });     
+
+    // Reload points in mapCondition, and restart location track
+    setMapClickEvent();   
 }
     
     
@@ -253,7 +248,11 @@ function loadNo3() {
 let NoReports;
     
 function displayNo3(assetData) {
+
     initialize();
+
+    //disable track location
+    removePositionPoints();
 
     let greyIcon = createCustomIcon('grey');
     
@@ -284,11 +283,6 @@ function removeNo3() {
         mymap.removeLayer(mapCondition);
     }
 
-    fetchUserId()
-      .then((userId) => {
-        loadUserAssets_C(userId);
-      })
-      .catch((error) => {
-        console.error("Error fetching user ID:", error);
-      });
+    // Reload points in mapCondition, and restart location track
+    setMapClickEvent();   
 }
